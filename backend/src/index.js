@@ -12,19 +12,23 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    sameSite: 'lax', // Good for localhost, allows cross-origin with navigation
+    secure: false    // Only true if using HTTPS
+  }
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
+// CORS setup for frontend integration
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
+  origin: 'http://localhost:5173', // Only allow your frontend
+  credentials: true                // Allow cookies to be sent
 }));
 app.use(express.json());
 

@@ -4,7 +4,9 @@ import { Bold, Italic, Underline, Strikethrough, Heading1, List, ListOrdered, Al
 import {DocumentTextIcon,ArrowsUpDownIcon,H1Icon,AdjustmentsHorizontalIcon} from '@heroicons/react/24/outline';
 import { extractTargetTag, cleanResponse, processAIResponse, buildPrompt } from "./utils/aiTargeting";
 import { useFuzzySearch } from './utils/useFuzzySearch.js';
-
+import GoogleDocsList from "./GoogleDocsList";
+import LoginButton from "./LoginButton";
+import GoogleDocsWrapper from "./GoogleDocsWrapper";
 
 const MASTER_PROMPT = `
 You are an intelligent AI writing and thinking assistant, operating exclusively inside Scripelle — a zero-friction, citation-capable, idea-to-text word processor.
@@ -2025,19 +2027,21 @@ const basicCommands = [
 
 
   return (
-  <>
-    <div className="file-name-bar">
-       <div className="app-title" align="centre">Scripelle</div>
-  <input
-    type="text"
-    className="file-name-input"
-    value={fileName}
-    onChange={(e) => setFileName(e.target.value)}
-  />
-  <button className="timeline-button" onClick={() => setShowTimeline(true)} title="Document History">
-    <History size={20} />
-  </button>
-</div>
+    <>
+      <div className="file-name-bar" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div className="app-title" align="centre">Scripelle</div>
+        <input
+          type="text"
+          className="file-name-input"
+          value={fileName}
+          onChange={(e) => setFileName(e.target.value)}
+        />
+        <div style={{ flex: 1 }} /> {/* Spacer to push buttons to the right */}
+        <GoogleDocsWrapper />
+        <button className="timeline-button" onClick={() => setShowTimeline(true)} title="Document History">
+          <History size={20} />
+        </button>
+      </div>
 
   <div className="menubar-container">
       <div className="menubar">

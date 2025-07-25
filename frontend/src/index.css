@@ -1757,3 +1757,24 @@ pre {
   -moz-user-select: none;
   user-select: none;
 }
+
+.sign-in-btn {
+  background: #252526;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-left: 12px;
+  margin-right: 8px;
+  transition: background 0.2s;
+  box-shadow: none;
+  height: 32px;
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+}
+.sign-in-btn:hover {
+  background: #35363a;
+}
