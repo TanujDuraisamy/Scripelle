@@ -2032,9 +2032,17 @@ const basicCommands = [
         <div className="app-title" align="centre">Scripelle</div>
         <input
           type="text"
-          className="file-name-input"
           value={fileName}
           onChange={(e) => setFileName(e.target.value)}
+          style={{
+            border: 'none',
+            background: 'transparent',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            color: '#333',
+            flex: 1,
+            marginLeft: '16px'
+          }}
         />
         <div style={{ flex: 1 }} /> {/* Spacer to push buttons to the right */}
         <GoogleDocsWrapper />
