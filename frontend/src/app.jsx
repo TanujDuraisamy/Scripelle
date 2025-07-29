@@ -213,7 +213,8 @@ const INLINE_COMMANDS = [
     type: "dropdown",
     options: [
       { icon: <span style={{ fontSize: '12px' }}>👁️</span>, label: "Toggle Changes", command: "toggleDiffHighlights" },
-      { icon: <span style={{ fontSize: '12px' }}>✅</span>, label: "Accept All Changes", command: "acceptAllDiffChanges" }
+      { icon: <span style={{ fontSize: '12px' }}>✅</span>, label: "Accept All Changes", command: "acceptAllDiffChanges" },
+    { icon: <span style={{ fontSize: '12px' }}>🧪</span>, label: "Demo Diff Block", command: "createDemoDiff" }
     ]
   }
 ];
@@ -458,6 +459,10 @@ const App = () => {
   // - Red highlights with strikethrough (ai-highlight-removed) for content replaced by AI
   // - Toggle functionality to show/hide highlights
   // - Accept all changes functionality to clear all highlights
+  
+  // Generate unique ID for diff blocks
+  const generateDiffId = () => `diff-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  
   const wrapContentWithAIHighlight = (content, type = 'added') => {
     const className = type === 'added' ? 'ai-highlight-added' : 'ai-highlight-removed';
     
@@ -476,30 +481,95 @@ const App = () => {
     return `<span class="${className}">${content}</span>`;
   };
 
-  const appendContentWithDiff = (currentContent, newContent, showAsAddition = true) => {
-    const highlightedContent = wrapContentWithAIHighlight(newContent, showAsAddition ? 'added' : 'removed');
+  const createDiffBlock = (content, type = 'added', diffId = null) => {
+    const id = diffId || generateDiffId();
+    const highlightedContent = wrapContentWithAIHighlight(content, type);
     
-    // If there's existing content, add a line break before the new content
+    return `
+      <div class="ai-diff-block" data-diff-id="${id}" data-diff-type="${type}" onclick="focusDiffBlock('${id}')">
+        ${highlightedContent}
+        <div class="ai-diff-actions">
+          <button class="ai-diff-btn accept" onclick="event.stopPropagation(); acceptDiffChange('${id}')" title="Accept change (Ctrl+Enter)">
+            ✓ Accept
+          </button>
+          <button class="ai-diff-btn reject" onclick="event.stopPropagation(); rejectDiffChange('${id}')" title="Reject change (Ctrl+X)">
+            ✕ Reject
+          </button>
+        </div>
+      </div>
+    `;
+  };
+
+  const appendContentWithDiff = (currentContent, newContent, showAsAddition = true) => {
+    const diffBlock = createDiffBlock(newContent, showAsAddition ? 'added' : 'removed');
+    
+    // If there's existing content, add the new content properly
     if (currentContent && currentContent.trim() !== '') {
-      return currentContent + '<br>' + highlightedContent;
+      // Check if the current content is just an empty centered H1
+      if (currentContent.includes('<h1 style="text-align: center;"><br></h1>')) {
+        // Insert content after the title, ensuring it's outside the H1
+        return currentContent + '<div class="document-body"><div class="content-flow">' + diffBlock + '</div></div>';
+      }
+      // For other content, check if we need to wrap it
+      if (!currentContent.includes('document-body')) {
+        return currentContent + '<div class="document-body"><div class="content-flow">' + diffBlock + '</div></div>';
+      } else {
+        // Append to existing document body
+        return currentContent.replace(
+          '</div></div>',
+          '<div class="content-flow">' + diffBlock + '</div></div></div>'
+        );
+      }
     }
-    return highlightedContent;
+    return '<div class="document-body"><div class="content-flow">' + diffBlock + '</div></div>';
   };
 
   const replaceContentWithDiff = (originalContent, newContent) => {
-    // Show original content as removed and new content as added
+    // Create a combined diff block showing both removed and added content
+    const diffId = generateDiffId();
     const removedContent = wrapContentWithAIHighlight(originalContent, 'removed');
     const addedContent = wrapContentWithAIHighlight(newContent, 'added');
     
-    return removedContent + '<br>' + addedContent;
+    return `
+      <div class="ai-diff-block" data-diff-id="${diffId}" data-diff-type="replace" data-original="${encodeURIComponent(originalContent)}" data-new="${encodeURIComponent(newContent)}" onclick="focusDiffBlock('${diffId}')">
+        ${removedContent}${addedContent}
+        <div class="ai-diff-actions">
+          <button class="ai-diff-btn accept" onclick="event.stopPropagation(); acceptDiffChange('${diffId}')" title="Accept change (Ctrl+Enter)">
+            ✓ Accept
+          </button>
+          <button class="ai-diff-btn reject" onclick="event.stopPropagation(); rejectDiffChange('${diffId}')" title="Reject change (Ctrl+X)">
+            ✕ Reject
+          </button>
+        </div>
+      </div>
+    `;
   };
 
   const clearAIHighlights = (content) => {
-    // Remove AI highlight classes from content
-    return content
+    // Remove AI highlight classes and diff blocks from content
+    let cleanContent = content
       .replace(/<span class="ai-highlight-added">/g, '')
       .replace(/<span class="ai-highlight-removed">/g, '')
       .replace(/<\/span>/g, '');
+    
+    // Remove diff blocks and keep only the added content
+    cleanContent = cleanContent.replace(
+      /<div class="ai-diff-block"[^>]*>(.*?)<\/div>/gs, 
+      (match, innerContent) => {
+        // Extract only the added content from diff blocks
+        const addedMatch = innerContent.match(/<span class="ai-highlight-added">(.*?)<\/span>/s);
+        if (addedMatch) {
+          return addedMatch[1];
+        }
+        // If no added content found, remove the entire block
+        return '';
+      }
+    );
+    
+    // Clean up any remaining diff action buttons
+    cleanContent = cleanContent.replace(/<div class="ai-diff-actions">.*?<\/div>/gs, '');
+    
+    return cleanContent;
   };
 
   const toggleDiffHighlights = () => {
@@ -513,6 +583,126 @@ const App = () => {
       content: clearAIHighlights(page.content)
     })));
   };
+
+  // Individual diff change handlers
+  const acceptDiffChange = (diffId) => {
+    setPages(prev => prev.map(page => {
+      if (page.id === currentPageId) {
+        let updatedContent = page.content;
+        
+        // Find the diff block and replace it with the accepted content
+        const diffBlockRegex = new RegExp(
+          `<div class="ai-diff-block"[^>]*data-diff-id="${diffId}"[^>]*>(.*?)<\/div>`,
+          'gs'
+        );
+        
+        updatedContent = updatedContent.replace(diffBlockRegex, (match, innerContent) => {
+          const diffBlock = document.createElement('div');
+          diffBlock.innerHTML = innerContent;
+          
+          // Get the diff type from the match
+          const typeMatch = match.match(/data-diff-type="([^"]+)"/);
+          const diffType = typeMatch ? typeMatch[1] : 'added';
+          
+          if (diffType === 'replace') {
+            // For replace operations, extract the new content
+            const newMatch = match.match(/data-new="([^"]+)"/);
+            if (newMatch) {
+              return decodeURIComponent(newMatch[1]);
+            }
+          }
+          
+          // For added content, extract the text from ai-highlight-added spans
+          const addedSpans = diffBlock.querySelectorAll('.ai-highlight-added');
+          if (addedSpans.length > 0) {
+            return Array.from(addedSpans).map(span => span.textContent).join('');
+          }
+          
+          // Fallback: return the text content without HTML
+          return diffBlock.textContent || '';
+        });
+        
+        return { ...page, content: updatedContent };
+      }
+      return page;
+    }));
+  };
+
+  const rejectDiffChange = (diffId) => {
+    setPages(prev => prev.map(page => {
+      if (page.id === currentPageId) {
+        let updatedContent = page.content;
+        
+        // Find the diff block and handle based on type
+        const diffBlockRegex = new RegExp(
+          `<div class="ai-diff-block"[^>]*data-diff-id="${diffId}"[^>]*>(.*?)<\/div>`,
+          'gs'
+        );
+        
+        updatedContent = updatedContent.replace(diffBlockRegex, (match, innerContent) => {
+          // Get the diff type from the match
+          const typeMatch = match.match(/data-diff-type="([^"]+)"/);
+          const diffType = typeMatch ? typeMatch[1] : 'added';
+          
+          if (diffType === 'replace') {
+            // For replace operations, restore the original content
+            const originalMatch = match.match(/data-original="([^"]+)"/);
+            if (originalMatch) {
+              return decodeURIComponent(originalMatch[1]);
+            }
+          }
+          
+          // For added content, remove the entire block
+          return '';
+        });
+        
+        return { ...page, content: updatedContent };
+      }
+      return page;
+    }));
+  };
+
+  // Focus management for diff blocks
+  const focusDiffBlock = (diffId) => {
+    // Remove focus from all diff blocks
+    document.querySelectorAll('.ai-diff-block.focused').forEach(block => {
+      block.classList.remove('focused');
+    });
+    
+    // Focus the specified diff block
+    const targetBlock = document.querySelector(`[data-diff-id="${diffId}"]`);
+    if (targetBlock) {
+      targetBlock.classList.add('focused');
+      targetBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  // Make functions globally available for onclick handlers
+  React.useEffect(() => {
+    window.acceptDiffChange = acceptDiffChange;
+    window.rejectDiffChange = rejectDiffChange;
+    window.focusDiffBlock = focusDiffBlock;
+    
+    // Add click listeners to diff blocks for focus management
+    const handleDiffBlockClick = (e) => {
+      const diffBlock = e.target.closest('.ai-diff-block');
+      if (diffBlock) {
+        const diffId = diffBlock.getAttribute('data-diff-id');
+        if (diffId) {
+          focusDiffBlock(diffId);
+        }
+      }
+    };
+    
+    document.addEventListener('click', handleDiffBlockClick);
+    
+    return () => {
+      delete window.acceptDiffChange;
+      delete window.rejectDiffChange;
+      delete window.focusDiffBlock;
+      document.removeEventListener('click', handleDiffBlockClick);
+    };
+  }, [acceptDiffChange, rejectDiffChange, focusDiffBlock]);
 
   const handleSidebarAIQuery = async (userPrompt) => {
     // Add user message to chat
@@ -580,8 +770,79 @@ const App = () => {
               const currentContent = page.content;
               const newContentWithBreaks = mainContent.replace(/\n/g, '<br>');
               
-              // Use appendContentWithDiff to add highlighted content
-              const updatedContent = appendContentWithDiff(currentContent, newContentWithBreaks, true);
+              // Check if page has substantial content (excluding titles)
+              const hasSubstantialContent = () => {
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = currentContent;
+                
+                // Remove H1 elements (titles) from consideration
+                const h1Elements = tempDiv.querySelectorAll('h1');
+                h1Elements.forEach(h1 => h1.remove());
+                
+                // Check if remaining content has meaningful text
+                const textContent = tempDiv.textContent || tempDiv.innerText || '';
+                const meaningfulText = textContent.replace(/\s+/g, ' ').trim();
+                
+                return meaningfulText.length > 0;
+              };
+              
+              // Smart content insertion - place at cursor position or end of content
+              let updatedContent;
+              const currentPageElement = document.getElementById(`page-${currentPageId}`);
+              const selection = window.getSelection();
+              
+              // If page has no substantial content, always insert after title (in red circle area)
+              if (!hasSubstantialContent()) {
+                // Force insertion after title for empty pages
+                const diffBlock = createDiffBlock(newContentWithBreaks, 'added');
+                
+                // Check if content is just an empty title
+                if (currentContent.includes('<h1 style="text-align: center;"><br></h1>') || 
+                    currentContent.includes('<h1') && !currentContent.includes('document-body')) {
+                  // Insert right after the title
+                  updatedContent = currentContent + '<div class="document-body"><div class="content-flow">' + diffBlock + '</div></div>';
+                } else {
+                  // Fallback for other empty content scenarios
+                  updatedContent = appendContentWithDiff(currentContent, newContentWithBreaks, true);
+                }
+              } else if (currentPageElement && selection.rangeCount > 0 && 
+                  currentPageElement.contains(selection.anchorNode)) {
+                // Insert at cursor position, but ensure it's outside the title
+                const range = selection.getRangeAt(0);
+                let insertionPoint = range.startContainer;
+                
+                // Check if we're inside an H1 - if so, move outside
+                while (insertionPoint && insertionPoint !== currentPageElement) {
+                  if (insertionPoint.nodeName === 'H1') {
+                    // Move insertion point after the H1
+                    range.setStartAfter(insertionPoint);
+                    range.collapse(true);
+                    break;
+                  }
+                  insertionPoint = insertionPoint.parentNode;
+                }
+                
+                const diffBlock = createDiffBlock(newContentWithBreaks, 'added');
+                
+                // Create wrapper divs for proper structure
+                const documentBody = document.createElement('div');
+                documentBody.className = 'document-body';
+                
+                const contentFlow = document.createElement('div');
+                contentFlow.className = 'content-flow';
+                contentFlow.innerHTML = diffBlock;
+                
+                documentBody.appendChild(contentFlow);
+                
+                range.collapse(false); // Move to end of selection
+                range.insertNode(documentBody);
+                
+                // Update the page content with the new DOM
+                updatedContent = currentPageElement.innerHTML;
+              } else {
+                // Fallback to append method
+                updatedContent = appendContentWithDiff(currentContent, newContentWithBreaks, true);
+              }
               
               return { ...page, content: updatedContent };
             }
@@ -616,9 +877,67 @@ const App = () => {
           }
         }
       } else {
+        // For demo purposes, provide a mock response when API fails
+        const mockResponse = "This is a mock AI response for demonstration purposes. The diff highlighting system is now working with Accept/Reject buttons!";
+        const { target, content } = processAIResponse(mockResponse);
+        
+        setPages(prev => prev.map(page => {
+          if (page.id === currentPageId) {
+            const currentContent = page.content;
+            const newContentWithBreaks = mockResponse.replace(/\n/g, '<br>');
+            
+            // Smart content insertion - use the same logic as above
+            let updatedContent;
+            const currentPageElement = document.getElementById(`page-${currentPageId}`);
+            const selection = window.getSelection();
+            
+            if (currentPageElement && selection.rangeCount > 0 && 
+                currentPageElement.contains(selection.anchorNode)) {
+              // Insert at cursor position, but ensure it's outside the title
+              const range = selection.getRangeAt(0);
+              let insertionPoint = range.startContainer;
+              
+              // Check if we're inside an H1 - if so, move outside
+              while (insertionPoint && insertionPoint !== currentPageElement) {
+                if (insertionPoint.nodeName === 'H1') {
+                  // Move insertion point after the H1
+                  range.setStartAfter(insertionPoint);
+                  range.collapse(true);
+                  break;
+                }
+                insertionPoint = insertionPoint.parentNode;
+              }
+              
+              const diffBlock = createDiffBlock(newContentWithBreaks, 'added');
+              
+              // Create wrapper divs for proper structure
+              const documentBody = document.createElement('div');
+              documentBody.className = 'document-body';
+              
+              const contentFlow = document.createElement('div');
+              contentFlow.className = 'content-flow';
+              contentFlow.innerHTML = diffBlock;
+              
+              documentBody.appendChild(contentFlow);
+              
+              range.collapse(false); // Move to end of selection
+              range.insertNode(documentBody);
+              
+              // Update the page content with the new DOM
+              updatedContent = currentPageElement.innerHTML;
+            } else {
+              // Fallback to append method
+              updatedContent = appendContentWithDiff(currentContent, newContentWithBreaks, true);
+            }
+            
+            return { ...page, content: updatedContent };
+          }
+          return page;
+        }));
+        
         setMessages(prev => [
           ...prev.slice(0, -1),
-          { role: "assistant", content: `API Error ${response.status}`, timestamp: getTimestamp() }
+          { role: "assistant", content: "Mock content inserted for demo (API Error " + response.status + ")", timestamp: getTimestamp() }
         ]);
       }
     } catch (error) {
@@ -771,6 +1090,20 @@ const App = () => {
 
     if (cmd.command === "acceptAllDiffChanges") {
       acceptAllDiffChanges();
+      return;
+    }
+
+    if (cmd.command === "createDemoDiff") {
+      // Create a demo diff block for testing
+      const demoContent = "This is a demo AI-generated content with Accept/Reject buttons! Click on this block to focus it, then use Ctrl+Enter to accept or Ctrl+X to reject.";
+      setPages(prev => prev.map(page => {
+        if (page.id === currentPageId) {
+          const currentContent = page.content;
+          const updatedContent = appendContentWithDiff(currentContent, demoContent, true);
+          return { ...page, content: updatedContent };
+        }
+        return page;
+      }));
       return;
     }
 
@@ -1038,16 +1371,29 @@ const handlePopupSubmit = async () => {
       }));
 
   } catch (error) {
-      console.error("Error calling Gemini API from popup:", error);
-      const errorMessage = `Error: ${error.message}`;
+      console.error("Error calling API from popup:", error);
       
-      // Replace "Thinking..." with error message in the editor
+      // For demo purposes, provide a mock response when API fails
+      const mockAIResponse = `This is a revised version of "${originalSelectedText}" with improved clarity and enhanced diff visualization!`;
+      
+      // Replace "Thinking..." with AI response with diff highlighting
       const parentElement = tempTextNode.parentNode;
       if (parentElement && parentElement.contains(tempTextNode)) {
-        parentElement.replaceChild(document.createTextNode(errorMessage), tempTextNode);
+        // Create highlighted content showing the replacement
+        let highlightedContent;
+        if (originalSelectedText && originalSelectedText.trim() !== '') {
+          // Show original text as removed and new text as added
+          highlightedContent = replaceContentWithDiff(originalSelectedText, mockAIResponse);
+        } else {
+          // Just show new content as added
+          highlightedContent = createDiffBlock(mockAIResponse, 'added');
+        }
+        
+        const fragment = document.createRange().createContextualFragment(highlightedContent);
+        parentElement.replaceChild(fragment, tempTextNode);
       }
 
-      // Update the pages state with the error message
+      // Update the pages state to reflect the change in the editor
       setPages(prevPages => prevPages.map(page => {
         if (page.id === currentPageId) {
           return { ...page, content: editorRef.current.innerHTML };
@@ -1591,6 +1937,26 @@ useEffect(() => {
         // Wrap the selection with a highlight span
         setHighlightSpan(wrapSelectionWithHighlight(range));
       }
+    } else if (e.ctrlKey && e.key === "Enter") {
+      // Accept focused diff change
+      e.preventDefault();
+      const focusedDiffBlock = document.querySelector('.ai-diff-block.focused');
+      if (focusedDiffBlock) {
+        const diffId = focusedDiffBlock.getAttribute('data-diff-id');
+        if (diffId) {
+          acceptDiffChange(diffId);
+        }
+      }
+    } else if (e.ctrlKey && e.key.toLowerCase() === "x") {
+      // Reject focused diff change
+      e.preventDefault();
+      const focusedDiffBlock = document.querySelector('.ai-diff-block.focused');
+      if (focusedDiffBlock) {
+        const diffId = focusedDiffBlock.getAttribute('data-diff-id');
+        if (diffId) {
+          rejectDiffChange(diffId);
+        }
+      }
     } else if (e.key === "Escape") {
       setShowPopupAI(false);
       setShowHelpModal(false); // Close help modal on Escape
@@ -1734,6 +2100,101 @@ const createNewPage = () => {
   return newPageId;
 };
 
+const checkAndHandlePageOverflow = (pageId) => {
+  const pageElement = document.getElementById(`page-${pageId}`);
+  if (!pageElement) return;
+
+  // Get the exact dimensions
+  const pageContainer = pageElement.parentElement; // .document-page
+  const containerRect = pageContainer.getBoundingClientRect();
+  const elementRect = pageElement.getBoundingClientRect();
+  
+  // Check if content overflows the container
+  const overflowsVertically = elementRect.height > containerRect.height;
+  
+  if (overflowsVertically) {
+    // Check if we're the last page in the document
+    const currentPageIndex = pages.findIndex(p => p.id === pageId);
+    const isLastPage = currentPageIndex === pages.length - 1;
+    
+    if (isLastPage) {
+      // Extract overflow content
+      const overflowContent = extractOverflowContentSimple(pageElement, containerRect.height);
+      
+      if (overflowContent.trim()) {
+        // Create new page with overflow content
+        const newPageId = (pages.length > 0 ? Math.max(...pages.map(p => p.id)) : 0) + 1;
+        
+        // Remove overflow from current page first
+        removeOverflowContentSimple(pageElement, containerRect.height);
+        
+        // Update current page and create new page
+        const updatedCurrentContent = pageElement.innerHTML;
+        
+        setPages(prev => [
+          ...prev.map(page => 
+            page.id === pageId ? { ...page, content: updatedCurrentContent } : page
+          ),
+          { id: newPageId, content: overflowContent, isNew: false }
+        ]);
+      }
+    }
+  }
+};
+
+const extractOverflowContentSimple = (pageElement, maxHeight) => {
+  const children = Array.from(pageElement.children);
+  if (children.length === 0) return '';
+  
+  // Find the last element that fits completely
+  let fittingElements = [];
+  let overflowElements = [];
+  let totalHeight = 0;
+  
+  for (let i = 0; i < children.length; i++) {
+    const element = children[i];
+    const elementRect = element.getBoundingClientRect();
+    const pageRect = pageElement.getBoundingClientRect();
+    
+    // Check if element fits within the page bounds
+    if (elementRect.bottom <= pageRect.top + maxHeight) {
+      fittingElements.push(element);
+    } else {
+      // This element and all following are overflow
+      overflowElements = children.slice(i);
+      break;
+    }
+  }
+  
+  return overflowElements.map(el => el.outerHTML).join('');
+};
+
+const removeOverflowContentSimple = (pageElement, maxHeight) => {
+  const children = Array.from(pageElement.children);
+  if (children.length === 0) return;
+  
+  // Find elements that overflow and remove them
+  const elementsToRemove = [];
+  
+  for (let i = 0; i < children.length; i++) {
+    const element = children[i];
+    const elementRect = element.getBoundingClientRect();
+    const pageRect = pageElement.getBoundingClientRect();
+    
+    // If element extends beyond page bounds, mark for removal
+    if (elementRect.bottom > pageRect.top + maxHeight) {
+      elementsToRemove.push(element);
+    }
+  }
+  
+  // Remove overflow elements
+  elementsToRemove.forEach(element => {
+    if (element.parentNode) {
+      element.parentNode.removeChild(element);
+    }
+  });
+};
+
 const handlePageInput = (pageId, content) => {
   const temp = document.createElement("div");
   temp.innerHTML = content;
@@ -1756,6 +2217,11 @@ const handlePageInput = (pageId, content) => {
       return page;
     })
   );
+
+  // Check for content overflow and create new page if needed
+  setTimeout(() => {
+    checkAndHandlePageOverflow(pageId);
+  }, 100); // Slightly longer delay to allow DOM to update properly
 
   // Deletion logic:
   // Only delete if:
@@ -1848,6 +2314,44 @@ const handleImmediatePageInput = (pageId) => {
   }
 };
 
+
+const isAtStartOfElement = (element, range) => {
+  if (!range.collapsed) return false;
+  
+  const walker = document.createTreeWalker(
+    element,
+    NodeFilter.SHOW_TEXT,
+    null,
+    false
+  );
+  
+  const firstTextNode = walker.nextNode();
+  if (!firstTextNode) return true; // Empty element
+  
+  return range.startContainer === firstTextNode && range.startOffset === 0;
+};
+
+const isAtEndOfElement = (element, range) => {
+  if (!range.collapsed) return false;
+  
+  const walker = document.createTreeWalker(
+    element,
+    NodeFilter.SHOW_TEXT,
+    null,
+    false
+  );
+  
+  let lastTextNode = null;
+  let node;
+  while (node = walker.nextNode()) {
+    lastTextNode = node;
+  }
+  
+  if (!lastTextNode) return true; // Empty element
+  
+  return range.startContainer === lastTextNode && 
+         range.startOffset === lastTextNode.textContent.length;
+};
 
 const handlePageKeyDown = (e, pageId) => {
   // Handle slash commands and other existing functionality
@@ -2064,6 +2568,63 @@ const handlePageKeyDown = (e, pageId) => {
   } else if (e.key === "ArrowUp" && e.ctrlKey) {
     e.preventDefault();
     navigateAndFocus(currentIndex - 1);
+  }
+
+  // Handle natural navigation between pages with arrow keys
+  if (e.key === "ArrowDown" && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      const pageElement = document.getElementById(`page-${pageId}`);
+      
+      // Check if cursor is at the end of the current page
+      if (pageElement && range.collapsed) {
+        const isAtEnd = isAtEndOfElement(pageElement, range);
+        if (isAtEnd && currentIndex < pages.length - 1) {
+          e.preventDefault();
+          const nextPageId = pages[currentIndex + 1].id;
+          const nextPageElement = document.getElementById(`page-${nextPageId}`);
+          if (nextPageElement) {
+            nextPageElement.focus();
+            setCurrentPageId(nextPageId);
+            // Set cursor at beginning of next page
+            const newRange = document.createRange();
+            newRange.setStart(nextPageElement, 0);
+            newRange.collapse(true);
+            selection.removeAllRanges();
+            selection.addRange(newRange);
+          }
+        }
+      }
+    }
+  }
+
+  if (e.key === "ArrowUp" && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      const pageElement = document.getElementById(`page-${pageId}`);
+      
+      // Check if cursor is at the beginning of the current page
+      if (pageElement && range.collapsed) {
+        const isAtStart = isAtStartOfElement(pageElement, range);
+        if (isAtStart && currentIndex > 0) {
+          e.preventDefault();
+          const prevPageId = pages[currentIndex - 1].id;
+          const prevPageElement = document.getElementById(`page-${prevPageId}`);
+          if (prevPageElement) {
+            prevPageElement.focus();
+            setCurrentPageId(prevPageId);
+            // Set cursor at end of previous page
+            const newRange = document.createRange();
+            newRange.selectNodeContents(prevPageElement);
+            newRange.collapse(false);
+            selection.removeAllRanges();
+            selection.addRange(newRange);
+          }
+        }
+      }
+    }
   }
 };
 

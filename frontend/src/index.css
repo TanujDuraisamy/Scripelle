@@ -79,29 +79,27 @@ body {
 
 /* Editor Container */
 .container {
-  display: flex;
-  justify-content: center;
+  display: block;
   padding: 0;
   position: relative;
-  max-width: 100%;
+  width: 100%;
   box-sizing: border-box;
   padding-top: 5rem;
   transition: margin-top 0.3s ease;
   background-color: #202020;
-  /*background-color: #252526; */ 
-  min-height: 20vh;
-  width: 100%;
+  min-height: 100vh;
   margin: 0 auto;
 }
 
 /* Document Container */
 .document-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: block;
   padding: 2rem 1rem;
   min-height: 100vh;
   background-color: #202020;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 
@@ -598,8 +596,7 @@ pre {
   width: 100%;
   max-width: 100%;
   transition: margin-right 0.3s ease;
-  display: flex;
-  justify-content: center;
+  display: block;
   box-sizing: border-box;
 }
 
@@ -909,20 +906,43 @@ pre {
 
 
 
-/* Individual Page */
+/* Individual Page - Google Docs exact dimensions */
 .document-page {
-  width: 792px; /* A4 width at 96dpi */
-  height: 1056px; /* Custom height for content */
+  width: 794px; /* Google Docs width at 96 DPI */
+  height: 1123px; /* Google Docs height at 96 DPI */
   background-color: #1e1e1e;
-  margin-bottom: 24px;
+  margin: 0 auto 24px auto;
   box-shadow: 0 0 0 1px #444, 0 4px 15px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
   position: relative;
-  overflow: hidden;
+  overflow: hidden; /* Hide overflow to prevent content bleeding */
 }
 
 .document-page:last-child {
   margin-bottom: 2rem;
+}
+
+/* Multi-page document styling */
+.document-container {
+  max-width: none; /* Remove max-width to allow full page display */
+}
+
+/* Ensure pages stack naturally */
+.document-page + .document-page {
+  margin-top: 24px; /* Consistent spacing between pages */
+}
+
+/* Page break indicator (subtle) */
+.document-page:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
 }
 
 /* Page Content */
@@ -938,52 +958,127 @@ pre {
   font-family: 'Segoe UI', sans-serif;
   word-wrap: break-word;
   white-space: pre-wrap;
-  overflow: hidden;
+  overflow: hidden; /* Hide overflow to match fixed page height */
   cursor: text;
   color: #f1f1f1;
+  display: block;
+}
+
+/* Document body container - separate from title */
+.document-body {
+  text-align: left !important;
+  width: 100%;
+  display: block;
+  margin-top: 24px;
+  clear: both;
+  position: relative;
+  left: 0;
+  right: 0;
+}
+
+/* Content flow container for AI-generated content */
+.content-flow {
+  text-align: left !important;
+  margin: 16px 0;
+  clear: both;
+  width: 100%;
+  display: block;
+}
+
+.content-flow .ai-diff-block {
+  text-align: left !important;
+  margin: 16px 0;
+}
+
+/* Ensure H1 titles don't affect content positioning */
+.page-content h1 + .document-body {
+  margin-top: 24px;
+}
+
+/* Ensure the first H1 starts at the top */
+.page-content h1:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Natural document flow */
+.page-content > *:first-child {
+  margin-top: 0;
+}
+
+/* Ensure content flows naturally without gaps */
+.document-container > .document-page:first-child {
+  margin-top: 0;
+}
+
+/* Reset any center alignment inheritance */
+.page-content .document-body,
+.page-content .document-body *,
+.page-content .content-flow,
+.page-content .content-flow *,
+.page-content .ai-diff-block,
+.page-content .ai-diff-block *,
+.page-content .ai-highlight-added,
+.page-content .ai-highlight-removed {
+  text-align: left !important;
+}
+
+/* Force left alignment on the entire document structure after title */
+.page-content h1[style*="text-align: center"] ~ * {
+  text-align: left !important;
 }
 
 /* AI Content Diff Highlighting */
 .ai-highlight-added {
-  background-color: rgba(34, 197, 94, 0.2); /* Green background with transparency */
-  border-radius: 3px;
-  padding: 1px 2px;
-  margin: 0 1px;
+  background-color: rgba(34, 197, 94, 0.15); /* Green background with transparency */
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 4px 0;
   animation: highlightFadeIn 0.5s ease-in-out;
   position: relative;
+  display: block;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  text-align: left !important;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ai-highlight-added::before {
   content: '';
   position: absolute;
-  left: -3px;
+  left: 0;
   top: 0;
   bottom: 0;
-  width: 3px;
+  width: 4px;
   background-color: #22c55e; /* Solid green left border */
-  border-radius: 1px;
+  border-radius: 3px 0 0 3px;
 }
 
 .ai-highlight-removed {
-  background-color: rgba(239, 68, 68, 0.2); /* Red background with transparency */
+  background-color: rgba(239, 68, 68, 0.15); /* Red background with transparency */
   color: #f87171; /* Lighter red text */
   text-decoration: line-through;
-  border-radius: 3px;
-  padding: 1px 2px;
-  margin: 0 1px;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 4px 0;
   animation: highlightFadeIn 0.5s ease-in-out;
   position: relative;
+  display: block;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  text-align: left !important;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ai-highlight-removed::before {
   content: '';
   position: absolute;
-  left: -3px;
+  left: 0;
   top: 0;
   bottom: 0;
-  width: 3px;
+  width: 4px;
   background-color: #ef4444; /* Solid red left border */
-  border-radius: 1px;
+  border-radius: 3px 0 0 3px;
 }
 
 /* Subtle animation for highlight appearance */
@@ -1026,6 +1121,147 @@ pre {
 .ai-diff-container.highlights-hidden .ai-highlight-removed {
   text-decoration: none;
   color: inherit;
+}
+
+/* AI Diff Block Container */
+.ai-diff-block {
+  position: relative;
+  margin: 12px 0;
+  padding: 0;
+  border-radius: 8px;
+  overflow: visible;
+  background: transparent;
+  border: none;
+  text-align: left !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+.ai-diff-block:hover .ai-diff-actions {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Accept/Reject Action Buttons */
+.ai-diff-actions {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.ai-diff-actions.show,
+.ai-diff-block:hover .ai-diff-actions,
+.ai-diff-block.focused .ai-diff-actions {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.ai-diff-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 18px;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12px);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  min-height: 28px;
+  pointer-events: auto;
+}
+
+.ai-diff-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.ai-diff-btn:active {
+  transform: translateY(-1px) scale(0.98);
+  transition: all 0.1s ease;
+}
+
+/* Accept Button */
+.ai-diff-btn.accept {
+  background: linear-gradient(135deg, #1DB954 0%, #1ed760 100%);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ai-diff-btn.accept:hover {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  box-shadow: 0 6px 20px rgba(29, 185, 84, 0.4), 0 2px 6px rgba(29, 185, 84, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Reject Button */
+.ai-diff-btn.reject {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ai-diff-btn.reject:hover {
+  background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4), 0 2px 6px rgba(239, 68, 68, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Keyboard shortcuts tooltip */
+.ai-diff-btn .shortcut {
+  font-size: 10px;
+  opacity: 0.8;
+  margin-left: 4px;
+}
+
+/* Animation for action buttons */
+@keyframes diffActionsFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ai-diff-actions.show {
+  opacity: 1;
+  visibility: visible;
+  animation: diffActionsFadeIn 0.2s ease;
+}
+
+/* Enhanced highlighting for focused diff block */
+.ai-diff-block.focused {
+  transform: scale(1.005);
+  transition: transform 0.2s ease;
+}
+
+.ai-diff-block.focused .ai-highlight-added,
+.ai-diff-block.focused .ai-highlight-removed {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+  border-color: rgba(59, 130, 246, 0.6);
+}
+
+/* Ensure proper stacking and transitions */
+.ai-diff-block .ai-highlight-added,
+.ai-diff-block .ai-highlight-removed {
+  transition: all 0.2s ease;
 }
 
 .page-content img {
