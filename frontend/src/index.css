@@ -1,5 +1,10 @@
 /* index.css */
 
+/* HTML and General Reset & Dark Theme */
+html {
+  overflow-x: hidden; /* Prevent horizontal scrollbar at root level */
+}
+
 /* General Reset & Dark Theme */
 body {
   margin: 0;
@@ -8,6 +13,7 @@ body {
   background-color: #202020;
   color: #f1f1f1;
   height: 100vh;
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
 }
 
 /* Custom text selection color */
@@ -89,6 +95,7 @@ body {
   background-color: #202020;
   min-height: 100vh;
   margin: 0 auto;
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
 }
 
 /* Document Container */
@@ -595,14 +602,14 @@ pre {
 .editor-wrapper {
   width: 100%;
   max-width: 100%;
-  transition: margin-right 0.3s ease;
   display: block;
   box-sizing: border-box;
+  position: relative;
 }
 
 /* naman changes sidebar */
 .editor-wrapper.shifted {
-  transition: margin-right 0.3s ease;
+  /* Animation handled via inline transform style */
 }
 
 /* Popup AI minimal style */
@@ -755,6 +762,7 @@ pre {
   color: #888888;
   padding: 6px 30px 6px 10px; /* Adjusted padding for send button space */
   font-size: 1.5rem; /* Fixed font size - was 3rem! */
+  font-family: 'Inter', sans-serif;
   resize: none;
   outline: none;
   border-radius: 6px; /* Smaller border radius */
@@ -955,7 +963,7 @@ pre {
   outline: none;
   font-size: 1.1rem;
   line-height: 1.6;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Inter', sans-serif;
   word-wrap: break-word;
   white-space: pre-wrap;
   overflow: hidden; /* Hide overflow to match fixed page height */
@@ -2077,4 +2085,18 @@ pre {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
+}
+
+.ai-chat-output::-webkit-scrollbar {
+  width: 8px;
+}
+.ai-chat-output::-webkit-scrollbar-track {
+  background: transparent; /* Track background */
+}
+.ai-chat-output::-webkit-scrollbar-thumb {
+  background-color: #555; /* Thumb color */
+  border-radius: 4px;
+}
+.ai-chat-output::-webkit-scrollbar-thumb:hover {
+  background-color: #777; /* Thumb hover color */
 }

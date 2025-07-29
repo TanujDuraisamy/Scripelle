@@ -2846,9 +2846,10 @@ const basicCommands = [
     className={`editor-wrapper ${isSidebarVisible ? "shifted" : ""}`}
     id="editorWrapper"
     style={{
-      // naman changes sidebar - Fixed positioning to keep content centered when sidebar is closed
-      marginRight: isSidebarVisible ? `${sidebarWidth / 4}px` : '0px',
-      transition: 'margin-right 0.3s ease'
+      // naman changes sidebar - Animate content shift when sidebar opens/closes
+      transform: isSidebarVisible ? `translateX(-${Math.min(sidebarWidth / 6, 80)}px)` : 'translateX(0px)',
+      transition: 'transform 0.3s ease',
+      width: '100%'
     }}
   >
     <div className="document-container">
