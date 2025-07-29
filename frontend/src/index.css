@@ -943,6 +943,91 @@ pre {
   color: #f1f1f1;
 }
 
+/* AI Content Diff Highlighting */
+.ai-highlight-added {
+  background-color: rgba(34, 197, 94, 0.2); /* Green background with transparency */
+  border-radius: 3px;
+  padding: 1px 2px;
+  margin: 0 1px;
+  animation: highlightFadeIn 0.5s ease-in-out;
+  position: relative;
+}
+
+.ai-highlight-added::before {
+  content: '';
+  position: absolute;
+  left: -3px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: #22c55e; /* Solid green left border */
+  border-radius: 1px;
+}
+
+.ai-highlight-removed {
+  background-color: rgba(239, 68, 68, 0.2); /* Red background with transparency */
+  color: #f87171; /* Lighter red text */
+  text-decoration: line-through;
+  border-radius: 3px;
+  padding: 1px 2px;
+  margin: 0 1px;
+  animation: highlightFadeIn 0.5s ease-in-out;
+  position: relative;
+}
+
+.ai-highlight-removed::before {
+  content: '';
+  position: absolute;
+  left: -3px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: #ef4444; /* Solid red left border */
+  border-radius: 1px;
+}
+
+/* Subtle animation for highlight appearance */
+@keyframes highlightFadeIn {
+  from {
+    background-color: transparent;
+    transform: scale(0.98);
+  }
+  to {
+    background-color: inherit;
+    transform: scale(1);
+  }
+}
+
+/* Hover effects for better UX */
+.ai-highlight-added:hover {
+  background-color: rgba(34, 197, 94, 0.3);
+}
+
+.ai-highlight-removed:hover {
+  background-color: rgba(239, 68, 68, 0.3);
+}
+
+/* Container for diff highlights with toggle capability */
+.ai-diff-container {
+  position: relative;
+}
+
+.ai-diff-container.highlights-hidden .ai-highlight-added,
+.ai-diff-container.highlights-hidden .ai-highlight-removed {
+  background-color: transparent;
+  animation: none;
+}
+
+.ai-diff-container.highlights-hidden .ai-highlight-added::before,
+.ai-diff-container.highlights-hidden .ai-highlight-removed::before {
+  display: none;
+}
+
+.ai-diff-container.highlights-hidden .ai-highlight-removed {
+  text-decoration: none;
+  color: inherit;
+}
+
 .page-content img {
   max-width: 100%;
   height: auto;

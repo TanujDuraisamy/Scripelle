@@ -206,10 +206,19 @@ const INLINE_COMMANDS = [
       { icon: <AlignRight size={14} />, label: "Right", command: "justifyRight" },
       { icon: <AlignJustify size={14} />, label: "Justify", command: "justifyFull" }
     ]
+  },
+  {
+    icon: <span style={{ fontSize: '14px', fontWeight: 'bold' }}>AI</span>,
+    label: "AI Changes",
+    type: "dropdown",
+    options: [
+      { icon: <span style={{ fontSize: '12px' }}>👁️</span>, label: "Toggle Changes", command: "toggleDiffHighlights" },
+      { icon: <span style={{ fontSize: '12px' }}>✅</span>, label: "Accept All Changes", command: "acceptAllDiffChanges" }
+    ]
   }
 ];
 
-const Page = React.memo(({ page, onInput, onKeyDown, onFocus, editorRef, onImmediateInput, onKeyUp, onTitleClick, skipNextInputHandling, onDragOver, onDragEnter, onDragLeave, onDrop, onPaste }) => {
+const Page = React.memo(({ page, onInput, onKeyDown, onFocus, editorRef, onImmediateInput, onKeyUp, onTitleClick, skipNextInputHandling, onDragOver, onDragEnter, onDragLeave, onDrop, onPaste, diffHighlightsVisible }) => {
   const contentRef = useRef(null);
   const debounceTimeout = useRef(null);
 
@@ -302,7 +311,7 @@ const Page = React.memo(({ page, onInput, onKeyDown, onFocus, editorRef, onImmed
             editorRef.current = el;
           }
         }}
-        className="page-content"
+        className={`page-content ${!diffHighlightsVisible ? 'highlights-hidden' : ''}`}
         contentEditable
         onKeyDown={e => onKeyDown(e, page.id)}
         onInput={handleInput}
@@ -354,6 +363,9 @@ const App = () => {
   ]);
   const [currentPageId, setCurrentPageId] = useState(1);
   const [messages, setMessages] = useState([]);
+  
+  // State for managing diff highlights visibility
+  const [diffHighlightsVisible, setDiffHighlightsVisible] = useState(true);
   const [showAlignDropdown, setShowAlignDropdown] = useState(false);
   const [documentVersions, setDocumentVersions] = useState([]);
   const [showTimeline, setShowTimeline] = useState(false);
@@ -440,6 +452,68 @@ const App = () => {
     return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
+  // AI Content Diff Highlighting System
+  // This system provides visual feedback for AI-generated content changes:
+  // - Green highlights (ai-highlight-added) for new content added by AI
+  // - Red highlights with strikethrough (ai-highlight-removed) for content replaced by AI
+  // - Toggle functionality to show/hide highlights
+  // - Accept all changes functionality to clear all highlights
+  const wrapContentWithAIHighlight = (content, type = 'added') => {
+    const className = type === 'added' ? 'ai-highlight-added' : 'ai-highlight-removed';
+    
+    // Handle empty or whitespace-only content
+    if (!content || content.trim() === '') {
+      return content;
+    }
+    
+    // For simple text content, just wrap it
+    if (!content.includes('<br>') && !content.includes('<')) {
+      return `<span class="${className}">${content}</span>`;
+    }
+    
+    // For content with HTML/line breaks, wrap the entire content
+    // This ensures the highlighting works across multiple lines
+    return `<span class="${className}">${content}</span>`;
+  };
+
+  const appendContentWithDiff = (currentContent, newContent, showAsAddition = true) => {
+    const highlightedContent = wrapContentWithAIHighlight(newContent, showAsAddition ? 'added' : 'removed');
+    
+    // If there's existing content, add a line break before the new content
+    if (currentContent && currentContent.trim() !== '') {
+      return currentContent + '<br>' + highlightedContent;
+    }
+    return highlightedContent;
+  };
+
+  const replaceContentWithDiff = (originalContent, newContent) => {
+    // Show original content as removed and new content as added
+    const removedContent = wrapContentWithAIHighlight(originalContent, 'removed');
+    const addedContent = wrapContentWithAIHighlight(newContent, 'added');
+    
+    return removedContent + '<br>' + addedContent;
+  };
+
+  const clearAIHighlights = (content) => {
+    // Remove AI highlight classes from content
+    return content
+      .replace(/<span class="ai-highlight-added">/g, '')
+      .replace(/<span class="ai-highlight-removed">/g, '')
+      .replace(/<\/span>/g, '');
+  };
+
+  const toggleDiffHighlights = () => {
+    setDiffHighlightsVisible(!diffHighlightsVisible);
+  };
+
+  const acceptAllDiffChanges = () => {
+    // Clear all AI highlights from all pages
+    setPages(prev => prev.map(page => ({
+      ...page,
+      content: clearAIHighlights(page.content)
+    })));
+  };
+
   const handleSidebarAIQuery = async (userPrompt) => {
     // Add user message to chat
     setMessages(prev => [
@@ -500,10 +574,19 @@ const App = () => {
           mainContent = (parts[1] || '').trim();
         }
         if (target === "document") {
-          // Insert only mainContent into the document
-          setPages(prev => prev.map(page =>
-            page.id === currentPageId ? { ...page, content: mainContent.replace(/\n/g, '<br>') } : page
-          ));
+          // Insert only mainContent into the document with diff highlighting
+          setPages(prev => prev.map(page => {
+            if (page.id === currentPageId) {
+              const currentContent = page.content;
+              const newContentWithBreaks = mainContent.replace(/\n/g, '<br>');
+              
+              // Use appendContentWithDiff to add highlighted content
+              const updatedContent = appendContentWithDiff(currentContent, newContentWithBreaks, true);
+              
+              return { ...page, content: updatedContent };
+            }
+            return page;
+          }));
           // If there was a lead-in, show it in the chat
           if (leadIn) {
             setMessages(prev => [
@@ -677,6 +760,17 @@ const App = () => {
       }
       setInlineToolbarPos(null); // Hide toolbar after command
       setShowMenu(false); // Close slash menu when code block is selected
+      return;
+    }
+
+    // Handle AI diff highlighting commands
+    if (cmd.command === "toggleDiffHighlights") {
+      toggleDiffHighlights();
+      return;
+    }
+
+    if (cmd.command === "acceptAllDiffChanges") {
+      acceptAllDiffChanges();
       return;
     }
 
@@ -881,24 +975,25 @@ const handlePopupSubmit = async () => {
   }
 
   try {
-      const payload = { contents: effectivePayloadContents };
-      const apiKey = ""; // Your API Key remains here
-      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+      // Convert Gemini format to standard messages format for backend
+      const messages = effectivePayloadContents.map(item => ({
+        role: item.role === 'model' ? 'assistant' : item.role,
+        content: item.parts[0].text
+      }));
 
-      const response = await fetch(apiUrl, {
+      const response = await fetch('http://localhost:5000/api/v1/chat/deepseek', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({ messages })
       });
 
 
 
       const result = await response.json();
       let aiResponseText = "No response from AI.";
-      if (result.candidates && result.candidates.length > 0 &&
-          result.candidates[0].content && result.candidates[0].content.parts &&
-          result.candidates[0].content.parts.length > 0) {
-          aiResponseText = result.candidates[0].content.parts[0].text;
+      if (result.choices && result.choices.length > 0 &&
+          result.choices[0].message && result.choices[0].message.content) {
+          aiResponseText = result.choices[0].message.content;
       }
 
       // Replace "Thinking..." with AI response in the editor
@@ -915,9 +1010,20 @@ const handlePopupSubmit = async () => {
       // Find the parent element of tempTextNode (which was inserted where the selection was)
       const parentElement = tempTextNode.parentNode;
       if (parentElement && parentElement.contains(tempTextNode)) {
-        // Replace the tempTextNode with the AI response
+        // Replace the tempTextNode with the AI response with diff highlighting
         const aiResponseHtml = aiResponseText.replace(/\n/g, '<br>'); // Convert newlines to <br> for HTML
-        const fragment = document.createRange().createContextualFragment(aiResponseHtml);
+        
+        // Create highlighted content showing the replacement
+        let highlightedContent;
+        if (originalSelectedText && originalSelectedText.trim() !== '') {
+          // Show original text as removed and new text as added
+          highlightedContent = replaceContentWithDiff(originalSelectedText, aiResponseHtml);
+        } else {
+          // Just show new content as added
+          highlightedContent = wrapContentWithAIHighlight(aiResponseHtml, 'added');
+        }
+        
+        const fragment = document.createRange().createContextualFragment(highlightedContent);
         parentElement.replaceChild(fragment, tempTextNode);
       }
 
@@ -2201,6 +2307,7 @@ const basicCommands = [
           onDrop={handleDrop}
           onPaste={handlePaste}
           editorRef={page.id === 1 ? editorRef : null}
+          diffHighlightsVisible={diffHighlightsVisible}
         />
       ))}
     </div>
