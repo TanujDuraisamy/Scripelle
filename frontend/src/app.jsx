@@ -2700,6 +2700,27 @@ const basicCommands = [
     className="file-name-input"
     value={fileName}
     onChange={(e) => setFileName(e.target.value)}
+
+    onKeyDown={(e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+    
+        // Stronger delay to outlast React updates or re-renders
+        setTimeout(() => {
+          if (contentRef.current) {
+            contentRef.current.focus();
+          // Optional: manually place cursor at the end
+            const range = document.createRange();
+            const sel = window.getSelection();
+            range.selectNodeContents(contentRef.current);
+            range.collapse(false); // move cursor to end
+            sel.removeAllRanges();
+            sel.addRange(range);
+      }
+    }, 10); // try increasing to 100ms
+      }
+    }}
+    
   />
   <button className="timeline-button" onClick={() => setShowTimeline(true)} title="Document History">
     <History size={20} />
