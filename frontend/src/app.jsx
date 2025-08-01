@@ -333,6 +333,8 @@ const Page = React.memo(({ page, onInput, onKeyDown, onFocus, editorRef, onImmed
 const App = () => {
   const editorRef = useRef(null);
   const aiInputRef = useRef(null);
+  // Remember caret position when opening sidebar
+  const sidebarCaretRangeRef = useRef(null);
   const imageInputRef = useRef(null);
   const selectedRef = useRef(null);
   const selectedTextRef = useRef("");
@@ -500,27 +502,60 @@ const App = () => {
     `;
   };
 
+  const prependContentWithDiff = (currentContent, newContent) => {
+    const diffBlock = createDiffBlock(newContent, 'added');
+    
+    // If page is empty or just has a title, create the body structure
+    if (!currentContent.includes('document-body')) {
+      return currentContent + '<div class="document-body"><div class="content-flow">' + diffBlock + '</div></div>';
+    }
+
+    // If body exists, find it and prepend the new content
+    const bodyStartIndex = currentContent.indexOf('<div class="document-body">');
+    if (bodyStartIndex !== -1) {
+      const openingTag = '<div class="document-body">';
+      const insertPosition = bodyStartIndex + openingTag.length;
+      const newFlow = '<div class="content-flow">' + diffBlock + '</div>';
+      return currentContent.slice(0, insertPosition) + newFlow + currentContent.slice(insertPosition);
+    }
+    
+    // Fallback: append if body structure is weird
+    return appendContentWithDiff(currentContent, newContent, true);
+  };
+
   const appendContentWithDiff = (currentContent, newContent, showAsAddition = true) => {
     const diffBlock = createDiffBlock(newContent, showAsAddition ? 'added' : 'removed');
     
     // If there's existing content, add the new content properly
     if (currentContent && currentContent.trim() !== '') {
-      // Check if the current content is just an empty centered H1
-      if (currentContent.includes('<h1 style="text-align: center;"><br></h1>')) {
-        // Insert content after the title, ensuring it's outside the H1
+      // Check if the current content is just an empty centered H1 (title section)
+      if (
+        currentContent.includes('<h1 style="text-align: center;">') && 
+        !currentContent.includes('document-body')
+      ) 
+      {
+        // Insert content in body section after the title, maintaining separation
         return currentContent + '<div class="document-body"><div class="content-flow">' + diffBlock + '</div></div>';
       }
-      // For other content, check if we need to wrap it
-      if (!currentContent.includes('document-body')) {
-        return currentContent + '<div class="document-body"><div class="content-flow">' + diffBlock + '</div></div>';
+      // For pages that already have body content
+      if (currentContent.includes('document-body')) {
+        // Find the last closing tags and insert before them
+        const lastContentFlowIndex = currentContent.lastIndexOf('</div></div>');
+        if (lastContentFlowIndex !== -1) {
+          // Insert new content flow within the existing document body
+          return currentContent.substring(0, lastContentFlowIndex) + 
+                 '<div class="content-flow">' + diffBlock + '</div>' + 
+                 currentContent.substring(lastContentFlowIndex);
+        } else {
+          // Fallback: append at the end
+          return currentContent + '<div class="content-flow">' + diffBlock + '</div>';
+        }
       } else {
-        // Append to existing document body
-        return currentContent.replace(
-          '</div></div>',
-          '<div class="content-flow">' + diffBlock + '</div></div></div>'
-        );
+        // For pages without body structure, create it
+        return '<div class="document-body"><div class="content-flow">' + diffBlock + '</div></div>' + currentContent;
       }
     }
+    // For empty pages, create body section with content
     return '<div class="document-body"><div class="content-flow">' + diffBlock + '</div></div>';
   };
 
@@ -615,7 +650,7 @@ const App = () => {
           // For added content, extract the text from ai-highlight-added spans
           const addedSpans = diffBlock.querySelectorAll('.ai-highlight-added');
           if (addedSpans.length > 0) {
-            return Array.from(addedSpans).map(span => span.textContent).join('');
+            return Array.from(addedSpans).map(span => span.innerHTML).join('');
           }
           
           // Fallback: return the text content without HTML
@@ -764,6 +799,12 @@ const App = () => {
           mainContent = (parts[1] || '').trim();
         }
         if (target === "document") {
+          // Restore caret position saved when sidebar was opened
+          if (sidebarCaretRangeRef.current) {
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(sidebarCaretRangeRef.current);
+          }
           // Insert only mainContent into the document with diff highlighting
           setPages(prev => prev.map(page => {
             if (page.id === currentPageId) {
@@ -786,63 +827,8 @@ const App = () => {
                 return meaningfulText.length > 0;
               };
               
-              // Smart content insertion - place at cursor position or end of content
-              let updatedContent;
-              const currentPageElement = document.getElementById(`page-${currentPageId}`);
-              const selection = window.getSelection();
-              
-              // If page has no substantial content, always insert after title (in red circle area)
-              if (!hasSubstantialContent()) {
-                // Force insertion after title for empty pages
-                const diffBlock = createDiffBlock(newContentWithBreaks, 'added');
-                
-                // Check if content is just an empty title
-                if (currentContent.includes('<h1 style="text-align: center;"><br></h1>') || 
-                    currentContent.includes('<h1') && !currentContent.includes('document-body')) {
-                  // Insert right after the title
-                  updatedContent = currentContent + '<div class="document-body"><div class="content-flow">' + diffBlock + '</div></div>';
-                } else {
-                  // Fallback for other empty content scenarios
-                  updatedContent = appendContentWithDiff(currentContent, newContentWithBreaks, true);
-                }
-              } else if (currentPageElement && selection.rangeCount > 0 && 
-                  currentPageElement.contains(selection.anchorNode)) {
-                // Insert at cursor position, but ensure it's outside the title
-                const range = selection.getRangeAt(0);
-                let insertionPoint = range.startContainer;
-                
-                // Check if we're inside an H1 - if so, move outside
-                while (insertionPoint && insertionPoint !== currentPageElement) {
-                  if (insertionPoint.nodeName === 'H1') {
-                    // Move insertion point after the H1
-                    range.setStartAfter(insertionPoint);
-                    range.collapse(true);
-                    break;
-                  }
-                  insertionPoint = insertionPoint.parentNode;
-                }
-                
-                const diffBlock = createDiffBlock(newContentWithBreaks, 'added');
-                
-                // Create wrapper divs for proper structure
-                const documentBody = document.createElement('div');
-                documentBody.className = 'document-body';
-                
-                const contentFlow = document.createElement('div');
-                contentFlow.className = 'content-flow';
-                contentFlow.innerHTML = diffBlock;
-                
-                documentBody.appendChild(contentFlow);
-                
-                range.collapse(false); // Move to end of selection
-                range.insertNode(documentBody);
-                
-                // Update the page content with the new DOM
-                updatedContent = currentPageElement.innerHTML;
-              } else {
-                // Fallback to append method
-                updatedContent = appendContentWithDiff(currentContent, newContentWithBreaks, true);
-              }
+              // Always prepend new content to the top of the document body
+              const updatedContent = prependContentWithDiff(currentContent, newContentWithBreaks);
               
               return { ...page, content: updatedContent };
             }
@@ -852,14 +838,11 @@ const App = () => {
           if (leadIn) {
             setMessages(prev => [
               ...prev.slice(0, -1),
-              { role: "assistant", content: leadIn, timestamp: getTimestamp() },
-              { role: "assistant", content: "Content inserted into document.", timestamp: getTimestamp() }
+              { role: "assistant", content: leadIn, timestamp: getTimestamp() }
             ]);
           } else {
-            setMessages(prev => [
-              ...prev.slice(0, -1),
-              { role: "assistant", content: "Content inserted into document.", timestamp: getTimestamp() }
-            ]);
+            // Remove the "Thinking..." message without adding a replacement
+            setMessages(prev => prev.slice(0, -1));
           }
         } else {
           // Sidebar response as chat
@@ -1808,8 +1791,15 @@ useEffect(() => {
   return () => window.removeEventListener('keydown', toggleSidebar);
 }, []);
 
-// Auto-focus the input field when sidebar becomes visible
+// Capture caret position and auto-focus the input field when sidebar becomes visible
 useEffect(() => {
+  if (isSidebarVisible) {
+    // Save the current caret position (selection range) before focus shifts away
+    const sel = window.getSelection();
+    if (sel && sel.rangeCount > 0) {
+      sidebarCaretRangeRef.current = sel.getRangeAt(0).cloneRange();
+    }
+  }
   if (isSidebarVisible && aiInputRef.current) {
     // Small delay to ensure the sidebar animation is complete
     setTimeout(() => {
