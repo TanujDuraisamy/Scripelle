@@ -4,9 +4,11 @@ import { Bold, Italic, Underline, Strikethrough, Heading1, List, ListOrdered, Al
 import {DocumentTextIcon,ArrowsUpDownIcon,H1Icon,AdjustmentsHorizontalIcon} from '@heroicons/react/24/outline';
 import { extractTargetTag, cleanResponse, processAIResponse, buildPrompt } from "./utils/aiTargeting";
 import { useFuzzySearch } from './utils/useFuzzySearch.js';
-import GoogleDocsList from "./GoogleDocsList";
+// TODO: Restore Google Docs import functionality - removed temporarily
+// import GoogleDocsList from "./GoogleDocsList";
 import LoginButton from "./LoginButton";
-import GoogleDocsWrapper from "./GoogleDocsWrapper";
+// TODO: Restore Google Docs import functionality - removed temporarily
+// import GoogleDocsWrapper from "./GoogleDocsWrapper";
 
 const MASTER_PROMPT = `
 You are an intelligent AI writing and thinking assistant, operating exclusively inside Scripelle — a zero-friction, citation-capable, idea-to-text word processor.
@@ -377,6 +379,23 @@ const App = () => {
 
   // New state for image resizing
   const [resizingImage, setResizingImage] = useState(null);
+
+  // TODO: Restore Google Docs import functionality - removed temporarily
+  // Handle imported document
+  // useEffect(() => {
+  //   if (importedDoc && importedDoc.plainText) {
+  //     console.log("Setting imported document content:", importedDoc.plainText);
+  //     // Set the document title from the imported doc
+  //     if (importedDoc.fullDoc && importedDoc.fullDoc.title) {
+  //       setFileName(importedDoc.fullDoc.title);
+  //     }
+  //     
+  //     // Convert plain text to HTML and set as page content
+  //     const htmlContent = importedDoc.plainText.replace(/\n/g, '<br>');
+  //     setPages([{ id: 1, content: htmlContent, isNew: false }]);
+  //     setCurrentPageId(1);
+  //   }
+  // }, [importedDoc]);
 
   // Helper to wrap selected text with a span for visual highlight
   const wrapSelectionWithHighlight = React.useCallback((range) => {
@@ -958,31 +977,32 @@ const handlePopupSubmit = async () => {
 };
 
 
-  const handleOpenFile = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  // TODO: Restore file import functionality - removed temporarily
+  // const handleOpenFile = (e) => {
+  //   const file = e.target.files[0];
+  //   if (!file) return;
 
-    const reader = new FileReader();
-    const ext = file.name.split(".").pop().toLowerCase();
+  //   const reader = new FileReader();
+  //   const ext = file.name.split(".").pop().toLowerCase();
 
-    if (ext === "txt") {
-      reader.onload = () => {
-        setPages([{ id: 1, content: reader.result.replace(/\n/g, '<br>') }]);
-        setCurrentPageId(1);
-      };
-      reader.readAsText(file);
-    } else if (ext === "doc" || ext === "docx" || ext === "html") {
-      reader.onload = () => {
-        setPages([{ id: 1, content: reader.result }]);
-        setCurrentPageId(1);
-      };
-      reader.readAsText(file);
-    } else if (ext === "pdf") {
-      alert("PDF loading is not supported directly. Please copy/paste its contents manually.");
-    } else {
-      alert("Unsupported file type.");
-    }
-  };
+  //   if (ext === "txt") {
+  //     reader.onload = () => {
+  //       setPages([{ id: 1, content: reader.result.replace(/\n/g, '<br>') }]);
+  //       setCurrentPageId(1);
+  //     };
+  //     reader.readAsText(file);
+  //   } else if (ext === "doc" || ext === "docx" || ext === "html") {
+  //     reader.onload = () => {
+  //       setPages([{ id: 1, content: reader.result }]);
+  //       setCurrentPageId(1);
+  //     };
+  //     reader.readAsText(file);
+  //   } else if (ext === "pdf") {
+  //     alert("PDF loading is not supported directly. Please copy/paste its contents manually.");
+  //   } else {
+  //     alert("Unsupported file type.");
+  //   }
+  // };
 
   const insertImageIntoEditor = (imageUrl, file) => {
     const sel = window.getSelection();
@@ -2008,7 +2028,8 @@ const basicCommands = [
   { title: "Select All", description: "Select all content on the page.", key: "Ctrl + A" },
   { title: "Save as PDF", description: "Save current document as PDF.", key: "File Menu" },
   { title: "Save as DOC", description: "Save current document as DOC.", key: "File Menu" },
-  { title: "Open File", description: "Open a .txt, .doc, or .docx file.", key: "File Menu" },
+  // TODO: Restore file import functionality - removed temporarily
+// { title: "Open File", description: "Open a .txt, .doc, or .docx file.", key: "File Menu" },
   { title: "Heading 1", description: "Apply Heading 1 style.", key: "Slash Menu / Format Menu" },
   { title: "Paragraph", description: "Apply Paragraph style.", key: "Slash Menu / Format Menu" },
   { title: "Bullet List", description: "Create an unordered list.", key: "Slash Menu / Inline Toolbar" },
@@ -2032,20 +2053,14 @@ const basicCommands = [
         <div className="app-title" align="centre">Scripelle</div>
         <input
           type="text"
+          className="file-name-input"
           value={fileName}
           onChange={(e) => setFileName(e.target.value)}
-          style={{
-            border: 'none',
-            background: 'transparent',
-            fontSize: '16px',
-            fontWeight: 'bold',
-            color: '#333',
-            flex: 1,
-            marginLeft: '16px'
-          }}
         />
         <div style={{ flex: 1 }} /> {/* Spacer to push buttons to the right */}
-        <GoogleDocsWrapper />
+        {/* TODO: Restore Google Docs import functionality - removed temporarily */}
+        {/* {importedDoc == null && <GoogleDocsWrapper />} */}
+        <LoginButton />
         <button className="timeline-button" onClick={() => setShowTimeline(true)} title="Document History">
           <History size={20} />
         </button>
@@ -2064,6 +2079,7 @@ const basicCommands = [
                   <div onMouseDown={() => document.execCommand("cut")}>Cut</div>
                   <div onMouseDown={handleSavePDF}>Save as PDF</div>
                   <div onMouseDown={handleSaveDOC}>Save as DOC</div>
+                  {/* TODO: Restore file import functionality - removed temporarily
                   <label style={{ cursor: "pointer", padding: "0.4rem 1rem", display: "block" }}>
                     Open File (.txt, .docx)
                     <input
@@ -2073,6 +2089,7 @@ const basicCommands = [
                       style={{ display: "none" }}
                     />
                   </label>
+                  */}
                 </>
               )}
               {menu === "Edit" && (

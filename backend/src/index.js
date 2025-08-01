@@ -12,6 +12,16 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// CORS MUST come FIRST - before any other middleware
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+}));
+
+app.use(express.json());
+
 app.use(session({
   secret: 'secret',
   resave: false,
@@ -24,13 +34,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-// CORS setup for frontend integration
-app.use(cors({
-  origin: 'http://localhost:5173', // Only allow your frontend
-  credentials: true                // Allow cookies to be sent
-}));
-app.use(express.json());
 
 app.use("/api/v1",router)
 

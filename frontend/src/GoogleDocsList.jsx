@@ -17,9 +17,7 @@ function extractPlainTextFromGoogleDoc(contentArray) {
   return text.trim();
 }
 
-const GoogleDocsList = React.memo(({ onDocImported }) => {
-  console.log("GoogleDocsList rendering"); // Debug log to track re-renders
-  
+const GoogleDocsList = ({ onDocImported }) => {
   const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -96,8 +94,6 @@ const GoogleDocsList = React.memo(({ onDocImported }) => {
       </ul>
     </div>
   );
-});
-
-GoogleDocsList.displayName = 'GoogleDocsList';
+};
 
 export default GoogleDocsList; 
