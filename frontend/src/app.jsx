@@ -534,38 +534,24 @@ const App = () => {
 
   const appendContentWithDiff = (currentContent, newContent, showAsAddition = true) => {
     const diffBlock = createDiffBlock(newContent, showAsAddition ? 'added' : 'removed');
-    
-    // If there's existing content, add the new content properly
-    if (currentContent && currentContent.trim() !== '') {
-      // Check if the current content is just an empty centered H1 (title section)
-      if (
-        currentContent.includes('<h1 style="text-align: center;">') && 
-        !currentContent.includes('document-body')
-      ) 
-      {
-        // Insert content in body section after the title, maintaining separation
-        return currentContent + '<div class="document-body"><div class="content-flow">' + diffBlock + '</div></div>';
-      }
-      // For pages that already have body content
-      if (currentContent.includes('document-body')) {
-        // Find the last closing tags and insert before them
-        const lastContentFlowIndex = currentContent.lastIndexOf('</div></div>');
-        if (lastContentFlowIndex !== -1) {
-          // Insert new content flow within the existing document body
-          return currentContent.substring(0, lastContentFlowIndex) + 
-                 '<div class="content-flow">' + diffBlock + '</div>' + 
-                 currentContent.substring(lastContentFlowIndex);
-        } else {
-          // Fallback: append at the end
-          return currentContent + '<div class="content-flow">' + diffBlock + '</div>';
-        }
-      } else {
-        // For pages without body structure, create it
-        return '<div class="document-body"><div class="content-flow">' + diffBlock + '</div></div>' + currentContent;
-      }
+    const newContentFlow = `<div class="content-flow">${diffBlock}</div>`;
+
+    // If there's no document-body yet, create it.
+    if (!currentContent.includes('document-body')) {
+      const h1EndIndex = currentContent.lastIndexOf('</h1>');
+      const insertionPoint = h1EndIndex !== -1 ? h1EndIndex + '</h1>'.length : currentContent.length;
+      const before = currentContent.slice(0, insertionPoint);
+      const after = currentContent.slice(insertionPoint);
+      return `${before}<div class="document-body">${newContentFlow}</div>${after}`;
     }
-    // For empty pages, create body section with content
-    return '<div class="document-body"><div class="content-flow">' + diffBlock + '</div></div>';
+
+    // If body exists, insert before its closing tag, assuming it's the last element.
+    if (currentContent.trim().endsWith('</div>')) {
+      return currentContent.replace(/<\/div>$/, `${newContentFlow}</div>`);
+    }
+
+    // Fallback for unusual structures.
+    return currentContent + newContentFlow;
   };
 
   const replaceContentWithDiff = (originalContent, newContent) => {
@@ -671,6 +657,9 @@ const App = () => {
     currentSelection.removeAllRanges();
     currentSelection.addRange(newRange);
 
+    // After accepting, update the sidebar caret ref to the new position
+    sidebarCaretRangeRef.current = newRange.cloneRange();
+
     setPages(prev => prev.map(page => {
       if (page.id === currentPageId) {
         return { ...page, content: editorElement.innerHTML };
@@ -734,6 +723,9 @@ const App = () => {
     currentSelection.removeAllRanges();
     currentSelection.addRange(newRange);
 
+    // After rejecting, update the sidebar caret ref to the new position
+    sidebarCaretRangeRef.current = newRange.cloneRange();
+
     setPages(prev => prev.map(page => {
       if (page.id === currentPageId) {
         return { ...page, content: editorElement.innerHTML };
@@ -784,6 +776,15 @@ const App = () => {
     };
   }, [acceptDiffChange, rejectDiffChange, focusDiffBlock]);
 
+  const removeAllDiffBlocks = () => {
+    const editorElement = editorRef.current;
+    if (editorElement) {
+      editorElement.querySelectorAll('.ai-diff-block').forEach(block => {
+        block.remove();
+      });
+    }
+  };
+
   const handleSidebarAIQuery = async (userPrompt) => {
     // Save current caret position just before sending the AI query
     const sel = window.getSelection();
@@ -792,17 +793,13 @@ const App = () => {
     }
 
     // Add user message to chat
+    // Add user message and "Thinking..." to chat in a single state update
     setMessages(prev => [
       ...prev,
-      { role: "user", content: userPrompt, timestamp: getTimestamp() }
-    ]);
-    setSidebarInput(""); // Clear input
-  
-    // Show "Thinking..." from assistant
-    setMessages(prev => [
-      ...prev,
+      { role: "user", content: userPrompt, timestamp: getTimestamp() },
       { role: "assistant", content: "Thinking...", timestamp: getTimestamp() }
     ]);
+    setSidebarInput(""); // Clear input
   
     // Get document text (strip HTML tags from current page)
     const currentPage = pages.find(p => p.id === currentPageId);
@@ -850,6 +847,7 @@ const App = () => {
           mainContent = (parts[1] || '').trim();
         }
         if (target === "document") {
+
           const newContentWithBreaks = mainContent.replace(/\n/g, '<br>');
           const diffBlockHtml = createDiffBlock(newContentWithBreaks, 'added');
 
@@ -909,6 +907,9 @@ const App = () => {
             newRange.collapse(false);
             currentSelection.removeAllRanges();
             currentSelection.addRange(newRange);
+
+            // Update the sidebar caret ref to the new position for subsequent insertions
+            sidebarCaretRangeRef.current = newRange.cloneRange();
 
             setPages(prev => prev.map(page => {
               if (page.id === currentPageId) {
@@ -2932,18 +2933,24 @@ const basicCommands = [
         </div>
       </div>
 
-     <div className="container">
-  <div 
-    // naman changes sidebar
-    className={`editor-wrapper ${isSidebarVisible ? "shifted" : ""}`}
-    id="editorWrapper"
-    style={{
-      // naman changes sidebar - Animate content shift when sidebar opens/closes
-      transform: isSidebarVisible ? `translateX(-${Math.min(sidebarWidth / 6, 80)}px)` : 'translateX(0px)',
-      transition: 'transform 0.3s ease',
-      width: '100%'
-    }}
-  >
+     <div
+       className="container"
+       style={{
+         marginRight: isSidebarVisible ? `${sidebarWidth}px` : '0px',
+         width: isSidebarVisible ? `calc(100% - ${sidebarWidth}px)` : '100%',
+         transition: 'margin-right 0.3s ease, width 0.3s ease'
+       }}
+     >
+ <div
+   // naman changes sidebar
+   className={`editor-wrapper ${isSidebarVisible ? "shifted" : ""}`}
+   id="editorWrapper"
+   style={{
+     // Removed transform as container now handles spacing
+     transition: 'width 0.3s ease', // Keep transition for width if needed
+     width: '100%' // Ensure it takes full width of its parent (the adjusted container)
+   }}
+ >
     <div className="document-container">
       {pages.map((page) => (
         <Page
