@@ -733,7 +733,7 @@ pre {
   display: flex;
   flex-direction: column;
   height: 100%; /* Take full height of sidebar */
-  padding: 1.2rem; /* Add overall padding for content inside */
+  overflow: hidden; /* Prevent content from spilling out */
   box-sizing: border-box;
 }
 
@@ -748,18 +748,44 @@ pre {
 
 .ai-chat-output {
   flex: 1; /* Allows it to grow and take available space */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
   color: #ddd;
   font-size: 0.95rem;
   white-space: pre-wrap;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding-top: 10px; /* Space from tabs */
-  padding-bottom: 10px; /* Space from input */
+  padding: 1rem;
+  scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+/* Custom scrollbar for chat output */
+.ai-chat-output::-webkit-scrollbar {
+  width: 10px;
+}
+
+.ai-chat-output::-webkit-scrollbar-track {
+  background: #0d1117; /* Very dark, almost black track */
+}
+
+.ai-chat-output::-webkit-scrollbar-thumb {
+  background-color: #30363d; /* Medium gray thumb */
+  border-radius: 6px; /* More rounded edges */
+  border: 2px solid #0d1117; /* Border to create padding effect */
+}
+
+.ai-chat-output::-webkit-scrollbar-thumb:hover {
+  background-color: #484f58; /* Lighter on hover */
+}
+
+.ai-chat-output::-webkit-scrollbar-button {
+  display: none; /* Hide arrow buttons */
 }
 
 /* Wrapper for input and send button, handles relative positioning */
 .ai-chat-input-wrapper {
+  flex-shrink: 0; /* Prevent input wrapper from shrinking */
   position: sticky;
   bottom: 0;
   display: flex;
@@ -851,6 +877,7 @@ pre {
 }
 
 .ai-chat-header {
+  flex-shrink: 0; /* Prevent header from shrinking */
   display: flex;
   justify-content: space-between;
   align-items: flex-start; /* Changed from center to flex-start */
@@ -2107,17 +2134,21 @@ pre {
 }
 
 .ai-sidebar::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 .ai-sidebar::-webkit-scrollbar-track {
-  background: #2c2c2c;
+  background: #0d1117; /* Very dark, almost black track */
 }
 .ai-sidebar::-webkit-scrollbar-thumb {
-  background-color: #555;
-  border-radius: 4px;
+  background-color: #30363d; /* Medium gray thumb */
+  border-radius: 6px; /* More rounded edges */
+  border: 2px solid #0d1117; /* Border to create padding effect */
 }
 .ai-sidebar::-webkit-scrollbar-thumb:hover {
-  background-color: #777;
+  background-color: #484f58; /* Lighter on hover */
+}
+.ai-sidebar::-webkit-scrollbar-button {
+  display: none; /* Hide arrow buttons */
 }
 
 .sign-in-btn {
