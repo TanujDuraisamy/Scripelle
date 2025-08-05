@@ -1,12 +1,15 @@
+import Page from "./Page.jsx";
 import React, { useRef, useState, useEffect } from "react";
-import "./index.css";
+import "../../index.css";
 import { Bold, Italic, Underline, Strikethrough, Heading1, List, ListOrdered, AlignLeft, Plus, X, Sparkles, ClipboardList, Text, ChevronUp, ChevronDown, AlignCenter, AlignRight, AlignJustify, Type, HelpCircle, Heading2, Quote, Code, Minus, Undo, Redo, History, ArrowUp, Trash2 } from "lucide-react"; // Import HelpCircle icon, plus new icons
 import {DocumentTextIcon,ArrowsUpDownIcon,H1Icon,AdjustmentsHorizontalIcon} from '@heroicons/react/24/outline';
-import { extractTargetTag, cleanResponse, processAIResponse, buildPrompt } from "./utils/aiTargeting";
-import { useFuzzySearch } from './utils/useFuzzySearch.js';
+import { extractTargetTag, cleanResponse, processAIResponse, buildPrompt } from "../../utils/aiTargeting";
+import { useFuzzySearch } from '../../utils/useFuzzySearch.js';
 // TODO: Restore Google Docs import functionality - removed temporarily
 // import GoogleDocsList from "./GoogleDocsList";
-import LoginButton from "./LoginButton";
+import LoginButton from "../../LoginButton";
+import Toolbar from "./Toolbar.jsx";
+import Sidebar from "./Sidebar.jsx";
 // TODO: Restore Google Docs import functionality - removed temporarily
 // import GoogleDocsWrapper from "./GoogleDocsWrapper";
 
@@ -222,117 +225,6 @@ const INLINE_COMMANDS = [
     ]
   }
 ];
-
-const Page = React.memo(({ page, onInput, onKeyDown, onFocus, editorRef, onImmediateInput, onKeyUp, onTitleClick, skipNextInputHandling, onDragOver, onDragEnter, onDragLeave, onDrop, onPaste, diffHighlightsVisible }) => {
-  const contentRef = useRef(null);
-  const debounceTimeout = useRef(null);
-
-  useEffect(() => {
-    if (contentRef.current && contentRef.current.innerHTML !== page.content) {
-      // Save current selection
-      const selection = window.getSelection();
-      const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
-      const currentOffset = range ? range.startOffset : 0;
-      const currentContainer = range ? range.startContainer : null;
- 
-      contentRef.current.innerHTML = page.content;
- 
-      // Restore selection if possible
-      if (currentContainer && contentRef.current.contains(currentContainer)) {
-let newRange = document.createRange();
-        newRange.setStart(currentContainer, Math.min(currentOffset, currentContainer.length));
-        newRange.collapse(true);
-        selection.removeAllRanges();
-        selection.addRange(newRange);
-      } else {
-        // If original container is no longer valid, set cursor.
-        let newRange = document.createRange();
-        const firstElement = contentRef.current.firstElementChild;
-
-        if (firstElement) {
-          // On initial load, this places the cursor inside the starting H1.
-          newRange.setStart(firstElement, 0);
-          newRange.collapse(true);
-        } else {
-          // Fallback for other cases where selection is lost.
-          newRange.selectNodeContents(contentRef.current);
-          newRange.collapse(false);
-        }
-       
-        selection.removeAllRanges();
-        selection.addRange(newRange);
-      }
-    }
-  }, [page.id, page.content]); // Re-render when page ID or content changes
-
-  const handleInput = (e) => {
-    // Skip input handling if flag is set (during Enter key operations)
-    if (skipNextInputHandling && skipNextInputHandling.current) {
-      return;
-    }
-    
-    const newContent = e.target.innerHTML;
-    
-    // Immediate actions
-    onImmediateInput(page.id);
-
-    // Debounced actions
-    if (debounceTimeout.current) {
-      clearTimeout(debounceTimeout.current);
-    }
-    debounceTimeout.current = setTimeout(() => {
-      onInput(page.id, newContent);
-    }, 300); // 300ms debounce delay
-  };
-
-  const handleClick = (e) => {
-    // Check if click was on or inside an H1 (title) element
-    let clickedElement = e.target;
-    let titleElement = null;
-    
-    // Traverse up to find if we clicked on an H1
-    while (clickedElement && clickedElement !== contentRef.current) {
-      if (clickedElement.nodeName === 'H1') {
-        titleElement = clickedElement;
-        break;
-      }
-      clickedElement = clickedElement.parentNode;
-    }
-    
-    // If we clicked on a title, use the custom positioning
-    if (titleElement && onTitleClick) {
-      e.preventDefault(); // Prevent default cursor positioning
-      onTitleClick(titleElement);
-    }
-  };
-
-  return (
-    <div className="document-page">
-      <div
-        id={`page-${page.id}`}
-        ref={el => {
-          contentRef.current = el;
-          if (editorRef) {
-            editorRef.current = el;
-          }
-        }}
-        className={`page-content ${!diffHighlightsVisible ? 'highlights-hidden' : ''}`}
-        contentEditable
-        onKeyDown={e => onKeyDown(e, page.id)}
-        onInput={handleInput}
-        onKeyUp={onKeyUp}
-        onClick={handleClick}
-        onDragOver={onDragOver}
-        onDragEnter={onDragEnter}
-        onDragLeave={onDragLeave}
-        onDrop={onDrop}
-        onPaste={onPaste}
-        suppressContentEditableWarning={true}
-        onFocus={() => onFocus(page.id)}
-      />
-    </div>
-  );
-});
 
 const App = () => {
   const editorRef = useRef(null);
@@ -2780,158 +2672,26 @@ const basicCommands = [
 
   return (
     <>
-      <div className="file-name-bar" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <div className="app-title" align="centre">Scripelle</div>
-        <input
-          type="text"
-          className="file-name-input"
-          value={fileName}
-          onChange={(e) => setFileName(e.target.value)}
-        />
-        <div style={{ flex: 1 }} /> {/* Spacer to push buttons to the right */}
-        {/* TODO: Restore Google Docs import functionality - removed temporarily */}
-        {/* {importedDoc == null && <GoogleDocsWrapper />} */}
-        <LoginButton />
-        <button className="timeline-button" onClick={() => setShowTimeline(true)} title="Document History">
-          <History size={20} />
-        </button>
-      </div>
+      <Toolbar
+        fileName={fileName}
+        setFileName={setFileName}
+        handleSavePDF={handleSavePDF}
+        handleSaveDOC={handleSaveDOC}
+        imageInputRef={imageInputRef}
+        setShowTimeline={setShowTimeline}
+      />
 
-  <div className="menubar-container">
-      <div className="menubar">
-        {["File", "Edit", "Format", "Tools"].map((menu, i) => (
-          <div className="menu-item" key={i}>
-            {menu}
-            <div className="dropdown">
-              {menu === "File" && (
-                <>
-                  <div onMouseDown={() => document.execCommand("selectAll")}>Select All</div>
-                  <div onMouseDown={() => document.execCommand("copy")}>Copy</div>
-                  <div onMouseDown={() => document.execCommand("cut")}>Cut</div>
-                  <div onMouseDown={handleSavePDF}>Save as PDF</div>
-                  <div onMouseDown={handleSaveDOC}>Save as DOC</div>
-                  {/* TODO: Restore file import functionality - removed temporarily
-                  <label style={{ cursor: "pointer", padding: "0.4rem 1rem", display: "block" }}>
-                    Open File (.txt, .docx)
-                    <input
-                      type="file"
-                      accept=".txt,.doc,.docx,.html,.pdf"
-                      onChange={handleOpenFile}
-                      style={{ display: "none" }}
-                    />
-                  </label>
-                  */}
-                </>
-              )}
-              {menu === "Edit" && (
-                <>
-                  <div onMouseDown={() => document.execCommand("undo")}>Undo</div>
-                  <div onMouseDown={() => document.execCommand("redo")}>Redo</div>
-                  <div onMouseDown={() => document.execCommand("delete")}>Delete</div>
-                  <div onMouseDown={(e) => { e.preventDefault(); imageInputRef.current.click(); }}>Insert Image</div>
-                  <div className="dropdown-separator"></div>
-                  <div onMouseDown={() => {
-                    const selectedImages = document.querySelectorAll('.resizable-image-wrapper.selected');
-                    selectedImages.forEach(img => img.remove());
-                  }}>Remove Selected Images</div>
-                </>
-              )}
-              {menu === "Format" && (
-                <>
-                  <div onMouseDown={() => document.execCommand("bold")}>Bold</div>
-                  <div onMouseDown={() => document.execCommand("italic")}>Italic</div>
-                  <div onMouseDown={() => document.execCommand("underline")}>Underline</div>
-                  <div onMouseDown={() => document.execCommand("formatBlock", false, "h1")}>Heading</div>
-                  <div onMouseDown={() => document.execCommand("formatBlock", false, "p")}>Paragraph</div>
-                </>
-              )}
-              {menu === "Tools" && (
-                <>
-                  <div onMouseDown={() => alert("Spell Check Coming Soon")}>Spelling & Grammar</div>
-                  <div onMouseDown={() => alert("Word Count Coming Soon")}>Word Count</div>
-                </>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-      </div>
-
-      
-      <div
-        className={`ai-sidebar ${isSidebarVisible ? "visible" : ""}`}
-        id="aiSidebar"
-        style={{
-          width: `${sidebarWidth}px`,
-          right: isSidebarVisible ? '0px' : `-${sidebarWidth + 100}px`// Determines how far the sidebar goes out of the screen
-        }}
-      >
-        <div
-          className="resize-handle"
-          onMouseDown={handleMouseDown}
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: '4px',
-            cursor: 'ew-resize',
-            backgroundColor: 'transparent',
-            zIndex: 10
-          }}
-        />
-        <div className="ai-chat-header">
-          <button className="new-chat-btn">New Chat</button>
-          <button
-            className="sidebar-close-btn"
-            aria-label="Close sidebar"
-            onClick={() => setIsSidebarVisible(false)}
-          >
-            <X size={20} />
-          </button>
-        </div>
-        <div className="ai-chat-output">
-          {messages.length === 0 ? (
-            <div className="chat-placeholder-container">
-              <div className="ask-something-placeholder">Ask something...</div>
-            </div>
-          ) : (
-            <div className="chat-log">
-              {messages.map((msg, idx) => (
-                <div key={idx} className={`chat-bubble ${msg.role}`}>
-                  <div className="chat-content">{msg.content}</div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="ai-chat-input-wrapper">
-          <textarea
-            ref={aiInputRef}
-            className="ai-chat-input"
-            placeholder="Plan, search, or ask..."
-            value={sidebarInput}
-            onChange={(e) => setSidebarInput(e.target.value)}
-            onKeyDown={async (e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                const userPrompt = sidebarInput.trim();
-                if (userPrompt) {
-                  await handleSidebarAIQuery(userPrompt);
-                }
-              }
-            }}
-          />
-          <button className="ai-send-button circular-icon-button" onClick={async () => {
-              const userPrompt = sidebarInput.trim();
-              if (userPrompt) {
-                await handleSidebarAIQuery(userPrompt);
-              }
-          }} title="Send">
-            <ArrowUp size={16} />
-          </button>
-        </div>
-      </div>
+      <Sidebar
+        isVisible={isSidebarVisible}
+        sidebarWidth={sidebarWidth}
+        handleMouseDown={handleMouseDown}
+        setIsVisible={setIsSidebarVisible}
+        messages={messages}
+        sidebarInput={sidebarInput}
+        setSidebarInput={setSidebarInput}
+        handleSidebarAIQuery={handleSidebarAIQuery}
+        aiInputRef={aiInputRef}
+      />
 
      <div
        className="container"

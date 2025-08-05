@@ -1,0 +1,10 @@
+/* Placeholder styles for DocumentPage. Add layout rules here. */
+
+.doc-layout {
+  height: 100%;
+}
+
+.doc-body {
+  display: flex;
+  flex: 1;
+}
