@@ -1985,33 +1985,44 @@ const createNewPage = () => {
   return newPageId;
 };
 
-const checkAndHandlePageOverflow = (pageId) => {
+const checkAndHandlePageOverflow = (pageId, isFromEnterKey = false) => {
   const pageElement = document.getElementById(`page-${pageId}`);
   if (!pageElement) return;
 
-  // Get the exact dimensions
-  const pageContainer = pageElement.parentElement; // .document-page
-  const containerRect = pageContainer.getBoundingClientRect();
-  const elementRect = pageElement.getBoundingClientRect();
+  // Get the page container (.document-page) 
+  const pageContainer = pageElement.parentElement;
+  if (!pageContainer) return;
   
-  // Check if content overflows the container
-  const overflowsVertically = elementRect.height > containerRect.height;
+  // Use more reliable overflow detection
+  const isOverflowing = pageElement.scrollHeight > pageElement.clientHeight;
   
-  if (overflowsVertically) {
+  if (isOverflowing) {
     // Check if we're the last page in the document
     const currentPageIndex = pages.findIndex(p => p.id === pageId);
     const isLastPage = currentPageIndex === pages.length - 1;
     
     if (isLastPage) {
+      // Save current cursor position before page manipulation
+      const selection = window.getSelection();
+      const savedRange = selection.rangeCount > 0 ? selection.getRangeAt(0).cloneRange() : null;
+      const cursorInCurrentPage = savedRange && pageElement.contains(savedRange.startContainer);
+      
+      // Calculate available height (accounting for padding)
+      const availableHeight = pageContainer.clientHeight;
+      
       // Extract overflow content
-      const overflowContent = extractOverflowContentSimple(pageElement, containerRect.height);
+      const overflowContent = extractOverflowContentSimple(pageElement, availableHeight);
       
       if (overflowContent.trim()) {
+        // Set flag to indicate page modification in progress
+        window.isPageBeingModified = true;
+        isPageBeingModified = true;
+        
         // Create new page with overflow content
         const newPageId = (pages.length > 0 ? Math.max(...pages.map(p => p.id)) : 0) + 1;
         
         // Remove overflow from current page first
-        removeOverflowContentSimple(pageElement, containerRect.height);
+        removeOverflowContentSimple(pageElement, availableHeight);
         
         // Update current page and create new page
         const updatedCurrentContent = pageElement.innerHTML;
@@ -2022,6 +2033,69 @@ const checkAndHandlePageOverflow = (pageId) => {
           ),
           { id: newPageId, content: overflowContent, isNew: false }
         ]);
+        
+        // For Enter key presses at the end of page, provide immediate smooth transition
+        const focusDelay = isFromEnterKey ? 25 : 50;
+        
+        // Focus the new page with optimized timing
+        setTimeout(() => {
+          const newPageElement = document.getElementById(`page-${newPageId}`);
+          if (newPageElement) {
+            // Add entering animation class for smooth appearance
+            const newPageContainer = newPageElement.parentElement;
+            if (newPageContainer && isFromEnterKey) {
+              newPageContainer.classList.add('page-entering');
+              // Remove the class after animation completes
+              setTimeout(() => {
+                newPageContainer.classList.remove('page-entering');
+              }, 300);
+            }
+            
+            newPageElement.focus();
+            setCurrentPageId(newPageId);
+            
+            // Position cursor at the beginning of the new page with smooth transition
+            const range = document.createRange();
+            const selection = window.getSelection();
+            
+            // Find the first editable content in the new page
+            const firstElement = newPageElement.firstElementChild;
+            if (firstElement) {
+              // Try to find the first text node within the first element
+              const firstTextNode = findFirstTextNode(firstElement);
+              if (firstTextNode) {
+                range.setStart(firstTextNode, 0);
+              } else {
+                // If no text node, position at the start of the first element
+                range.setStart(firstElement, 0);
+              }
+            } else {
+              // Fallback: position at the start of the page element
+              range.setStart(newPageElement, 0);
+            }
+            
+            range.collapse(true);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            
+            // Smooth scroll to the new page if it's from Enter key
+            if (isFromEnterKey) {
+              if (newPageContainer) {
+                newPageContainer.scrollIntoView({ 
+                  behavior: 'smooth', 
+                  block: 'start',
+                  inline: 'nearest'
+                });
+              }
+            }
+            
+            // Clear the page modification flag after ensuring all operations complete
+            setTimeout(() => {
+              window.isPageBeingModified = false;
+              isPageBeingModified = false;
+            }, 200); // Longer delay to ensure page content update completes
+          }
+        }, focusDelay);
       }
     }
   }
@@ -2031,22 +2105,27 @@ const extractOverflowContentSimple = (pageElement, maxHeight) => {
   const children = Array.from(pageElement.children);
   if (children.length === 0) return '';
   
-  // Find the last element that fits completely
-  let fittingElements = [];
-  let overflowElements = [];
-  let totalHeight = 0;
+  // Calculate the actual content height vs available space
+  const contentRect = pageElement.getBoundingClientRect();
+  const overflowAmount = pageElement.scrollHeight - pageElement.clientHeight;
   
-  for (let i = 0; i < children.length; i++) {
+  if (overflowAmount <= 0) return '';
+  
+  // Find elements that are causing overflow
+  let overflowElements = [];
+  let accumulatedHeight = 0;
+  
+  // Work backwards from the last element to find overflow content
+  for (let i = children.length - 1; i >= 0; i--) {
     const element = children[i];
-    const elementRect = element.getBoundingClientRect();
-    const pageRect = pageElement.getBoundingClientRect();
+    const elementHeight = element.offsetHeight;
+    accumulatedHeight += elementHeight;
     
-    // Check if element fits within the page bounds
-    if (elementRect.bottom <= pageRect.top + maxHeight) {
-      fittingElements.push(element);
-    } else {
-      // This element and all following are overflow
-      overflowElements = children.slice(i);
+    // Add this element to overflow if it contributes to the overflow
+    overflowElements.unshift(element);
+    
+    // Stop when we've captured enough content to account for the overflow
+    if (accumulatedHeight >= overflowAmount) {
       break;
     }
   }
@@ -2058,17 +2137,24 @@ const removeOverflowContentSimple = (pageElement, maxHeight) => {
   const children = Array.from(pageElement.children);
   if (children.length === 0) return;
   
-  // Find elements that overflow and remove them
+  const overflowAmount = pageElement.scrollHeight - pageElement.clientHeight;
+  if (overflowAmount <= 0) return;
+  
+  // Remove elements from the end until overflow is resolved
+  let removedHeight = 0;
   const elementsToRemove = [];
   
-  for (let i = 0; i < children.length; i++) {
+  // Work backwards to remove overflow content
+  for (let i = children.length - 1; i >= 0; i--) {
     const element = children[i];
-    const elementRect = element.getBoundingClientRect();
-    const pageRect = pageElement.getBoundingClientRect();
+    const elementHeight = element.offsetHeight;
     
-    // If element extends beyond page bounds, mark for removal
-    if (elementRect.bottom > pageRect.top + maxHeight) {
-      elementsToRemove.push(element);
+    elementsToRemove.push(element);
+    removedHeight += elementHeight;
+    
+    // Stop when we've removed enough content to resolve the overflow
+    if (removedHeight >= overflowAmount) {
+      break;
     }
   }
   
@@ -2183,22 +2269,57 @@ const handlePageInput = (pageId, content) => {
    };
  }, [pages, initialSaveDone]); // Re-run when pages change or initialSaveDone status changes
 
-const handleImmediatePageInput = (pageId) => {
-  const pageElement = document.getElementById(`page-${pageId}`);
-  if (pageElement && pageElement.scrollHeight > pageElement.clientHeight) {
-    const isLastPage = pages.findIndex(p => p.id === pageId) === pages.length - 1;
-    if (isLastPage) {
-      const newPageId = createNewPage();
-      setTimeout(() => {
-        const newPageElement = document.getElementById(`page-${newPageId}`);
-        if (newPageElement) {
-          newPageElement.focus();
-        }
-      }, 0);
-    }
+const handleImmediatePageInput = (pageId, isFromEnterKey = false) => {
+  // Use the more robust overflow detection
+  const delay = isFromEnterKey ? 25 : 50; // Faster response for Enter key
+  setTimeout(() => {
+    checkAndHandlePageOverflow(pageId, isFromEnterKey);
+  }, delay);
+};
+
+
+// Helper function to find the first text node in an element
+const findFirstTextNode = (element) => {
+  const walker = document.createTreeWalker(
+    element,
+    NodeFilter.SHOW_TEXT,
+    null,
+    false
+  );
+  return walker.nextNode();
+};
+
+// Helper function to check if cursor is near the end of a page (within last 20% of content)
+const isNearEndOfPage = (pageElement, range) => {
+  if (!range.collapsed) return false;
+  
+  try {
+    const pageHeight = pageElement.scrollHeight;
+    const cursorPosition = range.getBoundingClientRect().top;
+    const pageTop = pageElement.getBoundingClientRect().top;
+    const relativePosition = cursorPosition - pageTop;
+    
+    // Consider "near end" if cursor is in the last 20% of the page content
+    return relativePosition > (pageHeight * 0.8);
+  } catch (error) {
+    // Fallback if position calculation fails
+    return false;
   }
 };
 
+// Helper function to check if pressing Enter would cause overflow
+const checkIfEnterWouldOverflow = (pageElement) => {
+  const currentHeight = pageElement.scrollHeight;
+  const availableHeight = pageElement.clientHeight;
+  
+  // Estimate the height that would be added by pressing Enter
+  // This is a rough estimate - typically one line height
+  const computedStyle = window.getComputedStyle(pageElement);
+  const lineHeight = parseFloat(computedStyle.lineHeight) || 20;
+  
+  // Check if adding approximately one line would cause overflow
+  return (currentHeight + lineHeight) > availableHeight;
+};
 
 const isAtStartOfElement = (element, range) => {
   if (!range.collapsed) return false;
@@ -2353,6 +2474,23 @@ const handlePageKeyDown = (e, pageId) => {
         sel.removeAllRanges();
         sel.addRange(newRange);
         newParagraph.focus(); // Ensure the new paragraph is focused
+      }
+    }
+  }
+
+  // Handle Enter key for smooth page transitions (only if not in title or code block)
+  if (e.key === 'Enter' && !isInTitleH1 && (!currentNode || currentNode.nodeName !== 'PRE')) {
+    const pageElement = document.getElementById(`page-${pageId}`);
+    if (pageElement) {
+      // Check if the page is already overflowing or close to overflowing
+      const isOverflowing = pageElement.scrollHeight > pageElement.clientHeight;
+      const wouldOverflow = checkIfEnterWouldOverflow(pageElement);
+      
+      if (isOverflowing || wouldOverflow) {
+        // Set flag to indicate this overflow is from Enter key
+        setTimeout(() => {
+          handleImmediatePageInput(pageId, true);
+        }, 10); // Short delay to allow Enter to add content first
       }
     }
   }
