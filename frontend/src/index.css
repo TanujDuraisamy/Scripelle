@@ -22,7 +22,8 @@ body::-webkit-scrollbar-thumb:hover {
 
 /* HTML and General Reset & Dark Theme */
 html {
-  /* Removed overflow-x: hidden to allow content to shift */
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 /* General Reset & Dark Theme */
@@ -970,15 +971,40 @@ pre {
   border-radius: 8px;
   position: relative;
   overflow: hidden; /* Hide overflow to prevent content bleeding */
+  transition: transform 0.2s ease, opacity 0.3s ease; /* Smooth page transitions */
 }
 
 .document-page:last-child {
   margin-bottom: 2rem;
 }
 
+/* New page animation */
+.document-page.page-entering {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: pageSlideIn 0.3s ease forwards;
+}
+
+@keyframes pageSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth cursor transitions */
+.document-page [contenteditable] {
+  caret-color: #4A90E2; /* Visible cursor color */
+  transition: all 0.15s ease;
+}
+
 /* Multi-page document styling */
 .document-container {
   max-width: none; /* Remove max-width to allow full page display */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center pages horizontally */
+  padding: 2rem 1rem;
 }
 
 /* Ensure pages stack naturally */

@@ -26,6 +26,13 @@ const Page = React.memo(
 
     useEffect(() => {
       if (contentRef.current && contentRef.current.innerHTML !== page.content) {
+        // Check if page modifications are in progress (to avoid interfering with smooth transitions)
+        if (window.isPageBeingModified) {
+          // Just update content without touching cursor during page transitions
+          contentRef.current.innerHTML = page.content;
+          return;
+        }
+
         // Save current selection
         const selection = window.getSelection();
         const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
