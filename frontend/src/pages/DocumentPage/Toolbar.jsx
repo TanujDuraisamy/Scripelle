@@ -8,7 +8,7 @@ export default function Toolbar({ fileName, setFileName, handleSavePDF, handleSa
   return (
     <>
       <div className="file-name-bar" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <div className="app-title" align="centre">Scripelle</div>
+        <div className="app-title" align="center">Scripelle</div>
         <input
           type="text"
           className="file-name-input"

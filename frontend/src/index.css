@@ -524,7 +524,7 @@ pre {
 
 .app-title {
   position: absolute;
-  left: 50%;
+  left: 50.5%;
   transform: translateX(-50%);
   font-size: 1.25rem;
   font-weight: 600;

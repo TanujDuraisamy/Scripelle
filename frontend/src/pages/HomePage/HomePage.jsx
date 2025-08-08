@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./homePage.css";
+import reactLogo from "../../assets/react.svg";
 
 const seedDocuments = [
   { id: "demo-1", title: "Demo Document 1", date: "August 7th 2025" },
@@ -21,13 +22,16 @@ export default function HomePage() {
 
   return (
     <div className="home-root">
+      <div className="logo-wrapper">
+        <img src="/images/Scripelle Logo.png" alt="Scripelle Logo" className="home-logo" />
+      </div>
       <div className="create-cta-wrapper">
         <button
           className="create-cta"
           onClick={handleCreateNew}
           aria-label="Create a new document"
         >
-          Create a new document
+          Create A New Document
         </button>
       </div>
 

@@ -7,23 +7,40 @@
   box-sizing: border-box;
 }
 
+/* Logo at top */
+.logo-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  position: relative;
+  top: -30px;
+}
+
+/* Change the height of the logo */
+.home-logo {
+  height: 40px;
+  width: auto;
+}
+
 /* Create CTA pill */
 .create-cta-wrapper {
   display: flex;
   justify-content: center;
   margin-top: 60px;
-  margin-bottom: 40px;
+  margin-bottom: 90px;
 }
 
 .create-cta {
   background: #2a2a2a; /* slightly lighter than page bg */
   color: #ebe0c9; /* warm tint per spec */
   border: none;
-  border-radius: 55px;
-  height: 125px;
-  padding: 0 48px;
-  font-size: 28px;
+  border-radius: 100px;
+  height: 80px;
+  padding: 0 33px;
+  font-size: 20px;
   line-height: 1;
+  font-family: serif;
+  /*font-weight: bold;*/
   letter-spacing: 0.2px;
   cursor: pointer;
   box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset;
