@@ -1963,6 +1963,33 @@ useEffect(() => {
   }
 }, []); // Empty dependency array means this runs once on mount
 
+// Sync fileName changes from toolbar input to localStorage
+useEffect(() => {
+  const docId = window.location.pathname.split('/doc/')[1];
+  if (docId && fileName && fileName !== 'Untitled') {
+    const savedDocs = JSON.parse(localStorage.getItem('userDocuments') || '[]');
+    const docIndex = savedDocs.findIndex(doc => doc.id === docId);
+    
+    if (docIndex >= 0) {
+      const now = new Date().toLocaleDateString('en-US', { 
+        month: 'long', 
+        day: 'numeric', 
+        year: 'numeric' 
+      });
+      
+      // Only update if the title actually changed
+      if (savedDocs[docIndex].title !== fileName) {
+        savedDocs[docIndex] = { 
+          ...savedDocs[docIndex], 
+          title: fileName, 
+          date: now 
+        };
+        localStorage.setItem('userDocuments', JSON.stringify(savedDocs));
+      }
+    }
+  }
+}, [fileName]); // Watch for fileName changes
+
 // naman changes sidebar
 const handleMouseDown = (e) => {
   setIsResizing(true);

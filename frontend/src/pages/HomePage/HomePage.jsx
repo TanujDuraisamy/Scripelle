@@ -7,6 +7,7 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [userDocuments, setUserDocuments] = useState([]);
   const [openMenuId, setOpenMenuId] = useState(null);
+  const videoRef = React.useRef(null);
 
   // Load user documents from localStorage on component mount and when returning to page
   useEffect(() => {
@@ -85,11 +86,61 @@ export default function HomePage() {
     }
   }, [openMenuId]);
 
+  // Only play video on first site load, not when returning to page
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      // Check if this is the first time visiting the site
+      const hasPlayedVideo = sessionStorage.getItem('videoPlayed');
+      
+      if (!hasPlayedVideo) {
+        const playVideo = async () => {
+          try {
+            await video.play();
+            console.log('Video started playing');
+            // Mark video as played for this session
+            sessionStorage.setItem('videoPlayed', 'true');
+          } catch (error) {
+            console.error('Video autoplay failed:', error);
+          }
+        };
+        
+        // Try to play after a short delay
+        setTimeout(playVideo, 100);
+      }
+    }
+  }, []);
+
   return (
     <div className={`home-root ${userDocuments.length === 0 ? 'empty-state' : ''}`}>
-      <div className="logo-wrapper">
-        <img src="/images/Scripelle Logo.png" alt="Scripelle Logo" className="home-logo" />
-      </div>
+      {/* Background Video */}
+      <video 
+        ref={videoRef}
+        className="background-video"
+        autoPlay
+        {...(userDocuments.length === 0 && { loop: true })} //Add a comment line in the starting to make it stop.
+        muted
+        playsInline
+        preload="auto"
+        onError={(e) => {
+          console.error('Video error:', e);
+          console.error('Error details:', e.target.error);
+        }}
+        onLoadStart={() => console.log('Video loading started')}
+        onCanPlay={() => console.log('Video can play')}
+        onLoadedData={() => console.log('Video loaded')}
+        onPlay={() => console.log('Video started playing')}
+      >
+        <source src="videos/Painting Background_4.mp4" type="video/mp4" />
+        <source src="/videos/Painting Background_4.mp4" type="video/mp4" />
+        Video not supported
+      </video>
+      
+      {/* Content overlay */}
+      <div className="content-overlay">
+        <div className="logo-wrapper">
+          <img src="/images/Scripelle Logo.png" alt="Scripelle Logo" className="home-logo" />
+        </div>
       
       <div className={`create-cta-wrapper ${userDocuments.length === 0 ? 'centered-layout' : ''}`}>
         <button
@@ -101,47 +152,48 @@ export default function HomePage() {
         </button>
       </div>
 
-      {userDocuments.length > 0 && (
-        <div className="docs-grid">
-          {userDocuments.map((doc) => (
-            <div
-              key={doc.id}
-              className="doc-card"
-              role="button"
-              tabIndex={0}
-              onClick={() => openDoc(doc.id)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") openDoc(doc.id);
-              }}
-            >
-              <div className="doc-preview" />
-              <div className="doc-meta">
-                <div className="doc-title">{doc.title}</div>
-                <div className="doc-date">{doc.date}</div>
-              </div>
-              
-              {/* Three dots menu */}
-              <div 
-                className="doc-menu"
-                onClick={(e) => handleMenuClick(e, doc.id)}
+        {userDocuments.length > 0 && (
+          <div className="docs-grid">
+            {userDocuments.map((doc) => (
+              <div
+                key={doc.id}
+                className="doc-card"
+                role="button"
+                tabIndex={0}
+                onClick={() => openDoc(doc.id)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") openDoc(doc.id);
+                }}
               >
-                <span className="doc-menu-dots">⋯</span>
-                <div className={`doc-menu-dropdown ${openMenuId === doc.id ? 'show' : ''}`}>
-                  <div 
-                    className="doc-menu-item delete"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteDocument(doc.id);
-                    }}
-                  >
-                    Delete
+                <div className="doc-preview" />
+                <div className="doc-meta">
+                  <div className="doc-title">{doc.title}</div>
+                  <div className="doc-date">{doc.date}</div>
+                </div>
+                
+                {/* Three dots menu */}
+                <div 
+                  className="doc-menu"
+                  onClick={(e) => handleMenuClick(e, doc.id)}
+                >
+                  <span className="doc-menu-dots">⋯</span>
+                  <div className={`doc-menu-dropdown ${openMenuId === doc.id ? 'show' : ''}`}>
+                    <div 
+                      className="doc-menu-item delete"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteDocument(doc.id);
+                      }}
+                    >
+                      Delete
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
