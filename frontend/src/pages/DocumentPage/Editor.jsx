@@ -1935,6 +1935,34 @@ useEffect(() => {
   };
 }, []);
 
+// Save document to localStorage when component mounts (for new documents)
+useEffect(() => {
+  const docId = window.location.pathname.split('/doc/')[1];
+  if (docId) {
+    const savedDocs = JSON.parse(localStorage.getItem('userDocuments') || '[]');
+    const existingDoc = savedDocs.find(doc => doc.id === docId);
+    
+    if (existingDoc) {
+      // Load existing document title
+      setFileName(existingDoc.title);
+    } else {
+      // Create new document entry
+      const now = new Date().toLocaleDateString('en-US', { 
+        month: 'long', 
+        day: 'numeric', 
+        year: 'numeric' 
+      });
+      
+      savedDocs.push({ 
+        id: docId, 
+        title: fileName || 'Untitled', 
+        date: now 
+      });
+      localStorage.setItem('userDocuments', JSON.stringify(savedDocs));
+    }
+  }
+}, []); // Empty dependency array means this runs once on mount
+
 // naman changes sidebar
 const handleMouseDown = (e) => {
   setIsResizing(true);
@@ -2084,6 +2112,46 @@ const handlePageInput = (pageId, content) => {
   temp.innerHTML = content;
   const plainText = temp.textContent.trim();
   const hasImage = content.includes("<img");
+
+  // Extract title from H1 element and update fileName
+  if (pageId === 1) { // Only check for title on the first page
+    const h1Element = temp.querySelector('h1');
+    if (h1Element) {
+      const titleText = h1Element.textContent.trim();
+      if (titleText && titleText !== fileName) {
+        setFileName(titleText);
+        
+        // Save/update document in localStorage with new title
+        setTimeout(() => {
+          const docId = window.location.pathname.split('/doc/')[1];
+          if (docId) {
+            const savedDocs = JSON.parse(localStorage.getItem('userDocuments') || '[]');
+            const docIndex = savedDocs.findIndex(doc => doc.id === docId);
+            const now = new Date().toLocaleDateString('en-US', { 
+              month: 'long', 
+              day: 'numeric', 
+              year: 'numeric' 
+            });
+            
+            if (docIndex >= 0) {
+              savedDocs[docIndex] = { 
+                ...savedDocs[docIndex], 
+                title: titleText, 
+                date: now 
+              };
+            } else {
+              savedDocs.push({ 
+                id: docId, 
+                title: titleText, 
+                date: now 
+              });
+            }
+            localStorage.setItem('userDocuments', JSON.stringify(savedDocs));
+          }
+        }, 500);
+      }
+    }
+  }
 
   let updatedPage = null; // To hold the page after potential isNew update
 
