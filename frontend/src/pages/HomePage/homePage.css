@@ -214,6 +214,39 @@
   border-radius: 2px;
   box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset,
               0 8px 24px rgba(0,0,0,0.35);
+  overflow: hidden;
+  position: relative;
+}
+
+.doc-preview-content {
+  padding: 20px;
+  color: #cccccc;
+  font-size: 14px;
+  line-height: 1.5;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  height: 100%;
+  box-sizing: border-box;
+  
+  /* Text overflow with fade effect */
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 75%,
+    #1e1e1e 100%
+  );
+  mask: linear-gradient(
+    to bottom,
+    black 0%,
+    black 75%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(
+    to bottom,
+    black 0%,
+    black 75%,
+    transparent 100%
+  );
 }
 
 .doc-meta {

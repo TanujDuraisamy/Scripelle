@@ -994,7 +994,7 @@ pre {
 
 /* Smooth cursor transitions */
 .document-page [contenteditable] {
-  caret-color: #4A90E2; /* Visible cursor color */
+  caret-color: white; /* White cursor color */
   transition: all 0.15s ease;
 }
 
@@ -1040,6 +1040,7 @@ pre {
   white-space: pre-wrap;
   overflow: hidden; /* Hide overflow to match fixed page height */
   cursor: text;
+  caret-color: white;
   color: #f1f1f1;
   display: block;
 }

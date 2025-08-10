@@ -9,6 +9,65 @@ export default function HomePage() {
   const [openMenuId, setOpenMenuId] = useState(null);
   const videoRef = React.useRef(null);
 
+  // Helper function to extract preview text from document content
+  const extractPreviewText = (docId) => {
+    try {
+      const docContent = localStorage.getItem(`doc-content-${docId}`);
+      if (!docContent) return "No content available";
+      
+      const pages = JSON.parse(docContent);
+      if (!pages || !Array.isArray(pages) || pages.length === 0) return "No content available";
+      
+      // Get content from all pages
+      let allContent = pages.map(page => page.content || '').join(' ');
+      
+      // Create temporary div to parse HTML
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = allContent;
+      
+      // Extract title content first
+      const h1Elements = tempDiv.querySelectorAll('h1');
+      let titleText = '';
+      h1Elements.forEach(h1 => {
+        const title = h1.textContent || h1.innerText || '';
+        if (title.trim()) {
+          titleText += title.trim() + ' ';
+        }
+      });
+      
+      // Remove title elements to get body content
+      h1Elements.forEach(h1 => h1.remove());
+      
+      // Remove AI diff blocks and highlighting
+      const diffBlocks = tempDiv.querySelectorAll('.ai-diff-block, .ai-highlight-added, .ai-highlight-removed');
+      diffBlocks.forEach(block => block.remove());
+      
+      // Get body content
+      let bodyText = tempDiv.textContent || tempDiv.innerText || '';
+      bodyText = bodyText.replace(/\s+/g, ' ').trim();
+      
+      // Determine what to show based on content
+      let previewText = '';
+      
+      if (bodyText.length > 0) {
+        // Has body content - show body content (Google Docs style)
+        previewText = bodyText;
+      } else if (titleText.trim().length > 0) {
+        // Only has title - show title as preview
+        previewText = titleText.trim();
+      } else {
+        // Completely empty - show placeholder
+        return "No content available";
+      }
+      
+      // Return first 100 characters with ellipsis if longer
+      return previewText.length > 100 ? previewText.substring(0, 100) + '...' : previewText;
+    } catch (error) {
+      console.error('Error extracting preview:', error);
+      return "Error loading preview";
+    }
+  };
+
   // Load user documents from localStorage on component mount and when returning to page
   useEffect(() => {
     const loadDocuments = () => {
@@ -23,7 +82,14 @@ export default function HomePage() {
             const timestampB = parseInt(b.id.split('-')[1] || 0);
             return timestampB - timestampA; // Most recent first
           });
-          setUserDocuments(sortedDocs);
+          
+          // Add preview text to each document
+          const docsWithPreviews = sortedDocs.map(doc => ({
+            ...doc,
+            preview: extractPreviewText(doc.id)
+          }));
+          
+          setUserDocuments(docsWithPreviews);
         } catch (error) {
           console.error('Error loading documents:', error);
         }
@@ -34,7 +100,7 @@ export default function HomePage() {
 
     // Listen for storage changes (when documents are updated from other tabs/windows)
     const handleStorageChange = (e) => {
-      if (e.key === 'userDocuments') {
+      if (e.key === 'userDocuments' || (e.key && e.key.startsWith('doc-content-'))) {
         loadDocuments();
       }
     };
@@ -70,6 +136,10 @@ export default function HomePage() {
     const savedDocs = JSON.parse(localStorage.getItem('userDocuments') || '[]');
     const updatedDocs = savedDocs.filter(doc => doc.id !== docId);
     localStorage.setItem('userDocuments', JSON.stringify(updatedDocs));
+    
+    // Also remove the document content
+    localStorage.removeItem(`doc-content-${docId}`);
+    
     setUserDocuments(updatedDocs);
     setOpenMenuId(null);
   };
@@ -167,7 +237,11 @@ export default function HomePage() {
                   if (e.key === "Enter") openDoc(doc.id);
                 }}
               >
-                <div className="doc-preview" />
+                <div className="doc-preview">
+                  <div className="doc-preview-content">
+                    {doc.preview || "No content available"}
+                  </div>
+                </div>
                 <div className="doc-meta">
                   <div className="doc-title">{doc.title}</div>
                   <div className="doc-date">{doc.date}</div>

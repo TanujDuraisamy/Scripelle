@@ -1685,6 +1685,50 @@ useEffect(() => {
   return () => window.removeEventListener('keydown', toggleSidebar);
 }, []);
 
+// Function to focus the document after sidebar closes
+const focusDocument = () => {
+  // Focus the current page or first page if none is current
+  const targetPageId = currentPageId || 1;
+
+  // Prefer the explicit page id used elsewhere in the editor
+  let currentPageElement = document.getElementById(`page-${targetPageId}`);
+
+  // Fallbacks in case the exact id is not present
+  if (!currentPageElement) {
+    currentPageElement = document.querySelector(`.document-page .page-content`);
+  }
+
+  if (currentPageElement) {
+    currentPageElement.focus();
+    
+    // If we have a saved caret position, restore it
+    if (sidebarCaretRangeRef.current) {
+      try {
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(sidebarCaretRangeRef.current);
+        sidebarCaretRangeRef.current = null; // Clear after use
+      } catch (error) {
+        // If restoring position fails, just place cursor at end
+        const range = document.createRange();
+        range.selectNodeContents(currentPageElement);
+        range.collapse(false); // Move to end
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    } else {
+      // No saved position, place cursor at end of content
+      const range = document.createRange();
+      range.selectNodeContents(currentPageElement);
+      range.collapse(false); // Move to end
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  }
+};
+
 // Capture caret position and auto-focus the input field when sidebar becomes visible
 useEffect(() => {
   if (isSidebarVisible) {
@@ -1693,14 +1737,20 @@ useEffect(() => {
     if (sel && sel.rangeCount > 0) {
       sidebarCaretRangeRef.current = sel.getRangeAt(0).cloneRange();
     }
+  } else {
+    // Sidebar just closed - focus the document
+    setTimeout(() => {
+      focusDocument();
+    }, 350); // Delay to ensure sidebar transition completes
   }
+  
   if (isSidebarVisible && aiInputRef.current) {
     // Small delay to ensure the sidebar animation is complete
     setTimeout(() => {
       aiInputRef.current.focus();
     }, 350); // Slightly longer than the 0.3s CSS transition
   }
-}, [isSidebarVisible]);
+}, [isSidebarVisible, currentPageId]);
 
 useEffect(() => {
   if (showPopupAI && aiInputRef.current) {
@@ -1989,6 +2039,47 @@ useEffect(() => {
     }
   }
 }, [fileName]); // Watch for fileName changes
+
+// Save document content to localStorage whenever pages change
+useEffect(() => {
+  const docId = window.location.pathname.split('/doc/')[1];
+  if (docId && pages && pages.length > 0) {
+    // Only save if there's actual content (not just the default empty page)
+    const hasContent = pages.some(page => {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = page.content || '';
+      const textContent = tempDiv.textContent || tempDiv.innerText || '';
+      return textContent.trim().length > 0;
+    });
+    
+    if (hasContent) {
+      try {
+        localStorage.setItem(`doc-content-${docId}`, JSON.stringify(pages));
+      } catch (error) {
+        console.error('Error saving document content:', error);
+      }
+    }
+  }
+}, [pages]); // Watch for pages changes
+
+// Load document content when component mounts (for existing documents)
+useEffect(() => {
+  const docId = window.location.pathname.split('/doc/')[1];
+  if (docId) {
+    try {
+      const savedContent = localStorage.getItem(`doc-content-${docId}`);
+      if (savedContent) {
+        const savedPages = JSON.parse(savedContent);
+        if (savedPages && Array.isArray(savedPages) && savedPages.length > 0) {
+          setPages(savedPages);
+          return; // Don't load default content if we have saved content
+        }
+      }
+    } catch (error) {
+      console.error('Error loading document content:', error);
+    }
+  }
+}, []); // Run once on mount
 
 // naman changes sidebar
 const handleMouseDown = (e) => {
