@@ -43,6 +43,13 @@
   min-height: 60vh;
 }
 
+/* Layout when documents exist - solid background only */
+.home-root.has-documents {
+  background: #262626; /* Ensure solid background when there are documents */
+  display: block;
+  padding: 48px 24px 72px;
+}
+
 /* Logo at top */
 .logo-wrapper {
   display: flex;
@@ -88,6 +95,12 @@
   box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset, 0 4px 20px rgba(0,0,0,0.3);
   backdrop-filter: blur(10px);
   transition: transform 0.08s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Solid button styling when documents exist (no video background) */
+.home-root.has-documents .create-cta {
+  background: #2a2a2a; /* Solid background when no video */
+  backdrop-filter: none; /* Remove blur effect when no video */
 }
 
 .create-cta:hover {

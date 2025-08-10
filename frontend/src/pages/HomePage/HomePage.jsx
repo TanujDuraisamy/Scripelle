@@ -112,29 +112,31 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className={`home-root ${userDocuments.length === 0 ? 'empty-state' : ''}`}>
-      {/* Background Video */}
-      <video 
-        ref={videoRef}
-        className="background-video"
-        autoPlay
-        {...(userDocuments.length === 0 && { loop: true })} //Add a comment line in the starting to make it stop.
-        muted
-        playsInline
-        preload="auto"
-        onError={(e) => {
-          console.error('Video error:', e);
-          console.error('Error details:', e.target.error);
-        }}
-        onLoadStart={() => console.log('Video loading started')}
-        onCanPlay={() => console.log('Video can play')}
-        onLoadedData={() => console.log('Video loaded')}
-        onPlay={() => console.log('Video started playing')}
-      >
-        <source src="videos/Painting Background_4.mp4" type="video/mp4" />
-        <source src="/videos/Painting Background_4.mp4" type="video/mp4" />
-        Video not supported
-      </video>
+    <div className={`home-root ${userDocuments.length === 0 ? 'empty-state' : 'has-documents'}`}>
+      {/* Background Video - only show when no documents */}
+      {userDocuments.length === 0 && (
+        <video 
+          ref={videoRef}
+          className="background-video"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          onError={(e) => {
+            console.error('Video error:', e);
+            console.error('Error details:', e.target.error);
+          }}
+          onLoadStart={() => console.log('Video loading started')}
+          onCanPlay={() => console.log('Video can play')}
+          onLoadedData={() => console.log('Video loaded')}
+          onPlay={() => console.log('Video started playing')}
+        >
+          <source src="videos/Painting Background_4.mp4" type="video/mp4" />
+          <source src="/videos/Painting Background_4.mp4" type="video/mp4" />
+          Video not supported
+        </video>
+      )}
       
       {/* Content overlay */}
       <div className="content-overlay">
