@@ -10,6 +10,11 @@ import { useFuzzySearch } from '../../utils/useFuzzySearch.js';
 import LoginButton from "../../LoginButton";
 import Toolbar from "./Toolbar.jsx";
 import Sidebar from "./Sidebar.jsx";
+// TabCompletion pieces (service + store + overlay + utils)
+import { requestCompletion } from './TabCompletion';
+import { completionStore } from './TabCompletion';
+import { caretUtils, textUtils } from './TabCompletion';
+import { GhostTextOverlay } from './TabCompletion';
 // TODO: Restore Google Docs import functionality - removed temporarily
 // import GoogleDocsWrapper from "./GoogleDocsWrapper";
 
@@ -177,6 +182,28 @@ const App = () => {
   const [showTimeline, setShowTimeline] = useState(false);
   const [initialSaveDone, setInitialSaveDone] = useState(false);
   const initialSaveTimeoutRef = useRef(null);
+
+  // --- TabCompletion: timers and flags ---
+  // Kids typing means we wait a bit (2–3s) before asking for help
+  const completionDebounceRef = useRef(null);
+  // We can cancel a running ask if the kid keeps typing
+  const completionAbortRef = useRef(null);
+  // We skip asking while typing with IME (like Chinese/Japanese)
+  const composingRef = useRef(false);
+  // Suppress immediate retriggers after accept/dismiss
+  const completionSuppressUntilRef = useRef(0);
+
+  function cancelCompletionTimers() {
+    if (completionDebounceRef.current) {
+      clearTimeout(completionDebounceRef.current);
+      completionDebounceRef.current = null;
+    }
+    if (completionAbortRef.current) {
+      completionAbortRef.current.abort();
+      completionAbortRef.current = null;
+      completionStore.setInFlight(false);
+    }
+  }
 
   // Refs for other dropdowns
   const [showFontSizeDropdown, setShowFontSizeDropdown] = useState(false);
@@ -1559,6 +1586,191 @@ const handlePopupSubmit = async () => {
     }
   };
 
+  // Hook into page input to drive debounced completion
+  // We simply clear and re-schedule in handleImmediatePageInput below
+
+  // --- TabCompletion: core logic helpers ---
+  // Clear ghost text and cancel any running request
+  const clearGhostAndCancel = useCallback(() => {
+    completionStore.clearGhost();
+    completionStore.clearSuggestion();
+    if (completionAbortRef.current) {
+      completionAbortRef.current.abort();
+      completionAbortRef.current = null;
+      completionStore.setInFlight(false);
+    }
+    if (completionDebounceRef.current) {
+      clearTimeout(completionDebounceRef.current);
+      completionDebounceRef.current = null;
+    }
+  }, []);
+
+  // Schedule a new request after 2.2s of calm typing
+  const scheduleCompletion = useCallback(() => {
+    if (composingRef.current) return; // do not run during composition
+    if (Date.now() < completionSuppressUntilRef.current) return; // cooldown after accept/dismiss
+    if (completionDebounceRef.current) clearTimeout(completionDebounceRef.current);
+    completionDebounceRef.current = setTimeout(async () => {
+      console.log('scheduleCompletion: Timeout fired');
+      if (Date.now() < completionSuppressUntilRef.current) return;
+      try {
+        // Only run when selection is collapsed and inside the editor
+        const sel = window.getSelection();
+        if (!sel || sel.rangeCount === 0) return;
+        
+        // Get the current page element from the selection
+        let currentNode = sel.anchorNode;
+        let editorEl = null;
+        
+        // Find the page-content element that contains the current selection
+        while (currentNode && currentNode !== document.body) {
+          if (currentNode.classList && currentNode.classList.contains('page-content')) {
+            editorEl = currentNode;
+            break;
+          }
+          currentNode = currentNode.parentNode;
+        }
+        
+        if (!editorEl) return;
+        if (!sel.isCollapsed) return;
+        if (!caretUtils.isSelectionInEditor(editorEl)) return;
+
+        // Check if caret is anywhere within the editor element
+        const range = sel.getRangeAt(0);
+        let node = range.startContainer;
+        
+        // If it's a text node, get its parent
+        if (node.nodeType === Node.TEXT_NODE) {
+          node = node.parentNode;
+        }
+        
+        // Check if we're inside the editor element
+        let isInEditor = false;
+        while (node && node !== document.body) {
+          if (node === editorEl) {
+            isInEditor = true;
+            break;
+          }
+          node = node.parentNode;
+        }
+        
+        console.log('scheduleCompletion: Caret in editor:', isInEditor);
+        console.log('scheduleCompletion: editorEl:', editorEl);
+        console.log('scheduleCompletion: editorEl classList:', editorEl?.classList);
+        
+        if (!isInEditor) {
+          console.log('scheduleCompletion: Caret not in editor');
+          return;
+        }
+
+        // Detect special title trigger
+        const blockType = caretUtils.getBlockTypeAtSelection(editorEl);
+        const blockEl = caretUtils.getCurrentBlockElement(editorEl);
+        const titleEl = editorEl.querySelector('h1');
+        const bodyText = Array.from(editorEl.querySelectorAll('p, li, blockquote, pre'))
+          .map(el => el.textContent || '')
+          .join('')
+          .trim();
+
+        let prefix = caretUtils.extractPrefixUpToCaret(editorEl, 500);
+        let sendContext = {
+          blockType,
+          docSnippet: caretUtils.measureDocSnippetAroundCaret(editorEl, 600, 200),
+        };
+
+        if (titleEl && blockType === 'title') {
+          const titleText = (titleEl.textContent || '').trim();
+          const meaningful = titleText.split(/\s+/).filter(Boolean).length >= 3 || titleText.length >= 20;
+          if (meaningful && bodyText.length === 0) {
+            // Title trigger: ask for an opening line; we provide blank prefix
+            prefix = '';
+            sendContext.title = titleText;
+          }
+        }
+
+        // Get current range for overlay positioning
+        const currentRange = caretUtils.getCurrentRange();
+        if (!currentRange) return;
+
+        // Generate unique request ID
+        const requestId = Date.now() + Math.random();
+        
+        // Set initial empty suggestion to prepare overlay
+        completionStore.setSuggestion('', currentRange, requestId);
+
+        // Abort previous if any
+        if (completionAbortRef.current) completionAbortRef.current.abort();
+        const controller = new AbortController();
+        completionAbortRef.current = controller;
+        completionStore.setInFlight(true);
+
+        const myGen = completionStore.bumpGeneration();
+        console.log('scheduleCompletion: Requesting completion with prefix:', prefix, 'context:', sendContext);
+        const { suggestion } = await requestCompletion({ prefix, context: sendContext, signal: controller.signal });
+
+        console.log('scheduleCompletion: Received suggestion from backend:', suggestion);
+
+        completionStore.setInFlight(false);
+        completionAbortRef.current = null;
+
+        if (myGen !== completionStore.getCompletionState().generationId) {
+          console.log('scheduleCompletion: Generation mismatch, ignoring response');
+          return;
+        }
+        
+        // Check if this response is still relevant
+        const currentSuggestion = completionStore.getSuggestion();
+        if (currentSuggestion.requestId !== requestId) return;
+
+        let trimmed = textUtils.trimToOneSentence(suggestion);
+        console.log('scheduleCompletion: After trimToOneSentence:', trimmed);
+        
+        // Decide capitalization based on whether we're at start of a sentence.
+        if (trimmed) {
+          const prefix = caretUtils.extractPrefixUpToCaret(editorEl, 2).trimEnd();
+          const endsWithSentence = /[\.\?\!]\s*$/.test(prefix) || prefix.length === 0;
+          const firstAlpha = trimmed.search(/[A-Za-z]/);
+          if (firstAlpha >= 0) {
+            const isUpper = trimmed[firstAlpha] === trimmed[firstAlpha].toUpperCase();
+            if (endsWithSentence && !isUpper) {
+              // We are at sentence start → capitalize
+              trimmed = trimmed.slice(0, firstAlpha) + trimmed[firstAlpha].toUpperCase() + trimmed.slice(firstAlpha + 1);
+            } else if (!endsWithSentence && isUpper) {
+              // We are mid-sentence → lowercase the first letter
+              trimmed = trimmed.slice(0, firstAlpha) + trimmed[firstAlpha].toLowerCase() + trimmed.slice(firstAlpha + 1);
+            }
+          }
+        }
+        
+        console.log('scheduleCompletion: After capitalization processing:', trimmed);
+        
+        if (!trimmed) { 
+          console.log('scheduleCompletion: No trimmed suggestion, clearing');
+          completionStore.clearSuggestion(); 
+          return; 
+        }
+
+        // If suggestion begins with characters already trailing at caret, discard
+        const trailing = (blockEl?.textContent || '').slice(-trimmed.length);
+        if (trailing && trimmed.startsWith(trailing)) { completionStore.clearSuggestion(); return; }
+
+        // Update suggestion with the final text
+        const updatedRange = caretUtils.getCurrentRange();
+        if (updatedRange) {
+          console.log('Setting suggestion:', trimmed, 'range:', updatedRange, 'requestId:', requestId);
+          completionStore.setSuggestion(trimmed, updatedRange, requestId);
+        } else {
+          console.log('No updated range available for suggestion');
+        }
+      } catch (err) {
+        // On any error (including abort), we just clear
+        completionStore.setInFlight(false);
+        completionAbortRef.current = null;
+        completionStore.clearSuggestion();
+      }
+    }, 2200);
+  }, []);
+
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (!resizingImage) return;
@@ -2196,6 +2408,113 @@ const handleImmediatePageInput = (pageId) => {
       }, 0);
     }
   }
+  
+  // --- TabCompletion: handle typing behavior with overlay ---
+  const suggestion = completionStore.getSuggestion();
+  if (suggestion.text && suggestion.range) {
+    // Get current text at the suggestion range
+    const currentRange = suggestion.range.cloneRange();
+    const currentText = currentRange.toString();
+    
+    // Check if typed text matches the start of suggestion
+    if (suggestion.text.startsWith(currentText)) {
+      // Shrink suggestion text accordingly
+      const remainingText = suggestion.text.slice(currentText.length);
+      if (remainingText) {
+        // Update suggestion with remaining text
+        const updatedRange = caretUtils.getCurrentRange();
+        if (updatedRange) {
+          completionStore.setSuggestion(remainingText, updatedRange, suggestion.requestId);
+        }
+      } else {
+        // No remaining text, clear suggestion
+        completionStore.clearSuggestion();
+      }
+    } else {
+      // Mismatch, clear suggestion completely
+      completionStore.clearSuggestion();
+    }
+  }
+  
+  // Clear old ghost and prepare new suggestion
+  completionStore.clearGhost();
+  if (completionAbortRef.current) {
+    completionAbortRef.current.abort();
+    completionAbortRef.current = null;
+    completionStore.setInFlight(false);
+  }
+  // Start debounce for a new suggestion
+  scheduleCompletion();
+};
+
+
+// --- TabCompletion: selection and input hooks ---
+// When selection changes or caret moves, hide ghost and cancel in-flight
+useEffect(() => {
+  const onSelectionChange = () => {
+    const sel = window.getSelection();
+    if (!sel) return;
+    // Only show ghost when collapsed; if not collapsed, clear
+    if (!sel.isCollapsed) {
+      // Clear both old ghost and new suggestion
+      const anchorId = completionStore.getCompletionState().anchorId;
+      const anchorEl = anchorId ? document.querySelector(`[data-ghost-id="${anchorId}"]`) : null;
+      if (anchorEl) anchorEl.remove();
+      completionStore.clearGhost();
+      completionStore.clearSuggestion();
+      if (completionAbortRef.current) {
+        completionAbortRef.current.abort();
+        completionAbortRef.current = null;
+        completionStore.setInFlight(false);
+      }
+    }
+  };
+  document.addEventListener('selectionchange', onSelectionChange);
+  return () => document.removeEventListener('selectionchange', onSelectionChange);
+}, []);
+
+  // Recompute overlay position on scroll/resize
+useEffect(() => {
+  const reposition = () => {
+    const suggestion = completionStore.getSuggestion();
+    if (!suggestion.text || !suggestion.range) return;
+    
+    // Update range to current caret position
+    const currentRange = caretUtils.getCurrentRange();
+    if (currentRange) {
+      completionStore.setSuggestion(suggestion.text, currentRange, suggestion.requestId);
+    } else {
+      completionStore.clearSuggestion();
+    }
+  };
+  window.addEventListener('scroll', reposition, true);
+  window.addEventListener('resize', reposition);
+  // Reposition immediately and after next paint
+  reposition();
+  const raf = requestAnimationFrame(reposition);
+  return () => {
+    window.removeEventListener('scroll', reposition, true);
+    window.removeEventListener('resize', reposition);
+    cancelAnimationFrame(raf);
+  };
+}, []);
+
+// Composition handlers (IME): don't request during composition
+const handleCompositionStart = () => {
+  composingRef.current = true;
+  completionStore.clearGhost();
+  completionStore.clearSuggestion();
+  if (completionAbortRef.current) {
+    completionAbortRef.current.abort();
+    completionAbortRef.current = null;
+    completionStore.setInFlight(false);
+  }
+};
+
+const handleCompositionEnd = () => {
+  composingRef.current = false;
+  // After IME finishes, start the debounce
+  scheduleCompletion();
 };
 
 
@@ -2238,6 +2557,36 @@ const isAtEndOfElement = (element, range) => {
 };
 
 const handlePageKeyDown = (e, pageId) => {
+  // Handle Tab key for completion
+  if (e.key === 'Tab') {
+    const suggestion = completionStore.getSuggestion();
+    if (suggestion.text && suggestion.range) {
+      e.preventDefault();
+      
+      // Insert suggestion text into document at range
+      const range = suggestion.range.cloneRange();
+      range.deleteContents();
+      const textNode = document.createTextNode(suggestion.text);
+      range.insertNode(textNode);
+      
+      // Move caret to end of inserted text
+      const newRange = document.createRange();
+      newRange.setStartAfter(textNode);
+      newRange.collapse(true);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(newRange);
+      
+      // Clear suggestion state
+      completionStore.clearSuggestion();
+      
+      // Set cooldown to prevent immediate retrigger
+      completionSuppressUntilRef.current = Date.now() + 1000;
+      
+      return;
+    }
+  }
+  
   // Handle slash commands and other existing functionality
   handleKeyDown(e);
 
@@ -2510,6 +2859,86 @@ const handlePageKeyDown = (e, pageId) => {
       }
     }
   }
+
+  // --- TabCompletion: key handling ---
+  // If we see typing keys, hide the ghost progressively and schedule new suggestion
+  if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Delete') {
+    const st = completionStore.getCompletionState();
+    if (st.ghostText) {
+      // If user types a matching next character, remove it from the ghost (word-by-word feel)
+      if (e.key.length === 1) {
+        const typed = e.key;
+        if (st.ghostText.startsWith(typed)) {
+          const rect = caretUtils.getCaretClientRect();
+          const anchorEl = completionStore.getCompletionState().anchorId
+            ? document.querySelector(`[data-ghost-id="${completionStore.getCompletionState().anchorId}"]`)
+            : document.querySelector('[data-ghost-id]');
+          if (anchorEl) {
+            anchorEl.setAttribute('data-ghost', st.ghostText.slice(1));
+          }
+          completionStore.setGhostText(st.ghostText.slice(1), rect, st.targetNode, st.textStyle, st.forceNewLine);
+        } else {
+          const anchorEl = completionStore.getCompletionState().anchorId
+            ? document.querySelector(`[data-ghost-id="${completionStore.getCompletionState().anchorId}"]`)
+            : document.querySelector('[data-ghost-id]');
+          if (anchorEl) anchorEl.remove();
+          completionStore.clearGhost();
+        }
+      } else {
+        const anchorEl = completionStore.getCompletionState().anchorId
+          ? document.querySelector(`[data-ghost-id="${completionStore.getCompletionState().anchorId}"]`)
+          : document.querySelector('[data-ghost-id]');
+        if (anchorEl) anchorEl.remove();
+        completionStore.clearGhost();
+      }
+    }
+
+    // When user types, cancel in-flight
+    if (completionAbortRef.current) {
+      completionAbortRef.current.abort();
+      completionAbortRef.current = null;
+      completionStore.setInFlight(false);
+    }
+    // Directly schedule through helper (ensures 2.2s debounce)
+    if (!e.metaKey && !e.ctrlKey && !e.altKey) {
+      scheduleCompletion();
+    }
+  }
+
+  // On Esc: clear suggestion only
+  if (e.key === 'Escape') {
+    const anchorId3 = completionStore.getCompletionState().anchorId;
+    const anchorEl = anchorId3 ? document.querySelector(`[data-ghost-id="${anchorId3}"]`) : null;
+    if (anchorEl) anchorEl.remove();
+    completionStore.clearGhost();
+  }
+
+  // On Tab: accept suggestion if exists
+  if (e.key === 'Tab' && !e.shiftKey) {
+    const st = completionStore.getCompletionState();
+    if (st.ghostText) {
+      e.preventDefault();
+      // Preserve exactly one space if needed
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount > 0) {
+        const range = sel.getRangeAt(0);
+        const beforeCharRange = range.cloneRange();
+        beforeCharRange.setStart(range.startContainer, Math.max(0, range.startOffset - 1));
+        const tmp = document.createElement('span');
+        tmp.appendChild(beforeCharRange.cloneContents());
+        const endsWithSpace = /\s$/.test(tmp.textContent || '');
+        const toInsert = (endsWithSpace ? '' : ' ') + st.ghostText;
+
+        // Single undo step: insert plain text only
+        document.execCommand('insertText', false, toInsert);
+      }
+      const anchorId2 = completionStore.getCompletionState().anchorId;
+      const anchorEl = anchorId2 ? document.querySelector(`[data-ghost-id="${anchorId2}"]`) : null;
+      if (anchorEl) anchorEl.remove();
+      completionStore.clearGhost();
+      return;
+    }
+  }
 };
 
 const stripHtmlTags = (html) => {
@@ -2580,6 +3009,7 @@ const basicCommands = [
 
   return (
     <>
+      {/* Ghost overlay removed: we render inline via ghost-anchor now */}
       <Toolbar
         fileName={fileName}
         setFileName={setFileName}
@@ -2627,6 +3057,8 @@ const basicCommands = [
           onInput={handlePageInput}
           onImmediateInput={handleImmediatePageInput}
           onKeyDown={handlePageKeyDown}
+          onCompositionStart={handleCompositionStart}
+          onCompositionEnd={handleCompositionEnd}
           onFocus={setCurrentPageId}
           onTitleClick={positionCursorInTitle}
           skipNextInputHandling={skipNextInputHandling}
@@ -2926,6 +3358,9 @@ const basicCommands = [
         style={{ display: "none" }}
         accept="image/*"
       />
+      
+      {/* Ghost Text Overlay for Tab Completion */}
+      <GhostTextOverlay />
 </>
     
   );

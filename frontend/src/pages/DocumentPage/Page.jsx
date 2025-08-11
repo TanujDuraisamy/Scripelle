@@ -9,6 +9,8 @@ const Page = React.memo(
     onInput,
     onKeyDown,
     onFocus,
+    onCompositionStart,
+    onCompositionEnd,
     editorRef,
     onImmediateInput,
     onKeyUp,
@@ -127,7 +129,10 @@ const Page = React.memo(
           contentEditable
           onKeyDown={(e) => onKeyDown(e, page.id)}
           onInput={handleInput}
+
           onKeyUp={onKeyUp}
+          onCompositionStart={onCompositionStart}
+          onCompositionEnd={onCompositionEnd}
           onClick={handleClick}
           onDragOver={onDragOver}
           onDragEnter={onDragEnter}
