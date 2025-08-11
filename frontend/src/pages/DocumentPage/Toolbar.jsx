@@ -1,5 +1,4 @@
 import React from "react";
-import LoginButton from "../../LoginButton.jsx";
 import { History } from "lucide-react";
 
 export default function Toolbar({ fileName, setFileName, handleSavePDF, handleSaveDOC, imageInputRef, setShowTimeline }) {
@@ -8,7 +7,7 @@ export default function Toolbar({ fileName, setFileName, handleSavePDF, handleSa
   return (
     <>
       <div className="file-name-bar" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <div className="app-title" align="centre">Scripelle</div>
+        <div className="app-title" align="center">Scripelle</div>
         <input
           type="text"
           className="file-name-input"
@@ -16,7 +15,6 @@ export default function Toolbar({ fileName, setFileName, handleSavePDF, handleSa
           onChange={(e) => setFileName(e.target.value)}
         />
         <div style={{ flex: 1 }} />
-        <LoginButton />
         <button className="timeline-button" onClick={() => setShowTimeline(true)} title="Document History">
           <History size={20} />
         </button>
