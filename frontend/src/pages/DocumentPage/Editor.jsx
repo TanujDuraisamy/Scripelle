@@ -1897,6 +1897,50 @@ useEffect(() => {
   return () => window.removeEventListener('keydown', toggleSidebar);
 }, []);
 
+// Function to focus the document after sidebar closes
+const focusDocument = () => {
+  // Focus the current page or first page if none is current
+  const targetPageId = currentPageId || 1;
+
+  // Prefer the explicit page id used elsewhere in the editor
+  let currentPageElement = document.getElementById(`page-${targetPageId}`);
+
+  // Fallbacks in case the exact id is not present
+  if (!currentPageElement) {
+    currentPageElement = document.querySelector(`.document-page .page-content`);
+  }
+
+  if (currentPageElement) {
+    currentPageElement.focus();
+    
+    // If we have a saved caret position, restore it
+    if (sidebarCaretRangeRef.current) {
+      try {
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(sidebarCaretRangeRef.current);
+        sidebarCaretRangeRef.current = null; // Clear after use
+      } catch (error) {
+        // If restoring position fails, just place cursor at end
+        const range = document.createRange();
+        range.selectNodeContents(currentPageElement);
+        range.collapse(false); // Move to end
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    } else {
+      // No saved position, place cursor at end of content
+      const range = document.createRange();
+      range.selectNodeContents(currentPageElement);
+      range.collapse(false); // Move to end
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  }
+};
+
 // Capture caret position and auto-focus the input field when sidebar becomes visible
 useEffect(() => {
   if (isSidebarVisible) {
@@ -1905,14 +1949,20 @@ useEffect(() => {
     if (sel && sel.rangeCount > 0) {
       sidebarCaretRangeRef.current = sel.getRangeAt(0).cloneRange();
     }
+  } else {
+    // Sidebar just closed - focus the document
+    setTimeout(() => {
+      focusDocument();
+    }, 350); // Delay to ensure sidebar transition completes
   }
+  
   if (isSidebarVisible && aiInputRef.current) {
     // Small delay to ensure the sidebar animation is complete
     setTimeout(() => {
       aiInputRef.current.focus();
     }, 350); // Slightly longer than the 0.3s CSS transition
   }
-}, [isSidebarVisible]);
+}, [isSidebarVisible, currentPageId]);
 
 useEffect(() => {
   if (showPopupAI && aiInputRef.current) {
@@ -2147,6 +2197,102 @@ useEffect(() => {
   };
 }, []);
 
+// Save document to localStorage when component mounts (for new documents)
+useEffect(() => {
+  const docId = window.location.pathname.split('/doc/')[1];
+  if (docId) {
+    const savedDocs = JSON.parse(localStorage.getItem('userDocuments') || '[]');
+    const existingDoc = savedDocs.find(doc => doc.id === docId);
+    
+    if (existingDoc) {
+      // Load existing document title
+      setFileName(existingDoc.title);
+    } else {
+      // Create new document entry
+      const now = new Date().toLocaleDateString('en-US', { 
+        month: 'long', 
+        day: 'numeric', 
+        year: 'numeric' 
+      });
+      
+      savedDocs.push({ 
+        id: docId, 
+        title: fileName || 'Untitled', 
+        date: now 
+      });
+      localStorage.setItem('userDocuments', JSON.stringify(savedDocs));
+    }
+  }
+}, []); // Empty dependency array means this runs once on mount
+
+// Sync fileName changes from toolbar input to localStorage
+useEffect(() => {
+  const docId = window.location.pathname.split('/doc/')[1];
+  if (docId && fileName && fileName !== 'Untitled') {
+    const savedDocs = JSON.parse(localStorage.getItem('userDocuments') || '[]');
+    const docIndex = savedDocs.findIndex(doc => doc.id === docId);
+    
+    if (docIndex >= 0) {
+      const now = new Date().toLocaleDateString('en-US', { 
+        month: 'long', 
+        day: 'numeric', 
+        year: 'numeric' 
+      });
+      
+      // Only update if the title actually changed
+      if (savedDocs[docIndex].title !== fileName) {
+        savedDocs[docIndex] = { 
+          ...savedDocs[docIndex], 
+          title: fileName, 
+          date: now 
+        };
+        localStorage.setItem('userDocuments', JSON.stringify(savedDocs));
+      }
+    }
+  }
+}, [fileName]); // Watch for fileName changes
+
+// Save document content to localStorage whenever pages change
+useEffect(() => {
+  const docId = window.location.pathname.split('/doc/')[1];
+  if (docId && pages && pages.length > 0) {
+    // Only save if there's actual content (not just the default empty page)
+    const hasContent = pages.some(page => {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = page.content || '';
+      const textContent = tempDiv.textContent || tempDiv.innerText || '';
+      return textContent.trim().length > 0;
+    });
+    
+    if (hasContent) {
+      try {
+        localStorage.setItem(`doc-content-${docId}`, JSON.stringify(pages));
+      } catch (error) {
+        console.error('Error saving document content:', error);
+      }
+    }
+  }
+}, [pages]); // Watch for pages changes
+
+// Load document content when component mounts (for existing documents)
+useEffect(() => {
+  const docId = window.location.pathname.split('/doc/')[1];
+  if (docId) {
+    try {
+      const savedContent = localStorage.getItem(`doc-content-${docId}`);
+      if (savedContent) {
+        const savedPages = JSON.parse(savedContent);
+        if (savedPages && Array.isArray(savedPages) && savedPages.length > 0) {
+          setPages(savedPages);
+          return; // Don't load default content if we have saved content
+        }
+      }
+    } catch (error) {
+      console.error('Error loading document content:', error);
+    }
+  }
+}, []); // Run once on mount
+
 // naman changes sidebar
 const handleMouseDown = (e) => {
   setIsResizing(true);
@@ -2296,6 +2442,46 @@ const handlePageInput = (pageId, content) => {
   temp.innerHTML = content;
   const plainText = temp.textContent.trim();
   const hasImage = content.includes("<img");
+
+  // Extract title from H1 element and update fileName
+  if (pageId === 1) { // Only check for title on the first page
+    const h1Element = temp.querySelector('h1');
+    if (h1Element) {
+      const titleText = h1Element.textContent.trim();
+      if (titleText && titleText !== fileName) {
+        setFileName(titleText);
+        
+        // Save/update document in localStorage with new title
+        setTimeout(() => {
+          const docId = window.location.pathname.split('/doc/')[1];
+          if (docId) {
+            const savedDocs = JSON.parse(localStorage.getItem('userDocuments') || '[]');
+            const docIndex = savedDocs.findIndex(doc => doc.id === docId);
+            const now = new Date().toLocaleDateString('en-US', { 
+              month: 'long', 
+              day: 'numeric', 
+              year: 'numeric' 
+            });
+            
+            if (docIndex >= 0) {
+              savedDocs[docIndex] = { 
+                ...savedDocs[docIndex], 
+                title: titleText, 
+                date: now 
+              };
+            } else {
+              savedDocs.push({ 
+                id: docId, 
+                title: titleText, 
+                date: now 
+              });
+            }
+            localStorage.setItem('userDocuments', JSON.stringify(savedDocs));
+          }
+        }, 500);
+      }
+    }
+  }
 
   let updatedPage = null; // To hold the page after potential isNew update
 

@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import EditorPage from './editor/Editor.jsx'
-import HomePage   from './pages/HomePage.jsx'
+import HomePage   from './pages/HomePage/HomePage.jsx'
 import Dashboard  from './pages/Dashboard.jsx'
 
 export default function App() {
