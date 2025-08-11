@@ -1768,7 +1768,7 @@ const handlePopupSubmit = async () => {
         completionAbortRef.current = null;
         completionStore.clearSuggestion();
       }
-    }, 2200);
+    }, 100);
   }, []);
 
   useEffect(() => {
@@ -2581,7 +2581,7 @@ const handlePageKeyDown = (e, pageId) => {
       completionStore.clearSuggestion();
       
       // Set cooldown to prevent immediate retrigger
-      completionSuppressUntilRef.current = Date.now() + 1000;
+      completionSuppressUntilRef.current = Date.now() + 50;
       
       return;
     }
