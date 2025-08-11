@@ -30,6 +30,14 @@
   height: 100%;
 }
 
+/* Sign in button positioning on homepage */
+.home-signin-wrapper {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 20;
+}
+
 /* Centered layout for empty state */
 .home-root.empty-state {
   display: block;

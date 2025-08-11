@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./homePage.css";
 import reactLogo from "../../assets/react.svg";
+import LoginButton from "../../LoginButton.jsx";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -210,6 +211,11 @@ export default function HomePage() {
       
       {/* Content overlay */}
       <div className="content-overlay">
+        {/* Sign in button in top right */}
+        <div className="home-signin-wrapper">
+          <LoginButton />
+        </div>
+        
         <div className="logo-wrapper">
           <img src="/images/Scripelle Logo.png" alt="Scripelle Logo" className="home-logo" />
         </div>
