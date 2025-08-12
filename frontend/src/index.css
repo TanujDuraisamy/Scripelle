@@ -1095,16 +1095,32 @@ pre {
   z-index: 2147483647 !important;
   white-space: pre-wrap !important;
   word-break: break-word !important;
-  color: rgba(0, 255, 200, 0.8) !important;
-  font-family: inherit !important;
-  line-height: 1.0 !important;
-  /* Ensure proper line alignment */
-  display: inline-block !important;
+  color: rgba(156, 163, 175, 0.7) !important; /* Slightly more subtle color */
+  font-family: sans-serif !important;
+  line-height: 1.2 !important; /* Match document line height */
+  /*font-style: italic !important;*/
+  /* Display as block for next-line appearance */
+  display: block !important;
   vertical-align: baseline !important;
   margin: 0 !important;
-  padding: 0 !important;
+  padding: 0 !important; /* Remove padding for better alignment */
   /* Remove any transforms that could affect positioning */
   transform: translateY(0) !important;
+  /* Enhanced text wrapping and overflow control */
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  overflow: hidden !important;
+  /* Ensure text doesn't extend beyond container bounds */
+  box-sizing: border-box !important;
+  /* Allow hyphens for better text breaking */
+  hyphens: auto !important;
+  /* Ensure consistent text rendering */
+  text-rendering: optimizeLegibility !important;
+  /* Visual enhancement for next-line display */
+  /* background-color: rgba(75, 85, 99, 0.1) !important; /* Subtle background - removed for better alignment */
+  /* border-radius: 3px !important; /* Removed for cleaner look */
+  /* Smooth transition */
+  transition: opacity 0.2s ease !important;
 }
 
 /* Document body container - separate from title */
