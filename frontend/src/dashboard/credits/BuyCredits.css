@@ -1,0 +1,328 @@
+/* Buy Credits Page Styling - Same scale as other dashboard pages */
+.buy-credits-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #262626; /* Dark background matching Figma design */
+  color: #f1f1f1;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Sidebar Navigation - Same as other pages */
+.buy-credits-sidebar {
+  width: 300px; /* Same as other dashboard pages */
+  background-color: #262626;
+  padding: 48px 0 48px 24px; /* Same as other pages */
+  border-right: 1px solid #333;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+.sidebar-section {
+  margin-bottom: 72px; /* Same as other pages */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align sidebar items */
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center align text within item */
+  padding: 15px 24px; /* Same as other pages */
+  margin-bottom: 24px; /* Same as other pages */
+  border-radius: 18px; /* Same as other pages */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 21px; /* Same as other pages */
+  color: #ebe0c9; /* Warm tint color from Figma */
+  text-align: center; /* Center align text */
+  width: 90%; /* Set width for consistent centering */
+}
+
+.sidebar-item.active {
+  background-color: #323333; /* Darker background for active item */
+  color: #ebe0c9;
+}
+
+.sidebar-item:hover:not(.active) {
+  background-color: #2a2a2a;
+}
+
+/* Main Content Area - Same as other pages */
+.buy-credits-main {
+  flex: 1;
+  margin-left: 300px; /* Account for sidebar */
+  padding: 48px 64px; /* Same as other pages */
+  max-width: 960px; /* Same as other pages */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center all content horizontally */
+}
+
+/* Loading State */
+.buy-credits-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 14px;
+  color: #f1f1f1;
+}
+
+/* Header Section - Same as other pages */
+.buy-credits-header {
+  text-align: center;
+  margin-bottom: 48px;
+  width: 100%; /* Full width within centered container */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center header content */
+}
+
+.buy-credits-header h1 {
+  font-size: 2.2rem; /* Same as other pages */
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0;
+  margin-bottom: 24px;
+}
+
+.header-divider {
+  width: 737px; /* Same as other pages (921px scaled down 20%) */
+  height: 1px;
+  background-color: #484848; /* Grey divider line */
+  margin: 0 auto;
+}
+
+/* Buy Credits Content */
+.buy-credits-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px; /* Allow wider content for pricing cards */
+}
+
+.buy-credits-title {
+  font-size: 1.6rem; /* Similar to other section headers */
+  font-weight: 400;
+  color: #d1d1d1; /* Light grey from Figma */
+  margin: 32px 0 48px 0;
+  text-align: center;
+}
+
+/* Pricing Cards Container */
+.pricing-cards {
+  display: flex;
+  gap: 32px; /* Space between cards */
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 64px;
+}
+
+/* Individual Pricing Card */
+.pricing-card {
+  background-color: #2e2f2e; /* Dark grey from Figma */
+  border-radius: 22px; /* 28px scaled down 20% */
+  padding: 32px 24px; /* Adjusted padding */
+  width: 301px; /* 376px scaled down 20% */
+  height: 550px; /* 688px scaled down 20% */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+/* Plan-specific styling */
+.pricing-card.pro-plan {
+  background-color: #303c30; /* Green tint from Figma */
+}
+
+.pricing-card.max-plan {
+  background-color: #402e2e; /* Red tint from Figma */
+}
+
+/* Plan Header */
+.plan-header {
+  margin-bottom: 32px;
+}
+
+.plan-name {
+  font-size: 1.9rem; /* 39px scaled down 20% */
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+}
+
+.plan-price {
+  font-size: 1.9rem; /* 39px scaled down 20% */
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+}
+
+.plan-tagline {
+  font-size: 1rem;
+  color: #8d8d8d; /* Grey color from Figma */
+  margin: 0;
+  line-height: 1.4;
+  font-style: italic;
+  max-width: 250px;
+}
+
+/* Plan Credits */
+.plan-credits {
+  font-size: 1.1rem; /* Scaled down from Figma */
+  color: #ffffff;
+  margin-bottom: 32px;
+  font-weight: 400;
+}
+
+/* Plan Divider */
+.plan-divider {
+  width: 240px; /* 300px scaled down 20% */
+  height: 1px;
+  background-color: #7e7e7e; /* Grey color from Figma */
+  margin-bottom: 32px;
+}
+
+/* Plan Features */
+.plan-features {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.plan-features p {
+  font-size: 1rem;
+  color: #ffffff;
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* Plan Buttons */
+.plan-button {
+  width: 90px; /* 113px scaled down 20% */
+  height: 34px; /* 43px scaled down 20% */
+  border: none;
+  border-radius: 8px; /* 10px scaled down 20% */
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.free-button {
+  background-color: #3e4041; /* Dark grey from Figma */
+}
+
+.free-button:hover {
+  background-color: #4a4b4c;
+}
+
+.pro-button {
+  background-color: #404f40; /* Green from Figma */
+}
+
+.pro-button:hover {
+  background-color: #4a5a4a;
+}
+
+.max-button {
+  background-color: #5e4343; /* Red from Figma */
+}
+
+.max-button:hover {
+  background-color: #6a4848;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .buy-credits-main {
+    padding: 48px 32px;
+  }
+  
+  .header-divider {
+    width: 100%;
+    max-width: 640px;
+  }
+  
+  .pricing-cards {
+    gap: 24px;
+  }
+  
+  .pricing-card {
+    width: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .buy-credits-container {
+    flex-direction: column;
+  }
+  
+  .buy-credits-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #333;
+    padding: 24px;
+  }
+  
+  .sidebar-section {
+    margin-bottom: 24px;
+  }
+  
+  .sidebar-item {
+    margin-bottom: 12px;
+    font-size: 18px; /* Reduce font size for mobile */
+  }
+  
+  .buy-credits-main {
+    margin-left: 0;
+    padding: 32px 16px;
+  }
+  
+  .buy-credits-header h1 {
+    font-size: 1.6rem;
+  }
+  
+  .buy-credits-title {
+    font-size: 1.3rem;
+  }
+  
+  .pricing-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  
+  .pricing-card {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    min-height: 480px;
+  }
+  
+  .plan-name, .plan-price {
+    font-size: 1.5rem;
+  }
+  
+  .plan-tagline {
+    font-size: 0.9rem;
+  }
+}

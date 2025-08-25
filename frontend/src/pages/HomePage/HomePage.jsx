@@ -8,6 +8,8 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [userDocuments, setUserDocuments] = useState([]);
   const [openMenuId, setOpenMenuId] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
   const videoRef = React.useRef(null);
 
   // Helper function to extract preview text from document content
@@ -68,6 +70,31 @@ export default function HomePage() {
       return "Error loading preview";
     }
   };
+
+  // Check authentication status
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/v1/auth/me', {
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        
+        if (response.ok) {
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (error) {
+        console.error('Error checking auth status:', error);
+        setIsAuthenticated(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuthStatus();
+  }, []);
 
   // Load user documents from localStorage on component mount and when returning to page
   useEffect(() => {
@@ -211,8 +238,16 @@ export default function HomePage() {
       
       {/* Content overlay */}
       <div className="content-overlay">
-        {/* Sign in button in top right */}
+        {/* Sign in button and Dashboard button in top right */}
         <div className="home-signin-wrapper">
+          {isAuthenticated && (
+            <button 
+              className="dashboard-btn" 
+              onClick={() => navigate('/account')}
+            >
+              Dashboard
+            </button>
+          )}
           <LoginButton />
         </div>
         

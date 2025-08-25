@@ -1,0 +1,206 @@
+/* Privacy Page Styling - Same scale as Accounts page */
+.privacy-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #262626; /* Dark background matching Figma design */
+  color: #f1f1f1;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Sidebar Navigation - Same as Accounts */
+.privacy-sidebar {
+  width: 300px; /* Same as Accounts sidebar */
+  background-color: #262626;
+  padding: 48px 0 48px 24px; /* Same as Accounts sidebar */
+  border-right: 1px solid #333;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+.sidebar-section {
+  margin-bottom: 72px; /* Same as Accounts sidebar */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align sidebar items */
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center align text within item */
+  padding: 15px 24px; /* Same as Accounts sidebar */
+  margin-bottom: 24px; /* Same as Accounts sidebar */
+  border-radius: 18px; /* Same as Accounts sidebar */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 21px; /* Same as Accounts sidebar */
+  color: #ebe0c9; /* Warm tint color from Figma */
+  text-align: center; /* Center align text */
+  width: 90%; /* Set width for consistent centering */
+}
+
+.sidebar-item.active {
+  background-color: #323333; /* Darker background for active item */
+  color: #ebe0c9;
+}
+
+.sidebar-item:hover:not(.active) {
+  background-color: #2a2a2a;
+}
+
+/* Main Content Area - Same as Accounts */
+.privacy-main {
+  flex: 1;
+  margin-left: 300px; /* Account for sidebar */
+  padding: 48px 64px; /* Same as Accounts */
+  max-width: 960px; /* Same as Accounts */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center all content horizontally */
+}
+
+/* Loading State */
+.privacy-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 14px;
+  color: #f1f1f1;
+}
+
+/* Header Section - Same as Accounts */
+.privacy-header {
+  text-align: center;
+  margin-bottom: 48px;
+  width: 100%; /* Full width within centered container */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center header content */
+}
+
+.privacy-header h1 {
+  font-size: 2.2rem; /* Same as Accounts header */
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0;
+  margin-bottom: 24px;
+}
+
+.header-divider {
+  width: 737px; /* Same as Accounts header divider (921px scaled down 20%) */
+  height: 1px;
+  background-color: #484848; /* Grey divider line */
+  margin: 0 auto;
+}
+
+/* Privacy Content Sections */
+.privacy-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1023px; /* Based on Figma content width (1279px scaled down 20%) */
+}
+
+.privacy-section {
+  margin-bottom: 64px; /* Spacing between sections */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Left align content within section */
+}
+
+.privacy-section:first-child {
+  margin-top: 32px; /* Add some top spacing to first content section */
+}
+
+.section-title {
+  font-size: 1.6rem; /* Similar to other section headers */
+  font-weight: 400;
+  color: #ffffff; /* White text from Figma */
+  margin: 0 0 24px 0;
+  line-height: 1.4;
+  text-align: left;
+  width: 100%;
+}
+
+.section-text {
+  font-size: 1.2rem; /* Readable size for content text */
+  color: #818181; /* Grey color from Figma */
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.6;
+  text-align: left; /* Left align for better readability */
+  width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .privacy-main {
+    padding: 48px 32px;
+  }
+  
+  .header-divider {
+    width: 100%;
+    max-width: 640px;
+  }
+  
+  .privacy-content {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .privacy-container {
+    flex-direction: column;
+  }
+  
+  .privacy-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #333;
+    padding: 24px;
+  }
+  
+  .sidebar-section {
+    margin-bottom: 24px;
+  }
+  
+  .sidebar-item {
+    margin-bottom: 12px;
+    font-size: 18px; /* Reduce font size for mobile */
+  }
+  
+  .privacy-main {
+    margin-left: 0;
+    padding: 32px 16px;
+  }
+  
+  .privacy-header h1 {
+    font-size: 1.6rem;
+  }
+  
+  .section-title {
+    font-size: 1.3rem;
+  }
+  
+  .section-text {
+    font-size: 1.1rem;
+  }
+}
+
+/* Additional styling for better visual hierarchy */
+.privacy-section:last-child {
+  margin-bottom: 48px; /* Less bottom margin for last section */
+}
+
+/* Ensure proper spacing and alignment */
+.privacy-content .privacy-section {
+  align-self: stretch; /* Make sections take full width of container */
+}

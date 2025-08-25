@@ -1,0 +1,287 @@
+/* Credits Page Styling - Same scale as Accounts page */
+.credits-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #262626; /* Dark background matching Figma design */
+  color: #f1f1f1;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Sidebar Navigation - Same as Accounts */
+.credits-sidebar {
+  width: 300px; /* Same as Accounts sidebar */
+  background-color: #262626;
+  padding: 48px 0 48px 24px; /* Same as Accounts sidebar */
+  border-right: 1px solid #333;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+.sidebar-section {
+  margin-bottom: 72px; /* Same as Accounts sidebar */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align sidebar items */
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center align text within item */
+  padding: 15px 24px; /* Same as Accounts sidebar */
+  margin-bottom: 24px; /* Same as Accounts sidebar */
+  border-radius: 18px; /* Same as Accounts sidebar */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 21px; /* Same as Accounts sidebar */
+  color: #ebe0c9; /* Warm tint color from Figma */
+  text-align: center; /* Center align text */
+  width: 90%; /* Set width for consistent centering */
+}
+
+.sidebar-item.active {
+  background-color: #323333; /* Darker background for active item */
+  color: #ebe0c9;
+}
+
+.sidebar-item:hover:not(.active) {
+  background-color: #2a2a2a;
+}
+
+/* Main Content Area - Same as Accounts */
+.credits-main {
+  flex: 1;
+  margin-left: 300px; /* Account for sidebar */
+  padding: 48px 64px; /* Same as Accounts */
+  max-width: 960px; /* Same as Accounts */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center all content horizontally */
+}
+
+/* Loading State */
+.credits-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 14px;
+  color: #f1f1f1;
+}
+
+/* Header Section - Same as Accounts */
+.credits-header {
+  text-align: center;
+  margin-bottom: 48px;
+  width: 100%; /* Full width within centered container */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center header content */
+}
+
+.credits-header h1 {
+  font-size: 2.2rem; /* Same as Accounts header */
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0;
+  margin-bottom: 24px;
+}
+
+.header-divider {
+  width: 737px; /* Same as Accounts header divider */
+  height: 1px;
+  background-color: #484848; /* Grey divider line */
+  margin: 0 auto;
+}
+
+/* Credits Info Section */
+.credits-info-section {
+  text-align: center;
+  margin-bottom: 64px;
+  margin-top: 64px;
+  width: 100%; /* Full width within centered container */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.credits-info-section h2 {
+  font-size: 1.6rem; /* Similar to Accounts section headers */
+  font-weight: 400;
+  color: #d1d1d1; /* Light grey from Figma */
+  margin: 0 0 32px 0;
+  line-height: 1.4;
+}
+
+.credits-description {
+  font-size: 1.1rem; /* Readable size for longer text */
+  color: #818181; /* Grey color from Figma */
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.6;
+  max-width: 1000px; /* Limit width for readability */
+  text-align: left; /* Left align for better readability of long text */
+}
+
+/* Credits Usage Section */
+.credits-usage-section {
+  text-align: center;
+  margin-bottom: 64px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.credits-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.credits-used {
+  font-size: 3.8rem; /* Large display number from Figma */
+  font-weight: 400;
+  color: #ffffff;
+  margin-right: 8px;
+}
+
+.credits-total {
+  font-size: 3.6rem; /* Slightly smaller for hierarchy */
+  font-weight: 400;
+  color: #808080; /* Grey color from Figma */
+}
+
+/* Progress Bar */
+.credits-progress-bar {
+  width: 459px; /* Width from Figma design */
+  height: 8px; /* Height from Figma design */
+  background-color: #3a3a3a; /* Dark background for progress bar */
+  border-radius: 4px;
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.credits-progress-fill {
+  height: 100%;
+  background-color: #dfe878; /* Green/yellow color from Figma */
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.credits-info {
+  font-size: 1.1rem;
+  color: #9d9d9d; /* Grey color from Figma */
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Buy More Credits Section */
+.buy-credits-section {
+  text-align: center;
+  margin-bottom: 64px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.buy-credits-btn {
+  background-color: #2e2f30; /* Dark grey background from Figma */
+  color: #ffffff;
+  border: none;
+  border-radius: 12px; /* Same as other buttons */
+  padding: 16px 32px;
+  width: 239px; /* Width from Figma */
+  height: 55px; /* Height from Figma */
+  font-size: 1.2rem; /* Same as other buttons */
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buy-credits-btn:hover {
+  background-color: #404040;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .credits-main {
+    padding: 48px 32px;
+  }
+  
+  .header-divider {
+    width: 100%;
+    max-width: 640px;
+  }
+  
+  .credits-description {
+    max-width: 100%;
+  }
+  
+  .credits-progress-bar {
+    width: 100%;
+    max-width: 459px;
+  }
+}
+
+@media (max-width: 768px) {
+  .credits-container {
+    flex-direction: column;
+  }
+  
+  .credits-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #333;
+    padding: 24px;
+  }
+  
+  .sidebar-section {
+    margin-bottom: 24px;
+  }
+  
+  .sidebar-item {
+    margin-bottom: 12px;
+    font-size: 18px; /* Reduce font size for mobile */
+  }
+  
+  .credits-main {
+    margin-left: 0;
+    padding: 32px 16px;
+  }
+  
+  .credits-header h1 {
+    font-size: 1.6rem;
+  }
+  
+  .credits-info-section h2 {
+    font-size: 1.2rem;
+  }
+  
+  .credits-description {
+    font-size: 1rem;
+    text-align: center; /* Center on mobile */
+  }
+  
+  .credits-used {
+    font-size: 2.5rem;
+  }
+  
+  .credits-total {
+    font-size: 2.3rem;
+  }
+  
+  .buy-credits-btn {
+    width: 100%;
+    max-width: 239px;
+  }
+}

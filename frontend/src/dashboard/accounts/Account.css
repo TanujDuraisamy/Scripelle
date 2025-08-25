@@ -1,0 +1,316 @@
+/* Account Page Styling */
+.account-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #262626; /* Dark background matching Figma design */
+  color: #f1f1f1;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Sidebar Navigation */
+.account-sidebar {
+  width: 300px; /* Increased from 200px (50% larger) */
+  background-color: #262626;
+  padding: 48px 0 48px 24px; /* Increased from 32px 0 32px 16px (50% larger) */
+  border-right: 1px solid #333;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+.sidebar-section {
+  margin-bottom: 72px; /* Increased from 48px (50% larger) */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align sidebar items */
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center align text within item */
+  padding: 15px 24px; /* Increased from 10px 16px (50% larger) */
+  margin-bottom: 24px; /* Increased from 16px (50% larger) */
+  border-radius: 18px; /* Increased from 12px (50% larger) */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 21px; /* Increased from 14px (50% larger) */
+  color: #ebe0c9; /* Warm tint color from Figma */
+  text-align: center; /* Center align text */
+  width: 90%; /* Set width for consistent centering */
+}
+
+.sidebar-item.active {
+  background-color: #323333; /* Darker background for active item */
+  color: #ebe0c9;
+}
+
+.sidebar-item:hover:not(.active) {
+  background-color: #2a2a2a;
+}
+
+/* Main Content Area */
+.account-main {
+  flex: 1;
+  margin-left: 300px; /* Account for larger sidebar */
+  padding: 48px 64px; /* Keep same padding */
+  max-width: 960px; /* Keep same max-width */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center all content horizontally */
+}
+
+/* Loading State */
+.account-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 14px; /* Reduced from 18px */
+  color: #f1f1f1;
+}
+
+/* Header Section */
+.account-header {
+  text-align: center;
+  margin-bottom: 48px; /* Reduced from 60px */
+  width: 100%; /* Full width within centered container */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center header content */
+}
+
+.account-header h1 {
+  font-size: 2.2rem; /* Reduced from 2.75rem (44px) to ~35px */
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0;
+  margin-bottom: 24px; /* Reduced from 30px */
+}
+
+.header-divider {
+  width: 737px; /* Reduced from 921px (20% smaller) */
+  height: 1px;
+  background-color: #484848; /* Grey divider line */
+  margin: 0 auto;
+}
+
+/* Account Info Section */
+.account-info-section {
+  text-align: center;
+  margin-bottom: 64px; /* Reduced from 80px */
+  margin-top: 64px; /* Reduced from 80px */
+  width: 100%; /* Full width within centered container */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center account info content */
+}
+
+.account-status h2 {
+  font-size: 1.6rem; /* Reduced from 2rem (32px) to ~26px */
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 32px 0; /* Reduced from 40px */
+  line-height: 1.4;
+}
+
+.user-email {
+  font-size: 1.6rem; /* Reduced from 2rem (32px) to ~26px */
+  color: #8f8f8f; /* Grey color for email */
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Section Divider */
+.section-divider {
+  width: 845px; /* Reduced from 1056px (20% smaller) */
+  height: 1px;
+  background-color: #ffffff;
+  margin: 64px 0; /* Remove auto centering since parent is now centered */
+}
+
+/* Plan Section */
+.plan-section {
+  text-align: center;
+  margin-bottom: 64px; /* Reduced from 80px */
+  width: 100%; /* Full width within centered container */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center plan section content */
+}
+
+.plan-section h2 {
+  font-size: 1.5rem; /* Reduced from 1.875rem (30px) to 24px */
+  font-weight: 400;
+  color: #ffffff;
+  margin-bottom: 48px; /* Reduced from 60px */
+  line-height: 1.5;
+}
+
+/* Payment Method Card */
+.payment-method-card {
+  background-color: #2f2f2f; /* Darker grey background */
+  border-radius: 12px; /* Reduced from 15px */
+  padding: 32px; /* Reduced from 40px */
+  margin: 0 0 48px 0; /* Remove auto centering since parent is now centered */
+  max-width: 891px; /* Reduced from 1114px (20% smaller) */
+  width: 100%; /* Full width within container */
+  height: 102px; /* Reduced from 128px (20% smaller) */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.payment-method-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.payment-label {
+  font-size: 1.2rem; /* Reduced from 1.5rem (24px) to ~19px */
+  color: #ffffff;
+  font-weight: 400;
+}
+
+.payment-details {
+  font-size: 1.2rem; /* Reduced from 1.5rem (24px) to ~19px */
+  color: #ffffff;
+  font-weight: 400;
+}
+
+/* Action Buttons */
+.plan-actions {
+  display: flex;
+  justify-content: center;
+  gap: 24px; /* Reduced from 30px */
+  margin-bottom: 48px; /* Reduced from 60px */
+}
+
+.action-btn {
+  background-color: #363637; /* Dark grey background */
+  color: #ffffff;
+  border: none;
+  border-radius: 12px; /* Reduced from 15px */
+  padding: 11px 0; /* Reduced from 14px */
+  width: 234px; /* Reduced from 292px (20% smaller) */
+  height: 42px; /* Reduced from 52px (20% smaller) */
+  font-size: 1.2rem; /* Reduced from 1.5rem (24px) to ~19px */
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn:hover {
+  background-color: #404040;
+}
+
+/* Action button variants can be styled here if needed */
+
+/* Logout Section */
+.logout-section {
+  position: fixed;
+  bottom: 48px; /* Reduced from 60px */
+  right: 64px; /* Reduced from 80px */
+}
+
+.logout-btn {
+  background-color: #5a5a5a; /* Grey background for logout */
+  color: #ffffff;
+  border: none;
+  border-radius: 13px; /* Reduced from 16px */
+  padding: 12px 19px; /* Reduced from 15px 24px */
+  width: 140px; /* Reduced from 175px (20% smaller) */
+  height: 42px; /* Reduced from 52px (20% smaller) */
+  font-size: 0.9rem; /* Reduced from 1.125rem (18px) to ~14px */
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout-btn:hover {
+  background-color: #666666;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .account-main {
+    padding: 48px 32px; /* Reduced from 60px 40px */
+  }
+  
+  .header-divider,
+  .section-divider {
+    width: 100%;
+    max-width: 640px; /* Reduced from 800px */
+  }
+  
+  .payment-method-card {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .account-container {
+    flex-direction: column;
+  }
+  
+  .account-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #333;
+    padding: 24px; /* Keep larger padding for mobile */
+  }
+  
+  .sidebar-section {
+    margin-bottom: 24px; /* Keep larger margin for mobile */
+  }
+  
+  .sidebar-item {
+    margin-bottom: 12px; /* Keep larger margin for mobile */
+    font-size: 18px; /* Reduce font size for mobile */
+  }
+  
+  .account-main {
+    margin-left: 0;
+    padding: 32px 16px; /* Reduced from 40px 20px */
+  }
+  
+  .account-header h1 {
+    font-size: 1.6rem; /* Reduced from 2rem */
+  }
+  
+  .account-status h2 {
+    font-size: 1.2rem; /* Reduced from 1.5rem */
+  }
+  
+  .user-email {
+    font-size: 1rem; /* Reduced from 1.25rem */
+  }
+  
+  .plan-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .action-btn {
+    width: 100%;
+    max-width: 234px; /* Reduced from 292px */
+  }
+  
+  .logout-section {
+    position: static;
+    text-align: center;
+    margin-top: 32px; /* Reduced from 40px */
+  }
+}

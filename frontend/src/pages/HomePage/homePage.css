@@ -36,6 +36,30 @@
   top: 20px;
   right: 20px;
   z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Dashboard button styling to match sign-in button */
+.dashboard-btn {
+  background: #252526;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: none;
+  height: 32px;
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+}
+
+.dashboard-btn:hover {
+  background: #35363a;
 }
 
 /* Centered layout for empty state */
