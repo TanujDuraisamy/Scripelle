@@ -62,6 +62,13 @@ export default function Privacy() {
 
       {/* Main Content Area */}
       <div className="privacy-main">
+        {/* Back Button */}
+        <div className="back-button-container">
+          <button className="back-button" onClick={() => navigate('/')}>
+            ← Back to Home
+          </button>
+        </div>
+        
         {/* Header */}
         <div className="privacy-header">
           <h1>Data and Privacy</h1>

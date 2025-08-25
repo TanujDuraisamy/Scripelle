@@ -70,6 +70,13 @@ export default function Account() {
 
       {/* Main Content Area */}
       <div className="account-main">
+        {/* Back Button */}
+        <div className="back-button-container">
+          <button className="back-button" onClick={() => navigate('/')}>
+            ← Back to Home
+          </button>
+        </div>
+        
         {/* Header */}
         <div className="account-header">
           <h1>Account</h1>

@@ -62,6 +62,34 @@
   align-items: center; /* Center all content horizontally */
 }
 
+/* Back Button */
+.back-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 24px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: #ebe0c9; /* Same warm tint as sidebar items */
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.back-button:hover {
+  background-color: #2a2a2a;
+  color: #ffffff;
+}
+
 /* Loading State */
 .account-loading {
   display: flex;

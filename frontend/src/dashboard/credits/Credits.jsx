@@ -69,6 +69,13 @@ export default function Credits() {
 
       {/* Main Content Area */}
       <div className="credits-main">
+        {/* Back Button */}
+        <div className="back-button-container">
+          <button className="back-button" onClick={() => navigate('/')}>
+            ← Back to Home
+          </button>
+        </div>
+        
         {/* Header */}
         <div className="credits-header">
           <h1>Credits</h1>

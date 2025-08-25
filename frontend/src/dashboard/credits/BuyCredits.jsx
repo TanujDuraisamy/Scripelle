@@ -78,6 +78,13 @@ export default function BuyCredits() {
 
       {/* Main Content Area */}
       <div className="buy-credits-main">
+        {/* Back Button */}
+        <div className="back-button-container">
+          <button className="back-button" onClick={() => navigate('/')}>
+            ← Back to Home
+          </button>
+        </div>
+        
         {/* Header */}
         <div className="buy-credits-header">
           <h1>Credits</h1>

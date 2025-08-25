@@ -67,6 +67,13 @@ export default function About() {
 
       {/* Main Content Area */}
       <div className="about-main">
+        {/* Back Button */}
+        <div className="back-button-container">
+          <button className="back-button" onClick={() => navigate('/')}>
+            ← Back to Home
+          </button>
+        </div>
+        
         {/* Header */}
         <div className="about-header">
           <h1>About Scripelle</h1>
