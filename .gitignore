@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+*.zip
+*.log
+*.pem
+*.key
+*.pfx
+.DS_Store
+audit.local.json
+lint.local.txt
+audit-fix.local.txt
+audit-runtime.local.json

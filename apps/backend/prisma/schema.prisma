@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int       @id @default(autoincrement())
+  email            String    @unique
+  password         String?
+  firstName        String    @map("first_name")
+  lastName         String    @map("last_name")
+  plan             String    @default("free")
+  availableCredits Decimal   @default(0) @db.Decimal(12, 2) @map("available_credits")
+  googleId         String?   @unique
+  resetToken       String?   @map("reset_token")
+  resetTokenExpiry DateTime? @map("reset_token_expiry")
+  tokenVersion     Int       @default(0) @map("token_version")
+  isAdmin          Boolean   @default(false) @map("is_admin")
+  betaMember       Boolean   @default(false) @map("beta_member")
+  status           String    @default("pending") // "pending" | "approved" | "rejected"
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+
+  documents Documents[]
+
+  @@map("users")
+}
+
+model Documents {
+  id          Int      @id @default(autoincrement())
+  title       String
+  content     String   @db.Text
+  context     String   @default("") @db.Text
+  chatHistory String[] @map("chat_history")
+  createdBy   Int?     @map("created_by")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user User? @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+
+  @@map("documents")
+}
+
+model BetaAccessList {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  approved  Boolean  @default(true)
+  addedBy   String   @map("added_by") // admin ID or name
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("beta_access_list")
+}

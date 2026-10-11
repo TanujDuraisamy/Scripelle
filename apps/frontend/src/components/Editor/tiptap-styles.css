@@ -1,0 +1,225 @@
+/* TipTap Editor Styles */
+.tiptap-editor-wrapper {
+  font-family: "Inter", sans-serif;
+  line-height: 1.6;
+}
+
+/* Fade-in animation for suggestions */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Basic editor styling */
+.ProseMirror {
+  min-height: 297mm;
+  padding: 20mm 25mm;
+  background: #1e1e1e;
+  color: #ffffff;
+  font-size: 12pt;
+  line-height: 1.6;
+}
+
+.ProseMirror:focus {
+  outline: none;
+}
+
+/* Placeholder styling */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+/* Headings */
+.ProseMirror h1 {
+  font-size: 24pt;
+  font-weight: bold;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.ProseMirror h2 {
+  font-size: 20pt;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.ProseMirror h3 {
+  font-size: 16pt;
+  font-weight: bold;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.ProseMirror h4 {
+  font-size: 14pt;
+  font-weight: bold;
+  margin-top: 14px;
+  margin-bottom: 7px;
+  line-height: 1.3;
+}
+
+.ProseMirror h5 {
+  font-size: 12pt;
+  font-weight: bold;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.ProseMirror h6 {
+  font-size: 11pt;
+  font-weight: bold;
+  margin-top: 11px;
+  margin-bottom: 5px;
+  line-height: 1.3;
+}
+
+/* Paragraphs */
+.ProseMirror p {
+  margin-bottom: 12px;
+}
+
+/* Lists */
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 24px;
+  margin-bottom: 12px;
+}
+
+.ProseMirror li {
+  margin-bottom: 6px;
+}
+
+.ProseMirror li p {
+  margin-bottom: 6px;
+}
+
+/* Blockquote */
+.ProseMirror blockquote {
+  border-left: 4px solid #ddd;
+  padding-left: 16px;
+  margin-left: 0;
+  margin-bottom: 12px;
+  font-style: italic;
+  color: #555;
+}
+
+/* Code */
+.ProseMirror code {
+  background-color: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11pt;
+  color: #d63384;
+}
+
+.ProseMirror pre {
+  background-color: #f5f5f5;
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-bottom: 12px;
+}
+
+.ProseMirror pre code {
+  background: none;
+  padding: 0;
+  color: #000;
+  font-size: 10pt;
+}
+
+/* Horizontal rule */
+.ProseMirror hr {
+  border: none;
+  border-top: 2px solid #ddd;
+  margin: 24px 0;
+}
+
+/* Links */
+.ProseMirror a {
+  color: #0066cc;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ProseMirror a:hover {
+  color: #0052a3;
+}
+
+/* Bold, Italic, Underline */
+.ProseMirror strong {
+  font-weight: bold;
+}
+
+.ProseMirror em {
+  font-style: italic;
+}
+
+.ProseMirror u {
+  text-decoration: underline;
+}
+
+/* Text alignment */
+.ProseMirror .text-left {
+  text-align: left;
+}
+
+.ProseMirror .text-center {
+  text-align: center;
+}
+
+.ProseMirror .text-right {
+  text-align: right;
+}
+
+.ProseMirror .text-justify {
+  text-align: justify;
+}
+
+/* Selection */
+.ProseMirror ::selection {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.ProseMirror::-moz-selection {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Task list (if you add the extension later) */
+.ProseMirror ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 0;
+}
+
+.ProseMirror ul[data-type="taskList"] li {
+  display: flex;
+  align-items: flex-start;
+}
+
+.ProseMirror ul[data-type="taskList"] li > label {
+  margin-right: 8px;
+  user-select: none;
+}
+
+.ProseMirror ul[data-type="taskList"] li > div {
+  flex: 1;
+}

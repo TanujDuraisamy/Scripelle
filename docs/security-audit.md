@@ -1,0 +1,41 @@
+# Security and privacy audit
+
+Date: 2026-10-11. This is a source/dependency review with isolated regression tests, not a penetration-test certification. Public release remains blocked.
+
+## Credential and history scope
+
+Inspected all five extracted projects, their hidden/configuration files and package/build scripts. A second, token-boundary-aware scan inspected **318 text blobs across all fetched Git refs**, including tracked vendor text. No high-confidence provider credential, private key, credential-bearing database URL or literal credential assignment matched that history scan. The first broad scan incorrectly matched a CSS class containing `sk-`; those findings were dismissed and no redaction of that class remains. Pattern scans cannot prove the absence of every possible secret. No history rewrite was performed or is justified solely by those false positives.
+
+Both archived backend Dockerfiles contain the same provider-shaped Google API key and a database connection string with credentials. Values have never been printed in reports and were not tested against providers. Treat them as exposed until their owner confirms revocation/rotation. Their validity cannot be established safely from source alone. The new Dockerfiles contain no credential values. Check whether the original archives or previously built images were shared or published; revoke credentials and remove affected image/build artifacts through an approved process. If another source repository has committed them, that repository requires its own history assessment.
+
+No production database exports, embedded repositories, private-key files or binary executables were identified in the deliveries. SQL files are migrations, not dumps. Data-independent placeholders and stock/template names were not treated as real user records. User content is handled by document/chat features; logs and external provider destinations were reviewed. External photographs, animations and fonts have unresolved rights, separately tracked in licensing-review.md.
+
+## Findings and disposition
+
+| ID | Severity | Affected source | Remediation / status | Blocks release? |
+| --- | --- | --- | --- | --- |
+| S01 | Critical | Both delivered backend Dockerfiles | Credential-bearing ENV instructions excluded; safe recipes written. Owner must revoke/rotate API key and database credentials and review prior images/access. Original ZIPs remain private and untouched. | Yes, pending owner confirmation |
+| S02 | Critical | `apps/backend/src/routes/auth.routes.ts`, `Authentication.ts` | Admin creation was unrestricted when optional bootstrap secret was absent. Now requires approved authentication and database-verified administrator role; local CLI promotes an existing account deliberately. Anonymous/non-admin regression tests pass. | Fixed in candidate; verify with real DB |
+| S03 | High | `DocumentController.ts` | Read/update/delete addressed IDs without ownership. Every database predicate now includes authenticated owner; lists remain scoped; invalid IDs/field types rejected. Cross-account tests pass using database doubles. | Fixed in candidate; live isolation test pending |
+| S04 | High | `auth.utils.ts`, `App.ts` | Known fallback signing/session secrets removed. Startup requires independent 32+ character values; algorithm restricted to HS256. | Fixed in candidate |
+| S05 | High | `auth.middleware.ts`, `gemini.service.ts`, browser stores/sidebar | Access tokens, API key and document/chat/account data were logged. Direct credential/content debug logging removed from active flows. Review deployment logs and remaining exception logging before production. | Historical logs need owner review |
+| S06 | High | `config/email.ts` | Disabled SMTP certificate validation restored. Nodemailer upgraded to advisory-fixed version. Live Gmail/reset delivery not exercised. | Fixed code; integration pending |
+| S07 | High | `utils/passport.ts`, `Authentication.ts` | OAuth bypassed beta approval, implicitly linked email accounts, lacked state protection and put access token in query string. Now verified email, explicit provider identity, approval checks, state verification and cookie-based completion. Missing configuration returns unavailable. Existing password accounts cannot auto-link. | Provider end-to-end verification pending |
+| S08 | High | Authentication refresh/protected middleware | Rejected accounts could refresh/access with old tokens. Current approval checked on refresh and each protected request. Tests pass. | Fixed in candidate |
+| S09 | High | `AdminController.ts` | Full user objects exposed password hashes/reset fields to admin UI. Added explicit safe-field selection. | Fixed in candidate |
+| S10 | High | `credit.utils.ts`, Prisma schema, autocomplete routes | Integer balance could not represent 0.1 charges; check-then-deduct raced; prediction endpoint allowed anonymous unmetered calls. Decimal migration, conditional reservation, refund, nonnegative constraint and authentication added. | Migration/concurrency test with real PostgreSQL pending |
+| S11 | High | Authentication reset/logout/token utilities | Added a database token-version claim checked on access and refresh. Logout and password reset invalidate all account sessions. Reset tokens are stored as SHA-256 digests and consumed by a conditional, expiry-checked update. Replay, delivery-digest and revocation tests pass with database doubles. Old sessions/reset links must be renewed after migration. | Fixed in candidate; real database/provider verification pending |
+| S12 | Medium | `App.ts`, `middlewares/rate-limit.ts` | Added local rate limits and smaller request bodies; production OAuth still uses MemoryStore, limiter is per-process, proxy/trust settings need explicit deployment design. | Yes for production deployment |
+| S13 | Medium | `TextGenerator.ts`, AI helpers | Provider error details may reveal internal service information; provider timeouts/bounds and application error contract need further hardening. Some autocomplete failures return offline suggestions while charging existing credit cost. | Resolve/review before production |
+| S14 | High | Original app under `legacy/original` | Historical session configuration, Google token/content logging and unaudited authorization/dependencies retained for preservation. Excluded from active runtime/CI. Do not deploy unchanged. | Blocks deploying legacy code |
+| S15 | Medium | Website components and `main.tsx` | Hardcoded Formspree destination and analytics identifier removed from active defaults. Blank configuration sends no form/analytics data. Google Fonts requests still occur from CSS; review privacy notice and asset hosting. | Privacy review required before public service |
+| S16 | High | Dependency graph | Compatible updates and targeted runtime upgrades applied. Remaining Prisma and admin build-tool advisories are recorded in dependency-audit.json; no forced downgrades or incompatible overrides applied. | Yes until fixed or explicitly assessed |
+| S17 | Release gate | Font/media/source provenance | Missing commissioned-code/asset rights confirmation; no root open-source license. | Yes |
+
+## Operational boundaries
+
+Database double tests verify route selection/authorization but cannot prove migration safety, real transaction behavior, persistence or row isolation. Optional provider services were not contacted. No production databases, email recipients, payment services or application deployments were modified.
+
+Archives, exact preservation bundle and private scan records remain outside Git. `.gitignore` excludes environments, dependencies, generated output, archives and key files. `scripts/check-release.mjs` rejects common sensitive paths/provider token patterns without printing values; it is a limited defense, not a complete secret scanner. Run an independently maintained scanner and review all Git refs again before publication.
+
+Before release: confirm credential rotation, clear ownership/license gates, assess remaining dependency findings and verify token lifecycle against PostgreSQL, execute database/provider/browser tests, replace production session storage, review CORS/cookies/proxies and privacy notices, and obtain explicit publication approval. No PR merge, public visibility change, package release or deployment is authorized by this candidate.

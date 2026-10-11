@@ -1,0 +1,347 @@
+{
+  "backend": {
+    "auditReportVersion": 2,
+    "vulnerabilities": {
+      "@prisma/config": {
+        "name": "@prisma/config",
+        "severity": "high",
+        "isDirect": false,
+        "via": [
+          "deepmerge-ts"
+        ],
+        "effects": [
+          "prisma"
+        ],
+        "range": "6.13.0-dev.1 - 8.1.0-dev.4",
+        "nodes": [
+          "node_modules/@prisma/config"
+        ],
+        "fixAvailable": {
+          "name": "prisma",
+          "version": "6.12.0",
+          "isSemVerMajor": true
+        }
+      },
+      "deepmerge-ts": {
+        "name": "deepmerge-ts",
+        "severity": "high",
+        "isDirect": false,
+        "via": [
+          {
+            "source": 1145093,
+            "name": "deepmerge-ts",
+            "dependency": "deepmerge-ts",
+            "title": "DeepmergeTS has stack exhaustion when merging recursive object graphs",
+            "url": "https://github.com/advisories/GHSA-ggr8-5vv4-36mx",
+            "severity": "high",
+            "cwe": [
+              "CWE-674"
+            ],
+            "cvss": {
+              "score": 0,
+              "vectorString": null
+            },
+            "range": "<8.0.0"
+          }
+        ],
+        "effects": [
+          "@prisma/config"
+        ],
+        "range": "<8.0.0",
+        "nodes": [
+          "node_modules/deepmerge-ts"
+        ],
+        "fixAvailable": {
+          "name": "prisma",
+          "version": "6.12.0",
+          "isSemVerMajor": true
+        }
+      },
+      "prisma": {
+        "name": "prisma",
+        "severity": "high",
+        "isDirect": true,
+        "via": [
+          "@prisma/config"
+        ],
+        "effects": [],
+        "range": "6.13.0-dev.1 - 8.1.0-dev.4",
+        "nodes": [
+          "node_modules/prisma"
+        ],
+        "fixAvailable": {
+          "name": "prisma",
+          "version": "6.12.0",
+          "isSemVerMajor": true
+        }
+      }
+    },
+    "metadata": {
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 3,
+        "critical": 0,
+        "total": 3
+      },
+      "dependencies": {
+        "prod": 194,
+        "dev": 25,
+        "optional": 1,
+        "peer": 0,
+        "peerOptional": 0,
+        "total": 219
+      }
+    }
+  },
+  "frontend": {
+    "auditReportVersion": 2,
+    "vulnerabilities": {},
+    "metadata": {
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      },
+      "dependencies": {
+        "prod": 244,
+        "dev": 146,
+        "optional": 80,
+        "peer": 0,
+        "peerOptional": 0,
+        "total": 469
+      }
+    }
+  },
+  "admin": {
+    "auditReportVersion": 2,
+    "vulnerabilities": {
+      "@tailwindcss/typography": {
+        "name": "@tailwindcss/typography",
+        "severity": "moderate",
+        "isDirect": true,
+        "via": [
+          "postcss-selector-parser",
+          "tailwindcss"
+        ],
+        "effects": [],
+        "range": "<=0.4.0 || >=0.5.0-alpha.1",
+        "nodes": [
+          "node_modules/@tailwindcss/typography"
+        ],
+        "fixAvailable": {
+          "name": "@tailwindcss/typography",
+          "version": "0.5.4",
+          "isSemVerMajor": true
+        }
+      },
+      "braces": {
+        "name": "braces",
+        "severity": "high",
+        "isDirect": false,
+        "via": [
+          {
+            "source": 1240992,
+            "name": "braces",
+            "dependency": "braces",
+            "title": "braces vulnerable to stack-exhaustion denial of service through deeply nested patterns",
+            "url": "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm",
+            "severity": "high",
+            "cwe": [
+              "CWE-674"
+            ],
+            "cvss": {
+              "score": 7.5,
+              "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+            },
+            "range": "<=3.0.3"
+          }
+        ],
+        "effects": [
+          "chokidar",
+          "micromatch"
+        ],
+        "range": "*",
+        "nodes": [
+          "node_modules/braces"
+        ],
+        "fixAvailable": false
+      },
+      "chokidar": {
+        "name": "chokidar",
+        "severity": "high",
+        "isDirect": false,
+        "via": [
+          "braces"
+        ],
+        "effects": [
+          "tailwindcss"
+        ],
+        "range": "2.0.0 - 3.6.0",
+        "nodes": [
+          "node_modules/chokidar"
+        ],
+        "fixAvailable": false
+      },
+      "fast-glob": {
+        "name": "fast-glob",
+        "severity": "high",
+        "isDirect": false,
+        "via": [
+          "micromatch"
+        ],
+        "effects": [],
+        "range": "*",
+        "nodes": [
+          "node_modules/fast-glob"
+        ],
+        "fixAvailable": true
+      },
+      "micromatch": {
+        "name": "micromatch",
+        "severity": "high",
+        "isDirect": false,
+        "via": [
+          "braces"
+        ],
+        "effects": [
+          "fast-glob",
+          "tailwindcss"
+        ],
+        "range": ">=0.2.0",
+        "nodes": [
+          "node_modules/micromatch"
+        ],
+        "fixAvailable": false
+      },
+      "postcss-nested": {
+        "name": "postcss-nested",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "postcss-selector-parser"
+        ],
+        "effects": [],
+        "range": "2.0.3 - 6.2.0",
+        "nodes": [
+          "node_modules/postcss-nested"
+        ],
+        "fixAvailable": true
+      },
+      "postcss-selector-parser": {
+        "name": "postcss-selector-parser",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          {
+            "source": 1241232,
+            "name": "postcss-selector-parser",
+            "dependency": "postcss-selector-parser",
+            "title": "PostCSS: Quadratic complexity in flat selector parsing allows CPU exhaustion",
+            "url": "https://github.com/advisories/GHSA-rj75-hqrm-r3gf",
+            "severity": "moderate",
+            "cwe": [
+              "CWE-400",
+              "CWE-407"
+            ],
+            "cvss": {
+              "score": 5.9,
+              "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H"
+            },
+            "range": "<7.1.6"
+          }
+        ],
+        "effects": [
+          "@tailwindcss/typography",
+          "postcss-nested",
+          "tailwindcss"
+        ],
+        "range": "<7.1.6",
+        "nodes": [
+          "node_modules/@tailwindcss/typography/node_modules/postcss-selector-parser",
+          "node_modules/postcss-selector-parser"
+        ],
+        "fixAvailable": false
+      },
+      "tailwindcss": {
+        "name": "tailwindcss",
+        "severity": "high",
+        "isDirect": true,
+        "via": [
+          "chokidar",
+          "fast-glob",
+          "micromatch",
+          "postcss-nested",
+          "postcss-selector-parser"
+        ],
+        "effects": [
+          "@tailwindcss/typography",
+          "tailwindcss-animate"
+        ],
+        "range": "<=0.0.0-oxide-insiders.ff2c25f || 0.5.0 - 3.4.19",
+        "nodes": [
+          "node_modules/tailwindcss"
+        ],
+        "fixAvailable": false
+      },
+      "tailwindcss-animate": {
+        "name": "tailwindcss-animate",
+        "severity": "moderate",
+        "isDirect": true,
+        "via": [
+          "tailwindcss"
+        ],
+        "effects": [],
+        "range": "*",
+        "nodes": [
+          "node_modules/tailwindcss-animate"
+        ],
+        "fixAvailable": false
+      }
+    },
+    "metadata": {
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 4,
+        "high": 5,
+        "critical": 0,
+        "total": 9
+      },
+      "dependencies": {
+        "prod": 278,
+        "dev": 184,
+        "optional": 66,
+        "peer": 0,
+        "peerOptional": 0,
+        "total": 463
+      }
+    }
+  },
+  "website": {
+    "auditReportVersion": 2,
+    "vulnerabilities": {},
+    "metadata": {
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0,
+        "total": 0
+      },
+      "dependencies": {
+        "prod": 48,
+        "dev": 151,
+        "optional": 75,
+        "peer": 0,
+        "peerOptional": 0,
+        "total": 273
+      }
+    }
+  }
+}

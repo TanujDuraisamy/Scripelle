@@ -1,0 +1,156 @@
+[
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "sha256": "d2ac5fffe55dbf8b3c9b334c02703a782c76635b5eee821a5d37e9ce28fa0ba8",
+    "entries": 106,
+    "bytes": 672488,
+    "blocked": [],
+    "flagged": []
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "sha256": "12e9ab4a2cdc463536267a8fbea0b333a527695dfb64922106e019fe25303915",
+    "entries": 74,
+    "bytes": 285596,
+    "blocked": [],
+    "flagged": [
+      {
+        "path": "scripelle-backend-main/.env.example",
+        "size": 800,
+        "flags": [
+          "environment file"
+        ]
+      },
+      {
+        "path": "scripelle-backend-main/migrations/001_create_users_table.sql",
+        "size": 841,
+        "flags": [
+          "review type"
+        ]
+      },
+      {
+        "path": "scripelle-backend-main/prisma/migrations/20251019192603_init/migration.sql",
+        "size": 379,
+        "flags": [
+          "review type"
+        ]
+      },
+      {
+        "path": "scripelle-backend-main/prisma/migrations/20251019194525_add_user_fields/migration.sql",
+        "size": 1092,
+        "flags": [
+          "review type"
+        ]
+      },
+      {
+        "path": "scripelle-backend-main/prisma/migrations/20251019194927_added_extra_fields/migration.sql",
+        "size": 113,
+        "flags": [
+          "review type"
+        ]
+      },
+      {
+        "path": "scripelle-backend-main/prisma/migrations/20251023002053_add_documents_table/migration.sql",
+        "size": 312,
+        "flags": [
+          "review type"
+        ]
+      },
+      {
+        "path": "scripelle-backend-main/prisma/migrations/20251026012745_add_created_by_field/migration.sql",
+        "size": 338,
+        "flags": [
+          "review type"
+        ]
+      },
+      {
+        "path": "scripelle-backend-main/prisma/migrations/20251031094757_add_google_oauth/migration.sql",
+        "size": 356,
+        "flags": [
+          "review type"
+        ]
+      },
+      {
+        "path": "scripelle-backend-main/prisma/migrations/20251109222219_add_password_reset_fields/migration.sql",
+        "size": 119,
+        "flags": [
+          "review type"
+        ]
+      },
+      {
+        "path": "scripelle-backend-main/prisma/migrations/20251109233512_add_beta_access_system/migration.sql",
+        "size": 654,
+        "flags": [
+          "review type"
+        ]
+      }
+    ]
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "sha256": "a2f32aba7dc3d561e1f158762ed45f6866094df547e2e4de313ce5985da26cef",
+    "entries": 82,
+    "bytes": 3796655,
+    "blocked": [],
+    "flagged": []
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "sha256": "aaf2439abc692a9c180de8fb241f805ce66bcb7d09b7de5b4a00cdc03da724a9",
+    "entries": 60,
+    "bytes": 18466137,
+    "blocked": [],
+    "flagged": []
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "sha256": "60eacadb83d5a4dfe538f6e6d8dfdd0609ceefccae1fe2bc8f9a21e9cbd37a51",
+    "entries": 120,
+    "bytes": 3785089,
+    "blocked": [],
+    "flagged": [
+      {
+        "path": "Scripelle_project-master/backend/migrations/001_create_users_table.sql",
+        "size": 841,
+        "flags": [
+          "review type"
+        ]
+      },
+      {
+        "path": "Scripelle_project-master/backend/prisma/migrations/20251019192603_init/migration.sql",
+        "size": 379,
+        "flags": [
+          "review type"
+        ]
+      },
+      {
+        "path": "Scripelle_project-master/backend/prisma/migrations/20251019194525_add_user_fields/migration.sql",
+        "size": 1092,
+        "flags": [
+          "review type"
+        ]
+      },
+      {
+        "path": "Scripelle_project-master/backend/prisma/migrations/20251019194927_added_extra_fields/migration.sql",
+        "size": 113,
+        "flags": [
+          "review type"
+        ]
+      },
+      {
+        "path": "Scripelle_project-master/backend/prisma/migrations/20251023002053_add_documents_table/migration.sql",
+        "size": 312,
+        "flags": [
+          "review type"
+        ]
+      },
+      {
+        "path": "Scripelle_project-master/frontend/.env",
+        "size": 38,
+        "flags": [
+          "environment file"
+        ]
+      }
+    ]
+  }
+]

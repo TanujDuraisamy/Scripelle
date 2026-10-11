@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Manrope:wght@200..800&display=swap");
+@import "tailwindcss";
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.font-garamond {
+  font-family: "EB Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+}
+
+.font-garamond-italics {
+  font-family: "EB Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.tracking-tightest {
+  letter-spacing: -0.2rem;
+}
+
+.bg-header-opacity {
+  background: #313131bf;
+}
+
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+}
+
+@font-face {
+  font-family: "CustomTimes";
+  src: url("./assets/fonts/Times_new_roman_regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CustomTimesItalic";
+  src: url("./assets/fonts/Times_new_roman_italic.otf") format("opentype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+.times-new-roman {
+  font-family: "CustomTimes", "Times New Roman MT Condensed", "Times New Roman",
+    Times, serif;
+}
+
+.times-new-roman-italic {
+  font-family: "CustomTimesItalic", "Times New Roman MT Condensed",
+    "Times New Roman", Times, serif;
+}
+
+.manrope {
+  font-family: "Manrope", sans-serif;
+}

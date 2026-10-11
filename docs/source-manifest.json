@@ -1,0 +1,2048 @@
+[
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/.gitignore",
+    "bytes": 253,
+    "sha256": "fe718e7babb14f3cbad2d97f08889b9ce5215ed3fe0e43b2b8cfbfb3b9b844e8"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/bun.lockb",
+    "bytes": 201126,
+    "sha256": "0365405bfcc1de49a70cd23a13bf97bc2c474a9c470b3e8158f214951111bd16"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/components.json",
+    "bytes": 414,
+    "sha256": "9820835141c54e5b5dfbb68b3c3790db73c9ebfb967884ae3fccd058d698a1a6"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/Dockerfile",
+    "bytes": 360,
+    "sha256": "54d88ded6778d387ff8912b0eefcf9db61a6d4042e955e8cda0d23b96c7297f1"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/eslint.config.js",
+    "bytes": 765,
+    "sha256": "c55264234fef783629810643d995cd522c3adaeb60e7157906310607292015a3"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/index.html",
+    "bytes": 561,
+    "sha256": "36ca4a53a45f2ca85e350cdb6e8831aa362ac6c9d5518c9a66b75cec98f70f83"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/nginx.conf",
+    "bytes": 166,
+    "sha256": "15d3dd0d28b2635c778f352e4170605fd484c46f878f1d580d9e0f32e421dccb"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/package-lock.json",
+    "bytes": 251686,
+    "sha256": "da7905c45fa64a3c0824d311fd386ab0f4034a0c666e9d91a0f8e8325525657b"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/package.json",
+    "bytes": 2798,
+    "sha256": "acce98a8469712360fe5b8be88d0a970f69fd2b0182d6b6662f6486bda7a08d6"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/postcss.config.js",
+    "bytes": 81,
+    "sha256": "e32657baf631d7c5f4dc67b4b2ee0ec8e7d5b3c41860e09cddce7c0377cd80bc"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/README.md",
+    "bytes": 2141,
+    "sha256": "578b502a031108e3108a2256fe5a84eeeb5d49bf0d2ec5af589bfc6ff5e23072"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/tailwind.config.ts",
+    "bytes": 2706,
+    "sha256": "51966aebfd6890a6f9af82640249cd026ae5bb201f6be585d734343eafae2b56"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/tsconfig.app.json",
+    "bytes": 652,
+    "sha256": "3d44641a0151484d5adb5c764a4766a8e31076d2fd557dbe8c6e1c87863058f7"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/tsconfig.json",
+    "bytes": 369,
+    "sha256": "3a667cdf83b8335029de6380d1dc190d298d976df6c16259d562786ef13e3f07"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/tsconfig.node.json",
+    "bytes": 481,
+    "sha256": "a96b9ba5e40d95b92adf56431fdf9cbe25b5c2557621f0666615bff6889dfc50"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/vite.config.ts",
+    "bytes": 454,
+    "sha256": "fc927a322078d1af31b6d0fa1dd572b769e994882580429eb1efb0b721f9ab75"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/public/favicon-16x16.png",
+    "bytes": 426,
+    "sha256": "31a3274472e47f0dbe9bdfa78f9196a3fa1dbfada3a0a6be19dc9f373ebb92ad"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/public/placeholder.svg",
+    "bytes": 3253,
+    "sha256": "64badf7aabda0b9630b87020ffb6095cb858ccbcf66b355c2aa08b1063954d3b"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/public/robots.txt",
+    "bytes": 160,
+    "sha256": "a3d27b3ca5ce32341fa9f96f01169b521b1657c05d1860c45d1e53a6258e9e8b"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/App.css",
+    "bytes": 606,
+    "sha256": "a0715e0a09edbd0fbde65816a75e0fa0fc8b314c5260c0768c19bf3aac22621a"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/App.tsx",
+    "bytes": 2192,
+    "sha256": "dd9d039475a67f4ce99e12400944d56b3b800a5f853e4a4437650f0b1f940fd6"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/index.css",
+    "bytes": 1351,
+    "sha256": "a4eca0bbba074bd16abbe9bd3943edf321172d84bc3255b768f0e8c247d99943"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/main.tsx",
+    "bytes": 161,
+    "sha256": "c633525e3d3cf96bf7ccbb096074f6af64fc02f82b2339a4abb357ebc34441fd"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/vite-env.d.ts",
+    "bytes": 38,
+    "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ProtectedRoute.tsx",
+    "bytes": 803,
+    "sha256": "2beae427d2271b3d8b0dfb19a22d77e9825ee1a5ab6b7b7fb819afc7515712a7"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/constants/api.ts",
+    "bytes": 345,
+    "sha256": "7d5bc887825a7e9bb335d7594d289ab10b53f2a78cea0dbf10a06a163496df17"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/constants/backend.ts",
+    "bytes": 58,
+    "sha256": "005e0290388aa0b3d260853c4a54833a1e5c83fce7ce0ec7ee1879faf843475f"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/hooks/use-mobile.tsx",
+    "bytes": 576,
+    "sha256": "21eff740f9e5c965c7f0782925a7e8f67ddfcdf0f58b6613550f99c3e1c454e9"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/hooks/use-toast.ts",
+    "bytes": 3935,
+    "sha256": "0602ac84d95719f2a27075ce60333db73128e09c0b07365dce7f9c77441c9d7c"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/lib/axios.ts",
+    "bytes": 864,
+    "sha256": "dc1811254c44d739edf0cc9df4a0972f42271d2b44df52e3f9e2b4151a91d482"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/lib/utils.ts",
+    "bytes": 169,
+    "sha256": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/pages/Access.tsx",
+    "bytes": 6381,
+    "sha256": "22997d75bc3b34ae327a4fb65d4374bf16af87fadc9c6689b10cdc11d1580848"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/pages/Analytics.tsx",
+    "bytes": 9417,
+    "sha256": "fe91762ce611ad439e15a1446e33d994669e1b1422b564936292c1bc714b2885"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/pages/Index.tsx",
+    "bytes": 469,
+    "sha256": "17e908fc1c2d6bfd4bdf9c48745d7cb77724230797afaf10db9399b07fd2316c"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/pages/Login.tsx",
+    "bytes": 3597,
+    "sha256": "c16812391ba6175befe255fc025e75a5ecbd4cc8c46c1c5a3a2854d07a5c65b0"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/pages/NotFound.tsx",
+    "bytes": 721,
+    "sha256": "39e4568f7c7302db24bed7b919518dcd1de7eedbd7a2de56ea8df0ecf575985a"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/pages/Users.tsx",
+    "bytes": 9001,
+    "sha256": "13e9dd576f7f63de3627180f76b6ba3f7740a6bd47ef9241a918db89abe018cb"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/store/userStore.ts",
+    "bytes": 2221,
+    "sha256": "2377f6f1bbc1522a480ca702fe352e1e53cc1b37316a985919a109d2d313a601"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/types/customTypes.ts",
+    "bytes": 1105,
+    "sha256": "d8a04499106303261bcd18e6ecf68bb07b8e9da50ebebe43b3e2037e1658a7fa"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/types/handleHttp.ts",
+    "bytes": 2072,
+    "sha256": "bbd65809d2f08e3cae74c6fbdc93afba39df15d069c81de1405125115ef76c03"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/types/userUtils.ts",
+    "bytes": 1221,
+    "sha256": "9b3dbd5094fde3721d01c59085958bd936c784b8ae126da997d541de742d71f1"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/layout/AdminLayout.tsx",
+    "bytes": 395,
+    "sha256": "04bee96ea7caf2a076516c712965852713677cb61680f2c8b7ead48f04fb6754"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/layout/Sidebar.tsx",
+    "bytes": 3534,
+    "sha256": "37751e442ed356eb19d202a45084f5bb6b1b8b27a6ec50032446ac7864a5ae46"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/modals/AddEmailModal.tsx",
+    "bytes": 6448,
+    "sha256": "aaef647b77676b7bf05556b2db085481b3cfa161d303b5d602a11587bb7563b1"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/accordion.tsx",
+    "bytes": 1976,
+    "sha256": "9587b5ca80cf0aa68bc2a4e6baacebbe07eab14e1c66c6b6420033aeca9219d1"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/alert-dialog.tsx",
+    "bytes": 4313,
+    "sha256": "c8b01137c7552e63c9ccf2c38ef92e5417bd6616b6980d56d3015db027465283"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/alert.tsx",
+    "bytes": 1546,
+    "sha256": "6352c232d36b2aeb20cce9692fecd98a472c8bb0b8c3f8a45446c433382e2da7"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/aspect-ratio.tsx",
+    "bytes": 143,
+    "sha256": "d72c73d629e37995a0a71647d851d68d6fdcd7ec120797f36ab83a8ee89f2cab"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/avatar.tsx",
+    "bytes": 1365,
+    "sha256": "4a8bc00e5514912c54d414e207266fa100906aec2754d590adcc8ccc46d4c5c9"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/badge.tsx",
+    "bytes": 1089,
+    "sha256": "b851d9ba385c4d60de471c5f43da38067298bbcc3470807e992acb224041c75c"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/breadcrumb.tsx",
+    "bytes": 2687,
+    "sha256": "e5589a54c1ed42101bb24cd67bbc72469fbfbe6b694c46e006424375ad77183e"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/button.tsx",
+    "bytes": 1840,
+    "sha256": "99e5091c618896c9a46eba931d23814039709f9a1d150c4ac99217c1bba044fd"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/calendar.tsx",
+    "bytes": 2563,
+    "sha256": "845a0b0fdec33d8d49ab8ed05dd29a12c10b5bbcf60f24d0b9fc0a731ab18621"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/card.tsx",
+    "bytes": 1785,
+    "sha256": "bdfb74248321c52e89c2129d9d8088a56a3e33dd7850a7c9b0563a7b5ac937a0"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/carousel.tsx",
+    "bytes": 6249,
+    "sha256": "561cab7fcb619deed3532d027cbf18ef8e3ebae9def4206b0d36bd22b8474c3a"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/chart.tsx",
+    "bytes": 9987,
+    "sha256": "a759d32aa240fa6e929f204b04252e45d6ae458558eebd37dccf4ae9e05ab5e2"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/checkbox.tsx",
+    "bytes": 1053,
+    "sha256": "178f8177bedb1704b4dd3e748f4826848981c8af43178c04e1a276a7f017cf1f"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/collapsible.tsx",
+    "bytes": 320,
+    "sha256": "fbe07841b794e0d7d08e87ddaaafadf1dc0c63ecc8389cd2c5b4a0a3f5500df1"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/command.tsx",
+    "bytes": 4821,
+    "sha256": "2b640fee593528d494ca19b2888db68a396a96950ea0bb6f1b50536e26e26019"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/context-menu.tsx",
+    "bytes": 7191,
+    "sha256": "2d294c5e421c41b817f1644f2d54bfdde628cffae2682e69ca504ae754739ad6"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/dialog.tsx",
+    "bytes": 3761,
+    "sha256": "8e755711b3fd5e8d7339baea7627da546293fe2df1a88775729c2857e0de4b57"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/drawer.tsx",
+    "bytes": 2941,
+    "sha256": "3739cdfc80503412db604efb3ac0149db5f7cd5fec18508839d18dec195720e1"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/dropdown-menu.tsx",
+    "bytes": 7260,
+    "sha256": "b1ede0a4144b64853dc7ba62d184c09df479482eada86f936ce5b3d0b67a9a19"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/form.tsx",
+    "bytes": 4014,
+    "sha256": "7f6f3b157f0c08880937ae41d5e61647703c7163c3d8444656de711fb0576faf"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/hover-card.tsx",
+    "bytes": 1193,
+    "sha256": "8d606e166ef5f9bc4fc3efb1f6ce2f4bb376177a2c6fef16f67f87ad2d13d005"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/input-otp.tsx",
+    "bytes": 2166,
+    "sha256": "a301658db5430d30108004cf05cb9469457a882f93dc057097f777ade4ca5423"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/input.tsx",
+    "bytes": 799,
+    "sha256": "aacef8933fe99ab553e12a82c874a23c97e2b5602eb6f00018454fa0a8d4f7f2"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/label.tsx",
+    "bytes": 696,
+    "sha256": "d5dc9497cbb28a5401b864bd44a15f010c302584fbe8e07e015dbe443f103753"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/menubar.tsx",
+    "bytes": 7863,
+    "sha256": "9a44756ba91e4c486b30574910b72f58c136c7a9281ccf0c13bf366962c7cdaf"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/navigation-menu.tsx",
+    "bytes": 5030,
+    "sha256": "92736fbbe66e31d1b981d10436f9048c76f4b91d8b89e93b679ef2eb54204770"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/pagination.tsx",
+    "bytes": 2683,
+    "sha256": "ac9da1e191c3485524c1e8d8cdbe0b9fa4ea2729c9554f796e2516485c839260"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/popover.tsx",
+    "bytes": 1239,
+    "sha256": "ee5f78ece57c9e8eb5f9b4186e2bb9ebe46b69b52f03f1edd9a601883bc64772"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/progress.tsx",
+    "bytes": 765,
+    "sha256": "bdc4847f05de3aea1276966e0df9b4a293297f0ca7d7b430a1cb16cf5626728f"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/radio-group.tsx",
+    "bytes": 1447,
+    "sha256": "995ec983735b204597f11ae5dd22ba0175dfc633da2ddecf222847bbca387adb"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/resizable.tsx",
+    "bytes": 1696,
+    "sha256": "a31af34c14c7c86612d1c2e51c90da59e0edae37dab5210bc1dd2c91dc2f3edd"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/scroll-area.tsx",
+    "bytes": 1608,
+    "sha256": "998181a10164aa6e508210064ba61b2f772a92958d7bb2141867007f0ebd9783"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/select.tsx",
+    "bytes": 5575,
+    "sha256": "a2b62120a033b36c8d6c4a1693aa9231645fa69251740e15eacec24c1eea4d82"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/separator.tsx",
+    "bytes": 698,
+    "sha256": "6c271e740c3d7b54947bb727383e5355788f0176b7b683c3bb970cad9883dded"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/sheet.tsx",
+    "bytes": 4197,
+    "sha256": "e7d726b34d0f3214f597a844c7f2c4fc869933f7433eddb74e7fd2eb92500be3"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/sidebar.tsx",
+    "bytes": 22837,
+    "sha256": "5754b54ecb6151d7a138426a44a1057a4937ac5a173dfbd1f596a6c9d75b851b"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/skeleton.tsx",
+    "bytes": 234,
+    "sha256": "a229c310b9cbcb01ddd5e580865a6f14a19061aff7f6a97ef82a40b6a83583a4"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/slider.tsx",
+    "bytes": 1065,
+    "sha256": "b81a683197551322cd8f13653bc955ad4c3bca6fe62376d33acb2bcd04361d02"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/sonner.tsx",
+    "bytes": 877,
+    "sha256": "720fa5658777a469a3096e2fbb59b8f3453c744aab53a35d9ad47c873177b4ca"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/switch.tsx",
+    "bytes": 1147,
+    "sha256": "99cda942c2d215d8f25dd33ae06ed1278bcf912b262ed0e907b04f35881ac507"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/table.tsx",
+    "bytes": 2694,
+    "sha256": "fab18d9eeb84781f534330ff4b2c2cbe3a93f9bdf5c449debff2f682a83a4876"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/tabs.tsx",
+    "bytes": 1897,
+    "sha256": "b313d08a8c85e586a282b615cf30ce0b6ec1eca3ea92149b731f14b4082f4d71"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/textarea.tsx",
+    "bytes": 751,
+    "sha256": "2f5b24d28dc5c41817ca69653a396adcb2fe495200f8184777d086a62fc70461"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/toast.tsx",
+    "bytes": 4798,
+    "sha256": "8f4db67ae4633904c3cccee6629a1061472bb23f5368e5b7e72a306cc494f9d3"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/toaster.tsx",
+    "bytes": 730,
+    "sha256": "600d661340ddc3ee7b5f9088684e1b3072cf60c9275b2f84bf4860dc29fe0fba"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/toggle-group.tsx",
+    "bytes": 1714,
+    "sha256": "a3ea231230c8fff22ff6e0b457e71addf961fe1f80deaba0c80d17e649d34bf3"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/toggle.tsx",
+    "bytes": 1416,
+    "sha256": "fb0f786bce638fd414f220e31ad3c902f5c6e25eee9c95ac955cacd50638d6ff"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/tooltip.tsx",
+    "bytes": 1155,
+    "sha256": "bd9361649477cf9496f4b48415a2eafb9ae1ebca81af58a29b61b1516adc88c1"
+  },
+  {
+    "archive": "scripelle-admin-panel-main.zip",
+    "path": "scripelle-admin-panel-main/src/components/ui/use-toast.ts",
+    "bytes": 82,
+    "sha256": "d48c4c490e5101aa42ceed9b8ca49642d66152ba11daf7ee6c29bee0f5172c37"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/.env.example",
+    "bytes": 800,
+    "sha256": "bdf3bba31d895f1acae9a73430236fe85cc4c6e87943fc35c49f98b724b3f72d"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/.gitignore",
+    "bytes": 47,
+    "sha256": "77be442fc35b7839154409071e226dfc719f07299c3c45ed62f22a59462a6592"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/Dockerfile",
+    "bytes": 1810,
+    "sha256": "569c0e2f78cf34fdb9c4af377cf8e24709025ccf8beba4a819212bcaf3e2c506"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/Dockerfile.dev",
+    "bytes": 89,
+    "sha256": "993ada7937996a75078867d9d6cbda39cdfa6e2e89b5196733c3042624495e10"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/package-lock.json",
+    "bytes": 155000,
+    "sha256": "7729e389edec8c6a83d19b0041afbb01bad03bc46085834e9de5a991b7c50c74"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/package.json",
+    "bytes": 1621,
+    "sha256": "bc30deca624f74c76848c761aabfe68dd4b6df040fddf06be26fecbabbcc67d5"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/QUICK_START.md",
+    "bytes": 2466,
+    "sha256": "9697d091a6769486aa223722ae2fc26a8ad174289eec321b2871e4f5e9e2b368"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/tsconfig.json",
+    "bytes": 173,
+    "sha256": "3e38fbfedd4c864daa8e9a4b67b50e5345c54b2b0d40c2ef2773308716874e7c"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/migrations/001_create_users_table.sql",
+    "bytes": 841,
+    "sha256": "b598b1d31f96252100de315367e4f8b767d4788eac95f813c3a3ca91b8bf1588"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/prisma/schema.prisma",
+    "bytes": 1870,
+    "sha256": "c5086133b956d41243afcfcd21ff76c094d1af52feafad9cacd86ed32171e1f8"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/App.ts",
+    "bytes": 1863,
+    "sha256": "fd244c6135f533092a5c1cab56da3c5a5f4ff3785827863987d6701872c0811d"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/config/email.ts",
+    "bytes": 1682,
+    "sha256": "41bb1ddb7f1fd13b9aad3c384e253773e14c6d8e734ca6411c92a8d28e99198a"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/config/passport.ts",
+    "bytes": 1596,
+    "sha256": "9461fe4868c74d136433966dfbaab9568eab30bae507c6e67d29ffbb7a517430"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/controllers/AdminController.ts",
+    "bytes": 16192,
+    "sha256": "5698581af8760584fdda7eba993fbcd6955d0d1a78b810deb3221286ffa9b2ba"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/controllers/AnalyticsController.ts",
+    "bytes": 2170,
+    "sha256": "d8049ffd6c95379957348aadf9212b35447db2f024cd45ac0b42bb8cc3600429"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/controllers/Authentication.ts",
+    "bytes": 16892,
+    "sha256": "722c3abe16385dfd17f8e2f6236f467869ba1174f0d53353691f96c86ad13bb3"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/controllers/AutocompletionController.ts",
+    "bytes": 22028,
+    "sha256": "a9ffaed74f26eaa60ce21dde125f8973a8b33a32052f5fe5aa62def74bb9c6b7"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/controllers/CreditController.ts",
+    "bytes": 3199,
+    "sha256": "55540dd48a31f11752d999def1281505157a78a9273b0a4e54b889fd1bcbaeb1"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/controllers/DocumentController.ts",
+    "bytes": 2991,
+    "sha256": "580e3f3aef89a152cd685dbe20d77dc500b38508edcc4975baf5dda6cf651b04"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/controllers/tester.ts",
+    "bytes": 157,
+    "sha256": "a2d851c2337aacbfdded878be13557ccd617e6cc09289f6ca5d984eb6fb94318"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/controllers/TextGenerator.ts",
+    "bytes": 15042,
+    "sha256": "307c3e5a47309f74bb6303a7908a32ae7d7e042b02d24e8e050684c67471c606"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/db/prisma.ts",
+    "bytes": 511,
+    "sha256": "36cdcce3e0dafe4b21f6ee0b1bc6a5f948a0d04f17b54b2aa6eaff0a89d0bbe1"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/initializers/index.ts",
+    "bytes": 184,
+    "sha256": "2a56c5f8a22576d133f6fb089304535abf71b14bf10d9c0133ecc8949006d5ca"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/middlewares/auth.middleware.ts",
+    "bytes": 1827,
+    "sha256": "3ed73e82b81e49f4949cf86dbcaabd1523c4b843fa65563c9cefab7df470bee3"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/routes/admin.routes.ts",
+    "bytes": 967,
+    "sha256": "0b5c55ac37aa439e4f2df6b1c9e4a53afb3b5891524270da691ea5249993883a"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/routes/ai.routes.ts",
+    "bytes": 595,
+    "sha256": "28c90e0151e9b5d6b2b5a4faf56ce6ea0db57481459688dea628f3fcf1790c59"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/routes/analytics.routes.ts",
+    "bytes": 311,
+    "sha256": "2ffcb5c4890ee758378c165b9a2bc31614ff7fe4d9060f7b9d94572989f7c72b"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/routes/auth.routes.ts",
+    "bytes": 963,
+    "sha256": "5a7be94c11fd1e51bbb4e663c282ae37de9624aaa4c0f1a1b77a438650d51126"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/routes/autocompletion.routes.ts",
+    "bytes": 1280,
+    "sha256": "8d13f70604613daab33f9350f5ac136f04bb37f3ad14b2a6e534237c6b0bf6a5"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/routes/credit.routes.ts",
+    "bytes": 563,
+    "sha256": "f61ed4bea8065b11416bf81b8105282d7c7a6413915ecbfcdd325540d6f9216d"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/routes/document.routes.ts",
+    "bytes": 581,
+    "sha256": "38fc2b52a7b5e68b79260161f4d1d3508315becea3559c5bafd20261f848cdff"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/routes/index.ts",
+    "bytes": 771,
+    "sha256": "e597a0008c5e61fffe3477d7f66f0610ccaeacbf47710c332ad55fc52ddcf901"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/services/email.service.ts",
+    "bytes": 5188,
+    "sha256": "c38e8755b26b7d5a73a1005a317c5e07129f764ba42b727d4ae1e517f16ee443"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/services/gemini.service.ts",
+    "bytes": 1772,
+    "sha256": "1543a4f68f39265b062076b0d60cbffac96b1773f8906277dba7db4423a2b061"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/types/auth.types.ts",
+    "bytes": 1453,
+    "sha256": "b6a24a63ada8893bdb673d84acc2e6061ca7be3d4c109a7d36f3da4613648c3d"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/types/autocompletion.types.ts",
+    "bytes": 4269,
+    "sha256": "41b46aa45bd048c44635b7797929a1f122f336219a9fa5cc306334b836afe064"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/types/gemini.types.ts",
+    "bytes": 864,
+    "sha256": "bf81eeca3084a0a7e5af433fdc26f0603614af0006268bca156fc6ae4738a13e"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/types/index.ts",
+    "bytes": 387,
+    "sha256": "9a3257ac48c1aae0e87c0d95dd168f5f10e44421448c3a88977c366b70e0c6d0"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/utils/auth.utils.ts",
+    "bytes": 2925,
+    "sha256": "bbe1d0378625a09a7baeaf15044ee0df7cc2d437f2f8630910f8911c04dd9f3a"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/utils/credit.utils.ts",
+    "bytes": 2641,
+    "sha256": "60d93279de2610cf41ababff44ae01a4cb9d636f6d6863a5fbdf705eb8c27825"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/utils/httpWrapper.ts",
+    "bytes": 2354,
+    "sha256": "8bdaf479143f47fad8a8ff20cc5616b79a903ee48b4f21759b4890ecacd4b51f"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/utils/humanize.utils.ts",
+    "bytes": 1653,
+    "sha256": "29ade1999cdb5b8ad1d2749a270c6d33423af738852ec0abe8442421dba2504a"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/src/utils/passport.ts",
+    "bytes": 1517,
+    "sha256": "cc8016532c909a08a6997c422551ae5944dd0c2cf09ae9751f274e894d9b48ef"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/prisma/migrations/migration_lock.toml",
+    "bytes": 128,
+    "sha256": "99836963713b4f5b269ad49af0ed3d7b0b2e336115c2f92dc9ac683d139d0900"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/prisma/migrations/20251019192603_init/migration.sql",
+    "bytes": 379,
+    "sha256": "4698c9d14992e9eb0b117ae9fef93ba96079b11ea35f3df867f2622671a98f83"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/prisma/migrations/20251019194525_add_user_fields/migration.sql",
+    "bytes": 1092,
+    "sha256": "447e2a1c77261b4e8f1323b5dbc1afd5db476663d98c7bd31335178fc37624fa"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/prisma/migrations/20251019194927_added_extra_fields/migration.sql",
+    "bytes": 113,
+    "sha256": "9b84942a8db5c6526efc6fc15e974951c3139a97cc61d8583347f0fb2b5ef974"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/prisma/migrations/20251023002053_add_documents_table/migration.sql",
+    "bytes": 312,
+    "sha256": "a9838375d052499d08d95d6c11ef4cc981c51ab976fdd8dc1e7bfbcdbcbee120"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/prisma/migrations/20251026012745_add_created_by_field/migration.sql",
+    "bytes": 338,
+    "sha256": "668c06d0cf295e777f2cac8b5760b74972e0df6eea30b505cd19e55fedd75bd0"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/prisma/migrations/20251031094757_add_google_oauth/migration.sql",
+    "bytes": 356,
+    "sha256": "9cf889077c7bae094bf0e04ab38e000a1c194c802dde5207c6cd37542740de60"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/prisma/migrations/20251109222219_add_password_reset_fields/migration.sql",
+    "bytes": 119,
+    "sha256": "ae839bb5007ee480a00b939517546a620e6cc586f1368c84593a0b689c4589ac"
+  },
+  {
+    "archive": "scripelle-backend-main.zip",
+    "path": "scripelle-backend-main/prisma/migrations/20251109233512_add_beta_access_system/migration.sql",
+    "bytes": 654,
+    "sha256": "c2e4ff0ca731864fb6beb613e97a7053c6dbbdb52c1512700e62473366f917b3"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/.gitignore",
+    "bytes": 258,
+    "sha256": "c47099af6b8b597288cdc8b7713332361cc8825229ee3050b71f735cbd063400"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/Dockerfile",
+    "bytes": 360,
+    "sha256": "54d88ded6778d387ff8912b0eefcf9db61a6d4042e955e8cda0d23b96c7297f1"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/Dockerfile.dev",
+    "bytes": 175,
+    "sha256": "ab1df609d52a1971d36d7b3bf4d2a7a53dc307df3a3227c5884ad2a2f0d97046"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/eslint.config.js",
+    "bytes": 621,
+    "sha256": "088e9031a1668aacb8163463e8c1238c82f9188075c4216b04a615e7ad4c92d4"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/index.html",
+    "bytes": 396,
+    "sha256": "dc97309b55e4e60d3f441a02f74f0fbf26836e735159c0ed18dfc0719cd00311"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/nginx.conf",
+    "bytes": 166,
+    "sha256": "15d3dd0d28b2635c778f352e4170605fd484c46f878f1d580d9e0f32e421dccb"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/package-lock.json",
+    "bytes": 251099,
+    "sha256": "6680c3770d808b84b914f7d7141fa8c564d8444baae5154b72a72fa340110515"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/package.json",
+    "bytes": 1435,
+    "sha256": "34a0ac88dc9fd97f907291c42deecc74615e1196867305ca01f111a15ce74035"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/README.md",
+    "bytes": 2555,
+    "sha256": "f58b5b17f83db63c09a9f2c059ec435ac8a3feb66f9337391ed5f3f62cff4e63"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/tsconfig.app.json",
+    "bytes": 732,
+    "sha256": "922bc5bfb41bdc0768023b2487d54b3ae23c587d999024d4f32cde879ae6f4d8"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/tsconfig.json",
+    "bytes": 119,
+    "sha256": "770b4140bbb581e2dfd9ea9946ffc9c75a1d86ba7d2db5f77c83e37cbdf9d808"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/tsconfig.node.json",
+    "bytes": 653,
+    "sha256": "c3dd0fb522feba3596713f51b95bd53d781d845d24aedbfa2ac093d8b39c5120"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/vite.config.ts",
+    "bytes": 205,
+    "sha256": "455eef0231e9be23e2363b552d933371f4db11bf501c78ca6a13d657fbbee99a"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/public/favicon-16x16.png",
+    "bytes": 426,
+    "sha256": "31a3274472e47f0dbe9bdfa78f9196a3fa1dbfada3a0a6be19dc9f373ebb92ad"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/App.tsx",
+    "bytes": 2699,
+    "sha256": "c21e5d8a3d0d1a58a2b081116e4b534d79d141cdc65d7ba687bab26d664854d7"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/index.css",
+    "bytes": 1460,
+    "sha256": "56bac91b32d041dbf2f636a34129e20093b8fce5b3d6a259b86ce0307716607b"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/main.tsx",
+    "bytes": 230,
+    "sha256": "6e9e5807fcbd48b75a96db5cbef36c996262196be42e6d4760dc86babbe61ad2"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/DocumentCard.tsx",
+    "bytes": 2963,
+    "sha256": "b5b62bdaecd455725678eb3001c4c801bc8c8668b7fb76a1adaf646e8536683f"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/FloatingToolbar.tsx",
+    "bytes": 5491,
+    "sha256": "3a69dc5421574576efa1d1aacb7ed1c49026e74beb56437ef0c6e55ff8e534a5"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/constants/backend.ts",
+    "bytes": 146,
+    "sha256": "dcbb4e8cd228c6782f262f65e90dae07cc1263b6722df1372025c1090eeb80f0"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/examples/toastExamples.ts",
+    "bytes": 1025,
+    "sha256": "9dbd7321fd9a99aadb01a5deef0daf3e010d32d06e680e81f852913983d171e0"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/pages/Dashboard.tsx",
+    "bytes": 8270,
+    "sha256": "0277c016ce3d37d3693bf2aa60ee122c4c01490b01df7d20cf177a0b7b710662"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/pages/EditorPage.tsx",
+    "bytes": 9207,
+    "sha256": "55e52bdbfbaeb7d1823a9177ee992c7773a9bee594484f34c0ae847380c7eb83"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/pages/LoadingScreen.tsx",
+    "bytes": 353,
+    "sha256": "9774c81532fc7775539457688a13561db91a6743c7bbbace1b1d93a510b25603"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/pages/NotFound.tsx",
+    "bytes": 1133,
+    "sha256": "df44e833c5640f92a66ec40bfb6793bbd511ece48caed7bd6179051d44185651"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/pages/StartPage.tsx",
+    "bytes": 3607,
+    "sha256": "f048ffa0f7056de92036427f5055a6e833422eaa83407ff0e9f121896f98e436"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/store/editorStore.ts",
+    "bytes": 10394,
+    "sha256": "56d31d630fc2a9caf1bc667c7ba9050589f6b122a1036be4e622df2ae80d0be7"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/store/userStore.ts",
+    "bytes": 2621,
+    "sha256": "9269c20ab930dd0d55b326e09882afe46f3140436657d7dd62e31f65dc3a4f97"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/types/customTypes.ts",
+    "bytes": 2909,
+    "sha256": "5935b1c3044df093284a1b26a9a0c0efa693d6ff39d782dc4a59dd745796b8ce"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/utils/handleHttp.ts",
+    "bytes": 2073,
+    "sha256": "7caf4697f67bba39fe2ef01f7b8bdd4150e386b8d5c63871ce63806f4c96c679"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/utils/userUtils.ts",
+    "bytes": 1409,
+    "sha256": "3801ed3dc4edc3fc12cce82c670ffde6516b7dd7287a0c312574c6ad95a25905"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/pages/Auth/ForgotPassword.tsx",
+    "bytes": 6972,
+    "sha256": "8ce66542ad408de096c6e47e7a3e7378228c2349478fdb3ce9c4178285e78365"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/pages/Auth/Login.tsx",
+    "bytes": 7936,
+    "sha256": "bf5fdd301df55b0cd25ebee43e76110290a9c6ba858bd547b9f3020526f416de"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/pages/Auth/OAuth.tsx",
+    "bytes": 557,
+    "sha256": "5cc9569df2487df6fdedf34608faa516b5b5ff6854c587c46ba2f7b72da69b6f"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/pages/Auth/ResetPassword.tsx",
+    "bytes": 10967,
+    "sha256": "821ef93d09c86ad7a8182e9ea535814f24098a75479e3dfae987a5dd9f8a9ec3"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/pages/Auth/SignUp.tsx",
+    "bytes": 12850,
+    "sha256": "1637dde9aeba94a5ebcb058c7e2e4520dd13a6e2301f8bc8e7c685ed9083cde3"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/pages/LoadingScreen/index.tsx",
+    "bytes": 532,
+    "sha256": "ca7846aa0091bafd9bbce3bb4d535dec48fbfcfbcfeebf4d72c2d91d55c9d350"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/pages/NotFound/index.tsx",
+    "bytes": 1058,
+    "sha256": "e99377cad61ee99c0a4f382b01689736e4aedcbe85283c89d046c1d38a24ef6b"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Editor/A4Sheet.tsx",
+    "bytes": 25516,
+    "sha256": "7e59a8b74d9572633a6dfb8b3fb40808d15ee5eebfac753d9075302f04360670"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Editor/AIAssistant.tsx",
+    "bytes": 8292,
+    "sha256": "ba75e4dda01e5950461b8c68f85f0b3191302a49c606eda22c7bf312f012272b"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Editor/Comments.tsx",
+    "bytes": 6081,
+    "sha256": "eac41943a975b015495edb18413705ff564847b55c25ffe30703ce4b25690518"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Editor/ContextTeller.tsx",
+    "bytes": 2694,
+    "sha256": "e2f40e4b4ac22540081938e83d38dc8d5de2d15a1d8d454933cbaa63cd3b27a0"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Editor/DocumentHeader.tsx",
+    "bytes": 5324,
+    "sha256": "879681ca9978f13e54dbeaaad1e3d5a635de7f88354efd2e5dd040eeb9ea5422"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Editor/Ribbon.tsx",
+    "bytes": 7618,
+    "sha256": "729a37ce162aa31dba3e0f09e1b869499c185d131d1c3b93cf3166beef325da5"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Editor/RightSidebar.tsx",
+    "bytes": 16614,
+    "sha256": "3a50cdf069199dfcddc1da5b60294660529d3beb452960858eed757aad546649"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Editor/Sidebar.tsx",
+    "bytes": 1167,
+    "sha256": "30185444a0def1b08eb51e3e7b127286c3887e0e13ef6e62875fe3a3cd7a07af"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Editor/tiptap-styles.css",
+    "bytes": 3542,
+    "sha256": "b469837f5c225e9728d939b79cf649dc891fdacc1ff22a0c360dfc9ba5a7af1b"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Editor/TipTapEditor.tsx",
+    "bytes": 6541,
+    "sha256": "fa28554bbfa40180aefe828c9374a1b8f6cd5b365523cdccaab956d88806abb6"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Editor/TipTapToolbar.tsx",
+    "bytes": 5709,
+    "sha256": "ac625fb0ab48571b8df7772f2c9ea921ca265ebd676157c356a5a46cfebc2f06"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/FloatingToolbar/Divider.tsx",
+    "bytes": 117,
+    "sha256": "5b1d8a167cd1f085d2517ddc9858376dae9fed34c78a4f7f2b6c3ea1464f342d"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/FloatingToolbar/Dropdown.tsx",
+    "bytes": 4147,
+    "sha256": "d92df71659e70829d80545cffffdb65b18fe0f8a15ac1accf6852dba54ebc586"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/FloatingToolbar/ToolbarButton.tsx",
+    "bytes": 833,
+    "sha256": "a5bd6a05cb801d048ed3762d87e70c8a879f423fec4bd8a40f6062ba63094902"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Modals/DeleteConfirmationModal.tsx",
+    "bytes": 1248,
+    "sha256": "e57bb6c0ab93f792e16d18a599870e31579f74b907cfb6a49b72be7b76b32848"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Modals/HelpModal.tsx",
+    "bytes": 3717,
+    "sha256": "fda6779d6c23195955c2501b3285029a0fd1a29b29cd51020c1b775a0000cb50"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Modals/SignInPromptModal.tsx",
+    "bytes": 5051,
+    "sha256": "7b86a1b4ea60f04768aac46eb0cc4b5f0be665e3beb905e809cd91a88cf2a85b"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Toast/Toast.tsx",
+    "bytes": 3406,
+    "sha256": "3969fb614aa50c8c2fcdb1db09896ea1bff76c217d4a22a2419552db2178b9c1"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Toast/ToastContainer.tsx",
+    "bytes": 1038,
+    "sha256": "d4089faff52cf3fac3ad7f98294c6fce6a0b514b8366ebe78635e46a4144bb39"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/components/Toast/toastService.ts",
+    "bytes": 1069,
+    "sha256": "5ada0ef77861da61237984de8a618c402371d1c299c11ed0ac747fe0dad1bd7f"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/assets/animations/construction.json",
+    "bytes": 174490,
+    "sha256": "eda50d52c9f8514c501bc66a9dd24de786d39deb0267ea3abb715b498a60f249"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/assets/animations/loading.json",
+    "bytes": 108804,
+    "sha256": "61576274fc5deea1f3ac52439019e3ad264b0ca08147419c2d25b5adf2f42232"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/assets/animations/not-found.json",
+    "bytes": 39686,
+    "sha256": "536f4b1a098842983e8fb467ef81f5b6814b74d4f1e2eb5261cad617d4a905b7"
+  },
+  {
+    "archive": "scripelle-frontend-main.zip",
+    "path": "scripelle-frontend-main/src/assets/videos/painting_bg.mp4",
+    "bytes": 3007889,
+    "sha256": "373223f6f280d0de53bd46170214b94c745919b82f83b03ef41d56b3f6e105fb"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/.gitignore",
+    "bytes": 258,
+    "sha256": "c47099af6b8b597288cdc8b7713332361cc8825229ee3050b71f735cbd063400"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/eslint.config.js",
+    "bytes": 621,
+    "sha256": "088e9031a1668aacb8163463e8c1238c82f9188075c4216b04a615e7ad4c92d4"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/index.html",
+    "bytes": 2442,
+    "sha256": "08c3249158dd5699fc22d4109c7ef0555ebc5cb1ef43a4c338fb1be25afaa8fe"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/package-lock.json",
+    "bytes": 141473,
+    "sha256": "6fa0f728165ab12ef231ed9a4c0de60a30a2c9f230982ea7e175c0827cb45ada"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/package.json",
+    "bytes": 867,
+    "sha256": "bd64b2413127699e64ca149e28c1ca21e2c3491dc7aa68328f95b3a1e07e9800"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/README.md",
+    "bytes": 2466,
+    "sha256": "857708bbd3f67f5fdb84ac5f394452cd8f65f5ccd5104a597c9721664996e0f4"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/tailwind.config.js",
+    "bytes": 446,
+    "sha256": "b968ce83ab8525ef49a8573a70ea5badb6091ed9276de8563667cb6a0559cfcf"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/tsconfig.app.json",
+    "bytes": 732,
+    "sha256": "922bc5bfb41bdc0768023b2487d54b3ae23c587d999024d4f32cde879ae6f4d8"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/tsconfig.json",
+    "bytes": 119,
+    "sha256": "770b4140bbb581e2dfd9ea9946ffc9c75a1d86ba7d2db5f77c83e37cbdf9d808"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/tsconfig.node.json",
+    "bytes": 647,
+    "sha256": "372a2d8f2ce498ed3e32779ebc0157bb0423482a510cd2e5bd721bfcfcb9dd48"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/vite.config.ts",
+    "bytes": 220,
+    "sha256": "0c03207436c9eb3f2f35ec9ff13d17c6ae7e4c8d46ad394a556578cf12c80d74"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/public/favicon-16x16.png",
+    "bytes": 426,
+    "sha256": "31a3274472e47f0dbe9bdfa78f9196a3fa1dbfada3a0a6be19dc9f373ebb92ad"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/public/og-image.jpg",
+    "bytes": 69054,
+    "sha256": "1b1e6f7beb7201bcc74532fe1fe2fca09db273200f6620617e454a3f460a7a97"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/App.css",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/App.tsx",
+    "bytes": 632,
+    "sha256": "d48d85e9352c6309341a3391dd9978536d3ef1afd2721996002861c0f50eb853"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/index.css",
+    "bytes": 1515,
+    "sha256": "3444481297fbf6da20d349cbed985af201d5e848d1c3160f75996cf250aa4a6d"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/main.tsx",
+    "bytes": 730,
+    "sha256": "b11546f2937fac6f62d1936ff9156e6a5da233835f11d95806bf616c13062362"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/Card.tsx",
+    "bytes": 2091,
+    "sha256": "9fdf01f3dca6c92be5a1f8c902fa3b9ace6d7c88a7c56e39040e238c7b7358b9"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/EarlyAccessBanner.tsx",
+    "bytes": 2202,
+    "sha256": "f6ca37aeea4554d4b01b5cda68d4728052f44e86ae2c30eaf61c1db581533522"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/EmailNavigation.tsx",
+    "bytes": 1634,
+    "sha256": "0c475afc27a338192533a94d47cc5262693d6ceb54315b660f6195e3d3ef228b"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/Footer.tsx",
+    "bytes": 5628,
+    "sha256": "1d3bbe70c7082445c37f70a6dcaccf6a8a631cb3d2b60dbc43f869f4e4d10b64"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/Header.tsx",
+    "bytes": 539,
+    "sha256": "934d9086fd186b13f55a18ddb87a3c2744c7b8c37ce246fcc1423969018bd577"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/Hero.tsx",
+    "bytes": 8324,
+    "sha256": "d4293533a57e3e75a49cbcf069cdf8ba6febf548d1353f1c80fef4e2e69aa438"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/NotAnotherTools.tsx",
+    "bytes": 4881,
+    "sha256": "64ff6a39502e1300cd1ba0790526ce22880ff589b84484b50faea41b41989d67"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/Pricing.tsx",
+    "bytes": 8286,
+    "sha256": "161bffbe05c2f569b3e56302b0cc420b68f77710c4b711cbad83cd0f60096008"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/PureFocus.tsx",
+    "bytes": 2130,
+    "sha256": "b373d958396054c7fbc35f861a0eab948684de12eafefba1f048f435e00aefd5"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/Reclaim.tsx",
+    "bytes": 10505,
+    "sha256": "3dd7e15454aaee51ca2f047f624b7b2e59db1603f96e3fb36f6899354795c942"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/scrollsection.tsx",
+    "bytes": 3748,
+    "sha256": "0854d5be6068a98434a99e700b8993be2781e549384aa7935d7a2c7880efeb68"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/SpotSecured.tsx",
+    "bytes": 2530,
+    "sha256": "b13c0aabcd219c0eb875c7f24a244eabe2bfffd73ac28d0f3cd76b44e071b91b"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/StudentStruggle.tsx",
+    "bytes": 6933,
+    "sha256": "237bd321d800f33e05cf05698b7f50e7b03c8aa81e436363314f32a63a47cd47"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/WriteTheFuture.tsx",
+    "bytes": 5106,
+    "sha256": "1c0036912c8fe980f0ccd4f655fbcd95a7210ba3553678c2a0b2b764b7392546"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/utils/analytics.ts",
+    "bytes": 378,
+    "sha256": "dd1b4834734aea0e0d0c7b10c3a2a5bb0d3cfe8d7c243324917a2a17a5a4adc5"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/Cards/AdvancedSidebar.tsx",
+    "bytes": 2310,
+    "sha256": "b188cf4f4ee325c87857a74d03ecade7fd73bc6e9ac107dbcddf12f025801ba0"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/Cards/Overthinking.tsx",
+    "bytes": 2174,
+    "sha256": "a39df22bc35065b06ce5902a831917b159de6614564352911f403c2088e81e7b"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/components/Cards/StopBlankPage.tsx",
+    "bytes": 2280,
+    "sha256": "db346048add70c1deccbd1a7e094f8001a705ef8fd6a9b44b5882570fa2cce83"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/fonts/Times_new_roman_italic.otf",
+    "bytes": 36304,
+    "sha256": "04bdec20909259be35dc9588ca06aa2c7f4462b71721ba372e0f31dcea2244db"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/fonts/Times_new_roman_regular.otf",
+    "bytes": 32040,
+    "sha256": "aaf16fad49d94abde9fbfbfdb4bc70a0c0f56019c0ecd25321a1877dee7c9b0b"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/img/chat_box.png",
+    "bytes": 11505,
+    "sha256": "cfbc8c0e91c1c9e9bb38773d6e29a9ac865345ee92bef1f10e3c05a7e2a3fcd9"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/img/cinema.jpg",
+    "bytes": 378203,
+    "sha256": "2d0736c4f0af90c9a820c3cab377d919a682626e9be2c5fc619aa106e5944916"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/img/door.jpg",
+    "bytes": 2089041,
+    "sha256": "9a6e52ac220dc4620c0fc4d6eaee20ccc2889dfdb1e2b8e6b540773a52751ee9"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/img/favicon.png",
+    "bytes": 4605,
+    "sha256": "b4c6f200cb63987254b1ddec102e4a074808c5a2d5cece64e43a6c80e4a7e023"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/img/house.jpg",
+    "bytes": 769104,
+    "sha256": "d0cda12667d3e456ff7098bcdcd7c0961bcce0204ab16f4d7c2adff4bee2209d"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/img/keyboard_img.jpg",
+    "bytes": 3178501,
+    "sha256": "e644f0a410284b4dd5ec7c496bde24ecac541e22cc5a3ba51c3bd8552d6eba96"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/img/man-crossing-road.jpg",
+    "bytes": 5663456,
+    "sha256": "e267fd17d95d90a15c8864152f8ba70aa1a087bf004bc2a71e3c90be93764782"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/img/man-line.jpg",
+    "bytes": 121848,
+    "sha256": "bd916e8cf50a830b4aaa44004d20bd18f039f9c81dbd6e37a8adf53b4911cb1b"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/img/pricing_bg.png",
+    "bytes": 4655925,
+    "sha256": "4643921b97339e50eabffad5985f29c20b78d111919a38bcce6551c90e818b69"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/img/rings.jpg",
+    "bytes": 232820,
+    "sha256": "7cc701a4d04abdc0e9fc2ce0a09b660dd06f9752c985831a2bb026e86c105820"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/img/rocket.jpg",
+    "bytes": 504420,
+    "sha256": "f6ef1212de1cd352445fe2518c62d224186eb64b7e4e67432ceb2bb17f56f973"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/img/room-wall.jpg",
+    "bytes": 354209,
+    "sha256": "551b0c8fa483baf976a3e37ec301731b386753b5f0d0a88f2f97a7f725cab2b7"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/img/students_struggle.png",
+    "bytes": 27779,
+    "sha256": "68033fd2b540306724b0c0a82a2ddaa7db31f2cbf367de01b5e3a348bcbf649d"
+  },
+  {
+    "archive": "Scripelle-website-main.zip",
+    "path": "Scripelle-website-main/src/assets/img/white_background.jpg",
+    "bytes": 112050,
+    "sha256": "29adaa9e714cbfa4f99060a381f4fb11484c47c1a5bd90277a6c7920474b3f01"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/docker-compose.dev.yml",
+    "bytes": 930,
+    "sha256": "0e7937cdd64765ce81cf442ef83b19b1914210b6c68468baf90b4521ffff93fe"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/docker-compose.yml",
+    "bytes": 706,
+    "sha256": "96c4ba9300b5fb7f589efc51cd20a53d3c51ad34a2c51d450cd3f0b9636adc92"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/.gitignore",
+    "bytes": 47,
+    "sha256": "77be442fc35b7839154409071e226dfc719f07299c3c45ed62f22a59462a6592"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/Dockerfile",
+    "bytes": 1746,
+    "sha256": "480f56bbb168ec6b6dfea88255b7b605c47df876284a44a8f73326dcabb29dcf"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/Dockerfile.dev",
+    "bytes": 89,
+    "sha256": "993ada7937996a75078867d9d6cbda39cdfa6e2e89b5196733c3042624495e10"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/package-lock.json",
+    "bytes": 91506,
+    "sha256": "87ae926597312c7b7449ff62a273182dde943c3b408744e1f3666f0e0cf09bcc"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/package.json",
+    "bytes": 1248,
+    "sha256": "5f1be6b50fed3a8f42aa776a4c7f9b20f18057c5e0d19c38fb37c12c30de7d71"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/tsconfig.json",
+    "bytes": 173,
+    "sha256": "3e38fbfedd4c864daa8e9a4b67b50e5345c54b2b0d40c2ef2773308716874e7c"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/.env",
+    "bytes": 38,
+    "sha256": "ee9b29215f9c751fbdff576da9b5443a4187ffc6f0e217fb82b670fdae1d3762"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/.gitignore",
+    "bytes": 253,
+    "sha256": "fe718e7babb14f3cbad2d97f08889b9ce5215ed3fe0e43b2b8cfbfb3b9b844e8"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/Dockerfile",
+    "bytes": 344,
+    "sha256": "3e70d2041a35aa5183a17d3b2802a90d1d2d854a01b0836ec6f2a031b33f597f"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/Dockerfile.dev",
+    "bytes": 115,
+    "sha256": "7e14977b7f91cc8b8b12ebdc456f96b04b79567f502be2ba7f39f24c4d36ce99"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/eslint.config.js",
+    "bytes": 621,
+    "sha256": "088e9031a1668aacb8163463e8c1238c82f9188075c4216b04a615e7ad4c92d4"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/index.html",
+    "bytes": 377,
+    "sha256": "8133fedb071224b0ac109f11724a94d679a21517ec8835b56ff6232857f21fdf"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/nginx.conf",
+    "bytes": 166,
+    "sha256": "15d3dd0d28b2635c778f352e4170605fd484c46f878f1d580d9e0f32e421dccb"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/package-lock.json",
+    "bytes": 202641,
+    "sha256": "961d2a2ea3bab93d83311cbf56bbaf7d481814c2f923c064dbb5de54aefa8721"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/package.json",
+    "bytes": 999,
+    "sha256": "4d221e534c289fbf55c1699f1750e17f694a2c559faa079b57fa36aab1803e81"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/README.md",
+    "bytes": 2555,
+    "sha256": "f58b5b17f83db63c09a9f2c059ec435ac8a3feb66f9337391ed5f3f62cff4e63"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/tsconfig.app.json",
+    "bytes": 732,
+    "sha256": "922bc5bfb41bdc0768023b2487d54b3ae23c587d999024d4f32cde879ae6f4d8"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/tsconfig.json",
+    "bytes": 119,
+    "sha256": "770b4140bbb581e2dfd9ea9946ffc9c75a1d86ba7d2db5f77c83e37cbdf9d808"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/tsconfig.node.json",
+    "bytes": 653,
+    "sha256": "c3dd0fb522feba3596713f51b95bd53d781d845d24aedbfa2ac093d8b39c5120"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/vite.config.ts",
+    "bytes": 205,
+    "sha256": "455eef0231e9be23e2363b552d933371f4db11bf501c78ca6a13d657fbbee99a"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/public/vite.svg",
+    "bytes": 1497,
+    "sha256": "4a748afd443918bb16591c834c401dae33e87861ab5dbad0811c3a3b4a9214fb"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/App.tsx",
+    "bytes": 1864,
+    "sha256": "e010798a82d1dd8b8b799e971196ed9c9239b73714183fc9f1da344b76f7d9c9"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/index.css",
+    "bytes": 1406,
+    "sha256": "ec441756cba3226765b53cb55c9c3ba10ed19692514a2a3de75a827bcb9a342d"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/main.tsx",
+    "bytes": 230,
+    "sha256": "6e9e5807fcbd48b75a96db5cbef36c996262196be42e6d4760dc86babbe61ad2"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/constants/backend.ts",
+    "bytes": 103,
+    "sha256": "15652b97d4e55ecb15880e8c0c375bb8575be3cbd3ac3c79546d74e68f8f1215"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/examples/toastExamples.ts",
+    "bytes": 1025,
+    "sha256": "9dbd7321fd9a99aadb01a5deef0daf3e010d32d06e680e81f852913983d171e0"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/pages/Dashboard.tsx",
+    "bytes": 14815,
+    "sha256": "336129699050f62bde3a494dfd9fe24af8f30b32c41c45d9bd3a52e803810585"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/pages/EditorPage.tsx",
+    "bytes": 4577,
+    "sha256": "b684fed625d4ec250a3f7290936e28713db2b6ed2fdb1e8649513c89a7c9ceb2"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/pages/StartPage.tsx",
+    "bytes": 1629,
+    "sha256": "e0e93e90d61e03f2cb21c16f61e50551ff5ba2f35a7bec90f5b2a15464f72def"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/store/editorStore.ts",
+    "bytes": 5840,
+    "sha256": "143d4dc8ddbbadaa2f66dd3ffbf9a9c120c57daa6838acc183d3a420ed46c301"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/store/userStore.ts",
+    "bytes": 2228,
+    "sha256": "4297218aaa6efb1aeaa6a86bb4f5b8266684544beca6c9aefecc95cac8d5aa6d"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/types/customTypes.ts",
+    "bytes": 2594,
+    "sha256": "db1f5cef5ced338822b2af9894b262cd8b888b2a0a0c96ae98f9aa89dbc82f18"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/utils/handleHttp.ts",
+    "bytes": 2073,
+    "sha256": "7caf4697f67bba39fe2ef01f7b8bdd4150e386b8d5c63871ce63806f4c96c679"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/utils/userUtils.ts",
+    "bytes": 929,
+    "sha256": "158d31268117b41b38388dcb7a52dc9a4eb5ef4d3557d5037cf3a21ff96110ec"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/pages/Auth/Login.tsx",
+    "bytes": 8830,
+    "sha256": "e7098d46c5ee6d03d0c9e2577284ec6643710846f329ac6685534edacbc7c1bb"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/pages/Auth/SignUp.tsx",
+    "bytes": 13935,
+    "sha256": "8f49618246f1f4af4489f25bbf752f21e0b01118b2f3305abb5dbd3c0d7a746e"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/pages/LoadingScreen/index.tsx",
+    "bytes": 356,
+    "sha256": "4e9863ff9df59ff5bc6e619cb23a71e42a187eaf090b58d6c67ed9dc78f62090"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/pages/NotFound/index.tsx",
+    "bytes": 1136,
+    "sha256": "9b06ffbf11af2998de30ada7ddb3c8739c581e84653bfcb471d81af3fb7eceff"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/components/Editor/A4Sheet.tsx",
+    "bytes": 3958,
+    "sha256": "dddd2174b01943b9b6e8dc1b3a3e38d085a6cfdb7697929200b0b01639b89b50"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/components/Editor/AIAssistant.tsx",
+    "bytes": 8292,
+    "sha256": "ba75e4dda01e5950461b8c68f85f0b3191302a49c606eda22c7bf312f012272b"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/components/Editor/Comments.tsx",
+    "bytes": 6081,
+    "sha256": "eac41943a975b015495edb18413705ff564847b55c25ffe30703ce4b25690518"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/components/Editor/ContextTeller.tsx",
+    "bytes": 2694,
+    "sha256": "e2f40e4b4ac22540081938e83d38dc8d5de2d15a1d8d454933cbaa63cd3b27a0"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/components/Editor/DocumentHeader.tsx",
+    "bytes": 4421,
+    "sha256": "a4d3201dfa95c784d6339cd4a5e2aff86d897f0b64d6d5c0f395d458f9f2c3b1"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/components/Editor/Ribbon.tsx",
+    "bytes": 7503,
+    "sha256": "2c0ee080ed0a542694bfa942d0b5a46f19f90b62ebd4a04a48a28681f7f528b9"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/components/Editor/RightSidebar.tsx",
+    "bytes": 4357,
+    "sha256": "95d6e548b8c29b054f1e78f62c55a8b438a13a6535348460d9253133e2be3532"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/components/Editor/Sidebar.tsx",
+    "bytes": 1167,
+    "sha256": "30185444a0def1b08eb51e3e7b127286c3887e0e13ef6e62875fe3a3cd7a07af"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/components/Modals/DeleteConfirmationModal.tsx",
+    "bytes": 1247,
+    "sha256": "b4d49184393e5cc4a07fcabd2579b28069a5287d1a574b7e160e0a54b35eedd8"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/components/Modals/SignInPromptModal.tsx",
+    "bytes": 5249,
+    "sha256": "ec29698a71085fc62f793bee659d95bc4c8f2848c70622e2319f38559c0a75cc"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/components/Toast/Toast.tsx",
+    "bytes": 3406,
+    "sha256": "3969fb614aa50c8c2fcdb1db09896ea1bff76c217d4a22a2419552db2178b9c1"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/components/Toast/ToastContainer.tsx",
+    "bytes": 1038,
+    "sha256": "d4089faff52cf3fac3ad7f98294c6fce6a0b514b8366ebe78635e46a4144bb39"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/components/Toast/toastService.ts",
+    "bytes": 1069,
+    "sha256": "5ada0ef77861da61237984de8a618c402371d1c299c11ed0ac747fe0dad1bd7f"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/assets/animations/construction.json",
+    "bytes": 174490,
+    "sha256": "eda50d52c9f8514c501bc66a9dd24de786d39deb0267ea3abb715b498a60f249"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/assets/animations/loading.json",
+    "bytes": 108804,
+    "sha256": "61576274fc5deea1f3ac52439019e3ad264b0ca08147419c2d25b5adf2f42232"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/assets/animations/not-found.json",
+    "bytes": 39686,
+    "sha256": "536f4b1a098842983e8fb467ef81f5b6814b74d4f1e2eb5261cad617d4a905b7"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/frontend/src/assets/videos/painting_bg.mp4",
+    "bytes": 3007889,
+    "sha256": "373223f6f280d0de53bd46170214b94c745919b82f83b03ef41d56b3f6e105fb"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/migrations/001_create_users_table.sql",
+    "bytes": 841,
+    "sha256": "b598b1d31f96252100de315367e4f8b767d4788eac95f813c3a3ca91b8bf1588"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/prisma/schema.prisma",
+    "bytes": 1019,
+    "sha256": "b7bbbfa341d9b4a76b1ac88d9dfc370a996ad3f2f4d12934b8cf22a463b9b6d8"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/App.ts",
+    "bytes": 1509,
+    "sha256": "8ae522c71cafa09dd7a4126df7a23bb6688db448d1dfef29c7a6fddbd18af22e"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/controllers/Authentication.ts",
+    "bytes": 6770,
+    "sha256": "fbae213d63dea4aba06eba708cf77ab53d93e870b83ef0c32730c0d9d4497d62"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/controllers/DocumentController.ts",
+    "bytes": 2986,
+    "sha256": "21ce9474d7f73dd2ab51299ccd30698fa37a9b7862840fc375a7b6351c32c89f"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/controllers/GeminiAI.ts",
+    "bytes": 3961,
+    "sha256": "d5c95751234bd9d898a29ad15a2396d258eefcdbe6276d5c05c0f606d6ebcc94"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/controllers/Generator.ts",
+    "bytes": 1659,
+    "sha256": "120af5a411255a058369d27547a247c41665900b09a8c866a36721d510239066"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/controllers/tester.ts",
+    "bytes": 157,
+    "sha256": "a2d851c2337aacbfdded878be13557ccd617e6cc09289f6ca5d984eb6fb94318"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/db/prisma.ts",
+    "bytes": 511,
+    "sha256": "36cdcce3e0dafe4b21f6ee0b1bc6a5f948a0d04f17b54b2aa6eaff0a89d0bbe1"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/initializers/index.ts",
+    "bytes": 184,
+    "sha256": "2a56c5f8a22576d133f6fb089304535abf71b14bf10d9c0133ecc8949006d5ca"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/middlewares/auth.middleware.ts",
+    "bytes": 1068,
+    "sha256": "83f87f3c6e4d724f87887cd9a06eb5eda0353b7eddcd3349588f824dc7d315cc"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/routes/ai.routes.ts",
+    "bytes": 187,
+    "sha256": "33f11f599b3211d19fe56141e0a53bbc593683457cc7e6645870d7fd6aa6574f"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/routes/auth.routes.ts",
+    "bytes": 496,
+    "sha256": "2a48b8d9eebab73a226b4904dcfadfc263775bf87772fc6a2638a74d00148d8a"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/routes/document.routes.ts",
+    "bytes": 427,
+    "sha256": "1f285329c300af380ca56df30ac1976b0f7fc856031d3a83bd03a97b822cbdfd"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/routes/gemini.routes.ts",
+    "bytes": 525,
+    "sha256": "e9e4b3ca5d252628f27769efe6310c81321182b95b3898cd37d3a8139a143ac1"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/routes/index.ts",
+    "bytes": 459,
+    "sha256": "bd246bb3d61cf9807bf7f6a5865ed466a52189e049f46ac3cb74aa55504f789b"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/services/gemini.service.ts",
+    "bytes": 1751,
+    "sha256": "b214b521308417dc9ef81be998fc0d1c694597abd88e4ff23d90ee49bcd6a4b3"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/types/auth.types.ts",
+    "bytes": 856,
+    "sha256": "e9bd7f949fd1f8b890ce809bbf44c125f53555556dde63d5efa171b99bdc4b17"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/types/index.ts",
+    "bytes": 387,
+    "sha256": "9a3257ac48c1aae0e87c0d95dd168f5f10e44421448c3a88977c366b70e0c6d0"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/utils/auth.utils.ts",
+    "bytes": 2277,
+    "sha256": "2e4ee5567576cb79caa4f736f7e6803f434e9975fa66d8296c84e5f3ba7ca6d6"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/src/utils/httpWrapper.ts",
+    "bytes": 2354,
+    "sha256": "8bdaf479143f47fad8a8ff20cc5616b79a903ee48b4f21759b4890ecacd4b51f"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/prisma/migrations/migration_lock.toml",
+    "bytes": 128,
+    "sha256": "99836963713b4f5b269ad49af0ed3d7b0b2e336115c2f92dc9ac683d139d0900"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/prisma/migrations/20251019192603_init/migration.sql",
+    "bytes": 379,
+    "sha256": "4698c9d14992e9eb0b117ae9fef93ba96079b11ea35f3df867f2622671a98f83"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/prisma/migrations/20251019194525_add_user_fields/migration.sql",
+    "bytes": 1092,
+    "sha256": "447e2a1c77261b4e8f1323b5dbc1afd5db476663d98c7bd31335178fc37624fa"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/prisma/migrations/20251019194927_added_extra_fields/migration.sql",
+    "bytes": 113,
+    "sha256": "9b84942a8db5c6526efc6fc15e974951c3139a97cc61d8583347f0fb2b5ef974"
+  },
+  {
+    "archive": "Scripelle_project-master.zip",
+    "path": "Scripelle_project-master/backend/prisma/migrations/20251023002053_add_documents_table/migration.sql",
+    "bytes": 312,
+    "sha256": "a9838375d052499d08d95d6c11ef4cc981c51ab976fdd8dc1e7bfbcdbcbee120"
+  }
+]

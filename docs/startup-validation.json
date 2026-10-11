@@ -1,0 +1,22 @@
+[
+  {
+    "app": "backend",
+    "entry_point_http_smoke": "passed",
+    "scope": "process health only"
+  },
+  {
+    "app": "frontend",
+    "entry_point_http_smoke": "passed",
+    "scope": "built HTML served; not browser E2E"
+  },
+  {
+    "app": "admin",
+    "entry_point_http_smoke": "passed",
+    "scope": "built HTML served; not browser E2E"
+  },
+  {
+    "app": "website",
+    "entry_point_http_smoke": "passed",
+    "scope": "built HTML served; not browser E2E"
+  }
+]
